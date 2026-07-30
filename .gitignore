@@ -9,3 +9,6 @@ Thumbs.db
 .vercel
 node_modules/
 *.log
+
+# Source books — copyrighted, never commit or publish
+*.pdf

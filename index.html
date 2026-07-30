@@ -7,10 +7,10 @@
   --paper:#f3f6f4; --paper2:#ffffff; --paper3:#e9eeec;
   --bg:var(--paper); --surf:var(--paper2); --surf2:var(--paper3);
   --line:#d3ddd9; --line2:#c2cec9;
-  --tx:#12201d; --tx2:#41544e; --tx3:#6c807a;
-  --acc:#0c9a8a; --acc2:#0a8578; --accdim:#7fcdc4; --accwash:#dcf0ed;
-  --gold:#c98a1e; --goldwash:#f6ecd6;
-  --good:#1f9d63; --warn:#c58318; --crit:#d94b4b;
+  --tx:#12201d; --tx2:#3b4e48; --tx3:#55675e;
+  --acc:#0a6e62; --acc2:#0a5a50; --accdim:#7fcdc4; --accwash:#dcf0ed;
+  --gold:#8c6310; --goldwash:#f6ecd6;
+  --good:#157a49; --warn:#8a6410; --crit:#b92e2b;
   --goodwash:#dcf0e5; --critwash:#f6dede;
   --shadow:0 1px 2px rgba(16,40,36,.06),0 8px 24px -12px rgba(16,40,36,.14);
   --shadow2:0 2px 4px rgba(16,40,36,.05),0 18px 44px -20px rgba(16,40,36,.22);
@@ -23,8 +23,8 @@
   :root{
     --bg:#0d1316; --surf:#111a1e; --surf2:#16211f;
     --line:#25322f; --line2:#31413d;
-    --tx:#e7efec; --tx2:#a7b9b3; --tx3:#72857f;
-    --acc:#25c2ae; --acc2:#1fae9c; --accdim:#2f5a55; --accwash:#123029;
+    --tx:#e7efec; --tx2:#a7b9b3; --tx3:#8a9b94;
+    --acc:#28bda9; --acc2:#3ccdba; --accdim:#2f5a55; --accwash:#123029;
     --gold:#e0b054; --goldwash:#2b2313;
     --good:#3cc37f; --warn:#e0a94e; --crit:#ef6b6b;
     --goodwash:#12291f; --critwash:#2c1717;
@@ -35,8 +35,8 @@
 :root[data-theme="dark"]{
   --bg:#0d1316; --surf:#111a1e; --surf2:#16211f;
   --line:#25322f; --line2:#31413d;
-  --tx:#e7efec; --tx2:#a7b9b3; --tx3:#72857f;
-  --acc:#25c2ae; --acc2:#1fae9c; --accdim:#2f5a55; --accwash:#123029;
+  --tx:#e7efec; --tx2:#a7b9b3; --tx3:#8a9b94;
+  --acc:#28bda9; --acc2:#3ccdba; --accdim:#2f5a55; --accwash:#123029;
   --gold:#e0b054; --goldwash:#2b2313;
   --good:#3cc37f; --warn:#e0a94e; --crit:#ef6b6b;
   --goodwash:#12291f; --critwash:#2c1717;
@@ -46,19 +46,23 @@
 :root[data-theme="light"]{
   --bg:#f3f6f4; --surf:#ffffff; --surf2:#e9eeec;
   --line:#d3ddd9; --line2:#c2cec9;
-  --tx:#12201d; --tx2:#41544e; --tx3:#6c807a;
-  --acc:#0c9a8a; --acc2:#0a8578; --accdim:#7fcdc4; --accwash:#dcf0ed;
-  --gold:#c98a1e; --goldwash:#f6ecd6;
-  --good:#1f9d63; --warn:#c58318; --crit:#d94b4b;
+  --tx:#12201d; --tx2:#3b4e48; --tx3:#55675e;
+  --acc:#0a6e62; --acc2:#0a5a50; --accdim:#7fcdc4; --accwash:#dcf0ed;
+  --gold:#8c6310; --goldwash:#f6ecd6;
+  --good:#157a49; --warn:#8a6410; --crit:#b92e2b;
   --goodwash:#dcf0e5; --critwash:#f6dede;
 }
+:root{--onfill:#fff}
+@media (prefers-color-scheme:dark){:root{--onfill:#08201c}}
+:root[data-theme="dark"]{--onfill:#08201c}
+:root[data-theme="light"]{--onfill:#fff}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--tx);font-family:var(--sans);line-height:1.6;
   -webkit-font-smoothing:antialiased;font-size:16px}
 h1,h2,h3,h4{line-height:1.2;text-wrap:balance;margin:0}
 a{color:var(--acc);text-decoration:none}
-button{font-family:inherit}
+button{font-family:inherit;color:inherit}
 ::selection{background:var(--accwash);color:var(--tx)}
 .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
 .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--tx3);font-weight:600}
@@ -84,12 +88,13 @@ button{font-family:inherit}
 .navitem.on{background:var(--accwash);color:var(--acc2);font-weight:600}
 .navitem .ico{width:26px;height:26px;border-radius:7px;display:grid;place-items:center;flex:none;
   font-family:var(--mono);font-size:11px;font-weight:700;background:var(--surf2);color:var(--tx2)}
-.navitem.on .ico{background:var(--acc);color:#fff}
+.navitem.on .ico{background:var(--acc);color:var(--onfill)}
 .navitem .lbl{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .navitem .pct{font-family:var(--mono);font-size:10.5px;color:var(--tx3)}
 .navitem.done .ico::after{content:"";position:absolute}
 .navdone{color:var(--good)!important}
 
+.courseswitch{display:flex;gap:5px;padding:10px 12px;border-bottom:1px solid var(--line)}.cs-opt{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;font-size:12px;font-weight:650;padding:8px 6px;border-radius:8px;text-decoration:none;color:var(--tx2);border:1px solid transparent;transition:.12s;white-space:nowrap}.cs-opt:hover{background:var(--surf2);color:var(--tx)}.cs-opt.active{background:var(--accwash);color:var(--acc2);border-color:var(--accdim);cursor:default}
 /* ============ TOPBAR ============ */
 .main{min-width:0;display:flex;flex-direction:column}
 .topbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;padding:11px 26px;
@@ -180,8 +185,8 @@ button{font-family:inherit}
 .modcard .top{display:flex;align-items:center;gap:11px}
 .modcard .num{width:34px;height:34px;border-radius:9px;background:var(--surf2);display:grid;place-items:center;
   font-family:var(--mono);font-weight:800;font-size:14px;color:var(--tx2);flex:none}
-.modcard.dn .num{background:var(--acc);color:#fff}
-.modcard h3{font-size:15.5px;letter-spacing:-.01em;flex:1}
+.modcard.dn .num{background:var(--acc);color:var(--onfill)}
+.modcard h3{font-size:15.5px;letter-spacing:-.01em;flex:1;color:var(--tx)}
 .modcard p{font-size:13px;color:var(--tx2);margin:0;flex:1}
 .modcard .meta{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:11px;color:var(--tx3)}
 
@@ -200,9 +205,9 @@ button{font-family:inherit}
   font-size:14px;font-weight:650;padding:10px 17px;border:1px solid var(--line2);background:var(--surf);color:var(--tx);
   transition:.14s;text-align:center}
 .btn:hover{border-color:var(--tx3)}
-.btn.pri{background:var(--acc);border-color:var(--acc);color:#fff;box-shadow:0 4px 12px -4px var(--acc)}
+.btn.pri{background:var(--acc);border-color:var(--acc);color:var(--onfill);box-shadow:0 4px 12px -4px var(--acc)}
 .btn.pri:hover{background:var(--acc2);border-color:var(--acc2)}
-.btn.gold{background:var(--gold);border-color:var(--gold);color:#fff}
+.btn.gold{background:var(--gold);border-color:var(--gold);color:var(--onfill)}
 .btn.sm{padding:7px 12px;font-size:12.5px}
 .btn.ghost{background:none}
 .btn:disabled{opacity:.5;cursor:not-allowed}
@@ -221,9 +226,9 @@ button{font-family:inherit}
   font-family:var(--mono);font-size:11px;font-weight:700;color:var(--tx3);transition:.12s}
 .opt.locked{cursor:default}
 .opt.correct{border-color:var(--good);background:var(--goodwash)}
-.opt.correct .mk{background:var(--good);border-color:var(--good);color:#fff}
+.opt.correct .mk{background:var(--good);border-color:var(--good);color:var(--onfill)}
 .opt.wrong{border-color:var(--crit);background:var(--critwash)}
-.opt.wrong .mk{background:var(--crit);border-color:var(--crit);color:#fff}
+.opt.wrong .mk{background:var(--crit);border-color:var(--crit);color:var(--onfill)}
 .opt.muted{opacity:.55}
 .why{margin-top:6px;padding:12px 14px;border-radius:10px;background:var(--surf2);font-size:13.5px;line-height:1.6;
   border-left:3px solid var(--acc);display:none}
@@ -265,7 +270,7 @@ button{font-family:inherit}
 .rubric li .cb{width:21px;height:21px;border-radius:6px;border:1.6px solid var(--line2);flex:none;display:grid;place-items:center;color:transparent;transition:.12s}
 .rubric li .cb svg{width:13px;height:13px}
 .rubric li.on{color:var(--tx)}
-.rubric li.on .cb{background:var(--good);border-color:var(--good);color:#fff}
+.rubric li.on .cb{background:var(--good);border-color:var(--good);color:var(--onfill)}
 .casetype{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:20px;flex:none}
 .casetype.ai{background:var(--accwash);color:var(--acc2)}
 .casetype.gen{background:var(--goldwash);color:var(--gold)}
@@ -386,6 +391,7 @@ a:focus-visible,button:focus-visible,.opt:focus-visible,.modcard:focus-visible,.
       <div class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg></div>
       <div><b>AI Consultant Track</b><span>Interactive Studio</span></div>
     </div>
+    <div class="courseswitch" aria-label="Switch course"><span class="cs-opt active" aria-current="page">🧭 Consulting</span><a class="cs-opt" href="agentic-patterns.html">🕸️ Agentic</a></div>
     <div class="railprog">
       <div style="display:flex;justify-content:space-between;align-items:baseline">
         <span class="eyebrow">Overall</span>
@@ -1865,7 +1871,7 @@ function viewModule(v,mid){
     const dn=lessonDone(m.id,l.id);
     const locked=false;
     ls+='<button class="modcard" style="flex-direction:row;align-items:center" onclick="go(\'lesson/'+m.id+'/'+l.id+'\')">'+
-      '<span class="num" style="'+(dn?"background:var(--acc);color:#fff":"")+'">'+(dn?svg(IC.check,2.5):(i+1))+'</span>'+
+      '<span class="num" style="'+(dn?"background:var(--acc);color:var(--onfill)":"")+'">'+(dn?svg(IC.check,2.5):(i+1))+'</span>'+
       '<div style="flex:1;text-align:left"><div style="font-weight:650;font-size:14.5px">'+l.t+'</div>'+
       '<div class="mono" style="font-size:11px;color:var(--tx3)">'+(l.drill?"interactive · ":"")+'~'+l.min+' min'+(l.checks?' · '+l.checks.length+' checks':'')+'</div></div>'+
       (dn?'<span class="pill pass" style="font-size:10px">done</span>':'')+svg(IC.arrow,2)+'</button>';

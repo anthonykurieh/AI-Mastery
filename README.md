@@ -1,50 +1,50 @@
-# AI Consultant Track — Interactive
+# AI Mastery — Interactive Courses
 
-A single-file, offline-capable web app for learning AI consulting end to end: foundations and inference economics, classical ML, data readiness, retrieval/RAG, agents, evaluation, security, **deployment & production engineering**, economics & procurement, governance, and the consulting/case-interview craft.
+Two self-contained, offline-capable web apps for learning AI, built for retention rather than passive reading. Each is a single HTML file with no build step, no dependencies, and no server. Progress is tracked locally in the browser, and you can switch between the two courses from a toggle at the top of each app's sidebar.
 
-It's built for retention, not just reading — every module pairs prose with:
+## The courses
 
-- **Inline checks** and tiered **module exams** (timed, pass at 75%)
-- **Interactive calculator drills** — derive the KV-cache size, the cost anatomy of a call, prompt-cache break-even, and market sizing
-- **Code-completion** and **ordering** exercises (fill-in-the-blank snippets, put-it-in-order steps)
-- **Spaced-repetition flashcards** (Leitner boxes, resurfacing on a +1w / +1m schedule)
-- A self-graded **Case Lab** of mock cases (profitability, market sizing, market entry, plus AI-specific and a running end-to-end engagement)
-- The **Interview Gauntlet** — a mixed final drawn from every module
-- A **progress tracker** with XP, streaks, a 14-day activity graph, and mastery-by-module charts
+### 🧭 AI Consultant Track — `index.html`
+Getting job-ready as an AI consultant: LLM foundations & inference economics, classical ML & decision science, data readiness, retrieval/RAG, agents, evaluation, security, deployment & production engineering, economics & procurement, governance, and the consulting/case-interview craft.
+
+### 🕸️ Agentic Architecture — `agentic-patterns.html`
+Designing production multi-agent systems: the GenAI maturity model, agent-ready LLMs, the adaptation spectrum, ~50 agentic design patterns (coordination, robustness, explainability, human-agent, agent-level, system-level), building agents that learn (the Self-Improvement Flywheel & R⁵), and the frameworks (ADK / CrewAI / LangGraph).
+
+## Both apps include
+
+- Prose lessons with inline comprehension checks and timed module exams
+- Interactive calculator drills (cost/tokenomics, ROI, KV-cache, consensus, market sizing, …)
+- Code-completion and put-it-in-order exercises
+- Spaced-repetition flashcards (Leitner boxes, +1w / +1m schedule)
+- A self-graded Case Lab of design/consulting challenges
+- A capstone final drawn from every module
+- A progress tracker: XP, streak, a 14-day activity graph, and mastery-by-module charts
+- Light/dark themes (WCAG AA contrast), keyboard support, and Backup & restore
 
 ## Run it
 
-No build step, no dependencies, no server. Just open the file:
+No install needed — just open a file:
 
 ```
-open index.html      # macOS
-# or double-click index.html in your file browser
+open index.html            # the consulting course (macOS)
+open agentic-patterns.html # the agentic course
 ```
 
-It runs fully offline and makes zero external network calls.
+Both run fully offline and make zero external network calls.
 
 ## Deploy it
 
-It's a static single file, so any static host works.
+Any static host works (the files are self-contained).
 
-**Vercel**
-```
-npx vercel            # from this folder; it serves index.html automatically
-# or connect this GitHub repo at vercel.com for auto-deploys on push
-```
-
-**GitHub Pages** — in the repo, Settings → Pages → deploy from the `main` branch (root). Your site appears at `https://<user>.github.io/<repo>/`.
-
-**Netlify** — drag `index.html` onto [app.netlify.com/drop](https://app.netlify.com/drop).
+- **Vercel** — import this repo; it serves `index.html` at `/` and `agentic-patterns.html` at `/agentic-patterns.html`. The in-app course toggle links between them.
+- **GitHub Pages** — Settings → Pages → deploy from `main` (root).
+- **Netlify** — drag the folder onto app.netlify.com/drop.
 
 ## Progress & data
 
-All progress (completed lessons, exercise/quiz/exam scores, XP, streak, flashcard scheduling) is stored **locally in your browser** via `localStorage` — tied to the URL you use and the device/browser you're on. It persists across sessions but does **not** sync across devices.
-
-Use the **Backup & restore** button on the dashboard to export your progress as text and restore it on another device or URL. (True cross-device sync would require a backend + accounts.)
+Each course stores progress in its own `localStorage` key (`aict_v1` / `agentic_v1`), so they never clobber each other. Progress persists across sessions on the same URL/browser but does not sync across devices — use each app's **Backup & restore** button to move progress between browsers or hosts.
 
 ## Notes
 
-- Theme-aware (light/dark), responsive, keyboard-friendly (answer exams with `1`–`4`/`A`–`D`, flip flashcards with `Space`).
-- Perishable facts (model names, prices, regulations) are dated in-place and meant to be re-verified — treat them as of mid-2026.
-- Personal study project.
+- The courses are original, condensed teaching material written to accompany their source books — not reproductions of them. The source PDFs are intentionally excluded from this repo (see `.gitignore`).
+- Perishable facts (model names, prices, regulations) are dated in-place; re-verify them as of mid-2026.
