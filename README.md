@@ -5,7 +5,7 @@ Two self-contained, offline-capable web apps for learning AI, built for retentio
 ## The courses
 
 ### 🧭 AI Consultant Track — `index.html`
-Getting job-ready as an AI consultant: LLM foundations & inference economics, classical ML & decision science, data readiness, retrieval/RAG, agents, evaluation, security, deployment & production engineering, economics & procurement, governance, and the consulting/case-interview craft.
+Getting job-ready as an AI consultant: LLM foundations & inference economics, classical ML & decision science, data readiness, retrieval/RAG, agents, evaluation, security, deployment & production engineering, economics & procurement, governance, and the consulting/case-interview craft. Modules 14–19 form a general **Consulting Handbook**: the consulting business, problem solving, the analyst's toolkit (strategy frameworks, financial math, research, operations), storylining and communication, a case-types playbook (growth, market entry, M&A, pricing, cost), and delivering change.
 
 ### 🕸️ Agentic Architecture — `agentic-patterns.html`
 Designing production multi-agent systems: the GenAI maturity model, agent-ready LLMs, the adaptation spectrum, ~50 agentic design patterns (coordination, robustness, explainability, human-agent, agent-level, system-level), building agents that learn (the Self-Improvement Flywheel & R⁵), and the frameworks (ADK / CrewAI / LangGraph).
