@@ -13,6 +13,7 @@ Designing production multi-agent systems: the GenAI maturity model, agent-ready 
 ## Both apps include
 
 - Prose lessons with inline comprehension checks and timed module exams
+- Narrated audio for every lesson (natural Kokoro voice, pre-generated MP3s in `audio/`), with speed control (0.75×–2×, remembered), ±15s skips, auto-play of the next lesson, and lock-screen/headphone controls (`lesson-audio.js`)
 - Interactive calculator drills (cost/tokenomics, ROI, KV-cache, consensus, market sizing, …)
 - Code-completion and put-it-in-order exercises
 - Spaced-repetition flashcards (Leitner boxes, +1w / +1m schedule)

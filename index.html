@@ -419,6 +419,7 @@ a:focus-visible,button:focus-visible,.opt:focus-visible,.modcard:focus-visible,.
 <div class="toast" id="toast"></div>
 <div class="modal" id="modal" role="dialog" aria-modal="true"><div class="sheet"></div></div>
 
+<script src="lesson-audio.js"></script>
 <script>window.MODULES=[];window.CARDS=[];</script>
 <script>
 /* ============ INTERACTIVE DRILLS ============ */
@@ -1902,6 +1903,7 @@ function viewLesson(v,mid,lid){
   let html='<div class="page-in read">'+
     '<div class="eyebrow">Module '+m.n+' · Lesson '+(idx+1)+' of '+m.lessons.length+'</div>'+
     '<h1 class="h-hero" style="font-size:clamp(24px,3.5vw,32px)">'+l.t+'</h1>'+
+    '<div id="laSlot"></div>'+
     '<div class="prose" style="margin-top:18px">'+l.html+'</div>';
   if(l.drill)html+=drillHTML(l.drill);
   if(l.checks){
@@ -1917,6 +1919,7 @@ function viewLesson(v,mid,lid){
     '<button class="btn pri" id="doneBtn" onclick="completeLesson(\''+mid+'\',\''+lid+'\','+idx+')">'+(dn?'Completed ✓ · Continue':'Mark complete')+' '+svg(IC.arrow,2)+'</button></div>';
   html+='</div>';
   v.innerHTML=html;
+  if(window.LessonAudio)LessonAudio.mount(document.getElementById('laSlot'),{course:'consulting',mid:mid,lid:lid,title:l.t,module:m.t,nextHash:m.lessons[idx+1]?'lesson/'+mid+'/'+m.lessons[idx+1].id:''});
   bindQuizzes();
   if(l.drill)bindDrill(l.drill);
 }
