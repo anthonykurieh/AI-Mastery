@@ -383,6 +383,19 @@ a:focus-visible,button:focus-visible,.opt:focus-visible,.modcard:focus-visible,.
   .topbar{padding:10px 14px}
   .hide-sm{display:none}
 }
+.fwtag{font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;color:var(--acc2);background:var(--accwash);padding:2px 8px;border-radius:99px}
+.fwsteps{padding-left:20px;margin:14px 0}.fwsteps li{margin-bottom:10px;line-height:1.65}
+.fwsrc{font-size:12px;color:var(--tx3);margin-top:20px;font-family:var(--mono)}
+.fwdrill{display:grid;gap:12px}.fwq-h{font-weight:650;margin-bottom:10px;line-height:1.5}.fwq-h .mono{color:var(--tx3);font-size:11px;margin-right:6px}
+.fwq .opts{display:grid;gap:7px}
+.fwcalc{border:1px solid var(--line);border-radius:var(--r);padding:16px;margin:18px 0;background:var(--surf2)}
+.fwcalc-in{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:10px 0}
+.fwcalc-in label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--tx2)}
+.fwcalc-in input{font:inherit;font-size:15px;padding:8px 10px;border:1px solid var(--line2);border-radius:8px;background:var(--surf);color:var(--tx);width:100%;box-sizing:border-box}
+.fwcalc-out{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+.fwcalc-out div{background:var(--surf);border:1px solid var(--line);border-radius:8px;padding:8px 10px;display:flex;flex-direction:column;gap:2px}
+.fwcalc-out span{font-size:11px;color:var(--tx3)}.fwcalc-out b{font-size:16px}
+.read .tbl{width:100%;margin:12px 0}
 </style>
 
 <div class="app">
@@ -562,7 +575,7 @@ window.CARDS=[
   {id:"c26",k:"Economics",q:"What kills AI business cases in finance?",a:"Point-estimate benefits, no measured baseline, missing cost lines (change management!), and benefits no P&L owner will sign. Fix: baseline first, owner-signed ranges, full TCO, sensitivity table."},
   {id:"c27",k:"Deployment",q:"Why do most AI pilots die before production?",a:"Not the model — reliability, integration, cost control, monitoring, security review, and ownership. A demo is the happy path; production is everything else."},
   {id:"c28",k:"Deployment",q:"When does self-hosting beat an API on cost?",a:"Rarely — the killer is utilization. APIs batch thousands of tenants; your spiky traffic leaves GPUs idle. Below sustained heavy volume, APIs win. Self-host for residency, deep customization, or latency locality."},
-  {id:"c29",k:"Governance",q:"The EU AI Act spine in one line?",a:"Risk tiers: prohibited (banned) → high-risk (heavy obligations, phasing ~Aug 2026) → limited (transparency) → minimal (free). Extraterritorial like GDPR. Verify dates before quoting."},
+  {id:"c29",k:"Governance",q:"The EU AI Act spine in one line?",a:"Risk tiers: prohibited (banned) → high-risk (heavy obligations; stand-alone high-risk deferred to Dec 2027 by the 2026 AI Omnibus) → limited (transparency) → minimal (free). Extraterritorial like GDPR. Verify dates before quoting."},
   {id:"c30",k:"Craft",q:"The Pyramid Principle?",a:"Answer first, then grouped reasons, then evidence. Executives read the first line and decide whether to read the second. In interviews: answer in one sentence, then ‘three reasons,’ then give them."},
   {id:"c31",k:"Craft",q:"What does MECE guarantee?",a:"Mutually exclusive, collectively exhaustive branches — no overlap, nothing missing. Test: name what each branch excludes. It's what signals structured thinking in the first 30 seconds."},
   {id:"c32",k:"Delivery",q:"Why do AI programs underdeliver?",a:"People don't change how they work. Treat adoption as a funded workstream: champions, workflow redesign, the honest job-security answer, usage instrumented weekly. A mediocre system used daily beats a brilliant one routed around."},
@@ -570,6 +583,16 @@ window.CARDS=[
   {id:"c34",k:"Security",q:"Agent reads inbound emails and has a cancel tool. The defence in one line?",a:"Assume the model gets fooled; design so being fooled can't cause damage. Email path has no destructive tools; destructive actions need confirmation from the authenticated user."},
   {id:"c35",k:"Architecture",q:"Fine-tuning or RAG?",a:"RAG for knowledge (changing, citable, permissioned facts); fine-tuning for behaviour (format, tone, narrow tasks, cheaper small model). Prompting first; often both together."},
   {id:"c36",k:"Evals",q:"What counts as a ‘change' that must re-run the eval suite?",a:"Prompt edits, model swaps (incl. silent provider updates), chunking or embedding changes, new/updated documents, settings like top-k. Gate on a pass bar agreed up front, in CI."},
+  {id:"f1",k:"Frameworks",q:"Tech case vs traditional case: what changes?",a:"Same method, but you close with an implementation roadmap, talk TCO / ROI / payback instead of profit, and the big risks are adoption, integration and security."},
+  {id:"f2",k:"Frameworks",q:"The six steps of a tech case?",a:"Understand (restate the objective) → structure → kick off → quant (approach approved first) → qualitative (2–3 buckets) → recommend (answer, 2–3 reasons, risks, next steps)."},
+  {id:"f3",k:"Frameworks",q:"Technology Evaluation's three core criteria?",a:"Meets requirements, total cost of ownership, time to launch. Then check vendor stability, scalability and exit costs."},
+  {id:"f4",k:"Frameworks",q:"Payback period formula?",a:"Upfront cost ÷ annual savings. $15M migration saving $6M a year pays back in 2.5 years."},
+  {id:"f5",k:"Frameworks",q:"TOGAF's four architecture domains?",a:"Business, data, application, technology (BDAT), plus the ADM cycle to move from current to target state."},
+  {id:"f6",k:"Frameworks",q:"CMMI's five levels?",a:"Initial → Managed → Defined → Quantitatively managed → Optimizing. Move clients one level at a time."},
+  {id:"f7",k:"Frameworks",q:"NIST AI RMF's four functions?",a:"Govern (runs across everything), Map, Measure, Manage. NIST AI 600-1 is the GenAI profile."},
+  {id:"f8",k:"Frameworks",q:"ADKAR?",a:"Awareness, Desire, Knowledge, Ability, Reinforcement. Adoption stalls at the first missing stage; more training only fixes Knowledge."},
+  {id:"f9",k:"Frameworks",q:"How do you set an AI system's autonomy?",a:"By error cost and reversibility, not model capability: assist → augment → automate with review → autonomous within guardrails. Irreversible actions stay behind a human."},
+  {id:"f10",k:"Frameworks",q:"Use-case prioritisation axes for GenAI?",a:"Value (× volume) vs feasibility (data, maturity, integration, regulation), with error tolerance as the GenAI check. Start with quick wins to fund strategic bets."},
 ];
 </script>
 <script>
@@ -1272,7 +1295,7 @@ lessons:[
 <p>One law anchors the global conversation: the <strong>EU AI Act</strong>, whose logic every other regime borrows. Its spine is <strong>risk tiers</strong>:</p>
 <ul>
 <li><strong>Prohibited</strong> — social scoring, manipulative techniques, most real-time biometric surveillance (banned, in force since early 2025).</li>
-<li><strong>High-risk</strong> — hiring, credit, insurance, education, critical infrastructure, essential services (permitted with heavy obligations: risk management, data governance, documentation, human oversight, conformity assessment; phasing in ~August 2026).</li>
+<li><strong>High-risk</strong> — hiring, credit, insurance, education, critical infrastructure, essential services (permitted with heavy obligations: risk management, data governance, documentation, human oversight, conformity assessment; originally due August 2026, deferred by the 2026 AI Omnibus to 2 December 2027 for stand-alone systems and 2 August 2028 for AI in regulated products).</li>
 <li><strong>Limited-risk</strong> — transparency duties (users must know they're talking to AI; synthetic content disclosed).</li>
 <li><strong>Minimal-risk</strong> — most applications, unregulated.</li>
 </ul>
@@ -1284,7 +1307,7 @@ lessons:[
 ]}
 ],
 exam:[
-{q:"The EU AI Act's spine is:",opts:["A licensing regime that covers every provider of AI models","Risk tiers from prohibited to minimal, applied extraterritorially","A per-system tax on companies that deploy AI within the EU","Voluntary guidelines with no penalties for any kind of breach"],a:1,why:"Every other regime borrows this risk-tier logic. High-risk obligations phase in ~Aug 2026 — verify current status before quoting dates."},
+{q:"The EU AI Act's spine is:",opts:["A licensing regime that covers every provider of AI models","Risk tiers from prohibited to minimal, applied extraterritorially","A per-system tax on companies that deploy AI within the EU","Voluntary guidelines with no penalties for any kind of breach"],a:1,why:"Every other regime borrows this risk-tier logic. High-risk obligations were deferred by the 2026 AI Omnibus (stand-alone systems to Dec 2027); verify current status before quoting dates."},
 {q:"NIST AI RMF and ISO 42001 matter commercially because:",opts:["They replace the EU AI Act for companies based outside the EU","They only apply to developers who train their own AI models","They're the shared language of governance in procurement and audits","They're legally binding in every jurisdiction that has adopted AI law"],a:2,why:"NIST AI RMF is the US risk-management vocabulary; ISO 42001 is the certifiable, ISO-27001-of-AI standard procurement asks for."},
 {q:"The minimum viable AI governance stack starts with:",opts:["A large new compliance and ethics team","An inventory of every AI system, shadow AI included","A company-wide statement of AI ethics principles","A dedicated governance software platform"],a:1,why:"Inventory → risk classification at intake → documentation by design → oversight → fairness testing → review forum. Weeks to stand up, and it makes legal and security able to say yes fast."},
 {q:"For a Gulf client wanting frontier models under data-residency law:",opts:["It can't be done until a local frontier model becomes commercially available","In-region platform, private endpoint, no-training terms, local retrieval","Use any global API, but send only anonymized prompts across the border","Keep the model outputs stored in-country, while prompts can go abroad"],a:1,why:"Residency is a design input that selects the procurement path. Fluency in the UAE/Saudi regimes is a regional differentiator."}
@@ -1751,9 +1774,282 @@ function checkOrder(key){
 </script>
 <!--INSERT-->
 <script>
+/* =================== FRAMEWORKS LIBRARY ===================
+   Reference section for AI & tech consulting. Group "play" is built from
+   Hacking the Case Interview's "Tech Consulting Case Interview" video and guide
+   (Taylor Warfield, 2026); the rest is gathered from the named standards bodies.
+   Schema: {id,grp,name,tag,one, html? | when,parts,ai,say,trap, src, link?} */
+window.FW_GROUPS=[
+  ["play","The tech case playbook","How tech consulting cases differ, the six-step process, the seven case types and the math. From the Hacking the Case Interview tech consulting video."],
+  ["tech","Tech consulting frameworks","The six frameworks tech interviewers expect you to recognise. Entry-level candidates mainly need PPT and Technology Evaluation."],
+  ["ai","AI consulting frameworks","The structures you reach for when the case is about AI: what to build, whether the client is ready, how to de-risk it and how to govern it."],
+  ["craft","Structure & storytelling","The connective tissue: how you build any framework on the fly and how you deliver the answer."]
+];
+window.FRAMEWORKS=[
+/* ---------- PLAYBOOK ---------- */
+{id:"tc-diff",grp:"play",name:"Tech case vs traditional case",tag:"Know the game",
+one:"A tech case is a business case where the central decision is about technology, so the output, the numbers and the risks shift.",
+html:`
+<table class="tbl"><tr><th></th><th>Traditional case</th><th>Tech case</th></tr>
+<tr><td><b>Focus</b></td><td>The business decision</td><td>Business, people <em>and</em> technology together</td></tr>
+<tr><td><b>Output</b></td><td>A strategic recommendation</td><td>A recommendation <em>plus</em> an implementation roadmap</td></tr>
+<tr><td><b>Numbers</b></td><td>Revenue, cost, profit</td><td>TCO, ROI, payback period, uptime</td></tr>
+<tr><td><b>Role of tech</b></td><td>One factor among many</td><td>Central to the solution</td></tr>
+<tr><td><b>Timing</b></td><td>Often immediate</td><td>Value builds over months or years</td></tr>
+<tr><td><b>Risks</b></td><td>Market and competition</td><td>Adoption, integration, security</td></tr></table>
+<div class="box key"><div class="bx-h">The point</div>The solving method is the same as any case. What changes is that you must close with <b>how it gets delivered</b> and you must talk in <b>payback, not price</b>. Prep split suggested in the video: about 80% general case skill, 20% tech-specific.</div>`,
+src:"Hacking the Case Interview, Tech Consulting Case Interview video and guide (2026)"},
+
+{id:"tc-steps",grp:"play",name:"The six-step tech case process",tag:"The spine",
+one:"Same six steps as a strategy case. Follow them in order and a deeply technical prompt still feels manageable.",
+html:`
+<ol class="fwsteps">
+<li><b>Understand the case.</b> Note context and objective, ask 2 to 3 clarifying questions, then <em>restate the objective</em> and get a yes. Answering the wrong business question is the fastest way to fail.</li>
+<li><b>Structure the problem.</b> Ask for a minute, build a tailored framework (PPT or Technology Evaluation are the usual starting blocks), present it confidently.</li>
+<li><b>Kick off.</b> Candidate-led: pick the branch to explore first and say why. Interviewer-led: follow their lead.</li>
+<li><b>Solve the quant.</b> Lay out the approach and get approval <em>before</em> computing. TCO, ROI and payback are the usual targets.</li>
+<li><b>Answer the qualitative.</b> Group ideas into 2 to 3 buckets before speaking. For opinion questions, state your position first, then the reasons.</li>
+<li><b>Recommend.</b> Answer, the 2 to 3 strongest reasons, the key risks, then next steps (a regional pilot, vendor reference calls, a security audit). Under 45 seconds.</li>
+</ol>
+<div class="box warnbx"><div class="bx-h">Five ways tech cases go wrong</div>
+<ol style="margin:0;padding-left:18px"><li>Leading with technology instead of the business problem.</li><li>Forcing a memorised framework onto a case it doesn't fit.</li><li>Ignoring change management. Most tech projects fail on adoption, not technology.</li><li>Skipping the math because it looks messier than profit math.</li><li>Name-dropping vendors (AWS, Azure, SAP) without saying why they fit.</li></ol></div>
+<div class="box"><div class="bx-h">Volume</div>Aim for 20 to 30 practice cases before interviews, 5 to 10 of them tech cases. Feedback on each case beats raw count.</div>`,
+src:"Hacking the Case Interview, Tech Consulting Case Interview video and guide (2026)"},
+
+{id:"tc-types",grp:"play",name:"The seven tech case types",tag:"Pattern-match fast",
+one:"Recognise the type in the first 30 seconds and you already know which framework to start from.",
+html:`
+<table class="tbl"><tr><th>Type</th><th>Typical prompt</th><th>Attack it with</th></tr>
+<tr><td><b>Build vs buy</b></td><td>A retailer needs an e-commerce platform</td><td>Technology Evaluation: cost, time to launch, customisation, long-term maintenance</td></tr>
+<tr><td><b>Cloud migration</b></td><td>A bank moving core banking to cloud over 3 years</td><td>Cloud Adoption Framework: security, cost, latency, skill gaps</td></tr>
+<tr><td><b>Vendor selection</b></td><td>An insurer picking between two claims systems</td><td>Technology Evaluation: features, cost, integration effort, vendor stability</td></tr>
+<tr><td><b>Digital transformation</b></td><td>A 100-year-old retailer vs online-first rivals</td><td>PPT: strategy, technology and change management together</td></tr>
+<tr><td><b>Cybersecurity</b></td><td>A hospital hit by ransomware</td><td>Roadmap horizons: 30 / 90 / 365 days, security vs user experience</td></tr>
+<tr><td><b>AI &amp; automation</b></td><td>A call centre wants GenAI to handle 30% of queries</td><td>Use-case prioritisation, AI business case, autonomy ladder, adoption risk</td></tr>
+<tr><td><b>IT modernisation</b></td><td>An agency running a 30-year-old mainframe</td><td>Prioritise systems, rebuild vs replace, transition with no service disruption</td></tr></table>
+<div class="box key"><div class="bx-h">For you specifically</div>The AI &amp; automation type is where an AI-literate candidate pulls ahead: most candidates can size savings, few can explain <em>why</em> 30% containment is or isn't realistic (error tolerance, retrieval quality, escalation design, evals).</div>`,
+src:"Hacking the Case Interview, Tech Consulting Case Interview video and guide (2026)"},
+
+{id:"tc-math",grp:"play",name:"Tech case math: TCO, ROI, payback",tag:"The numbers",
+one:"Three formulas show up in almost every tech case. Frame every investment as a payback period, not an upfront cost.",
+html:`
+<table class="tbl"><tr><th>Metric</th><th>Formula</th></tr>
+<tr><td><b>TCO</b></td><td>Purchase or build + implementation + training + ongoing support &amp; maintenance</td></tr>
+<tr><td><b>ROI</b></td><td>(Total benefit − total cost) ÷ total cost</td></tr>
+<tr><td><b>Payback</b></td><td>Upfront cost ÷ annual savings</td></tr>
+<tr><td>ARR</td><td>MRR × 12</td></tr>
+<tr><td>Churn</td><td>Customers lost in period ÷ customers at start</td></tr>
+<tr><td>LTV : CAC</td><td>Lifetime value ÷ acquisition cost (3:1 is the usual health bar)</td></tr>
+<tr><td>NRR</td><td>(Start recurring revenue + expansion − churn) ÷ start; target above 100%</td></tr></table>
+<p style="font-size:13px;color:var(--tx3)">The first three appear in most tech cases; the last four matter when the client is a software business.</p>
+<h4>Worked example: the logistics cloud migration</h4>
+<p>On-prem costs $20M a year. Migration is $15M upfront, then $14M a year in cloud. Horizon: 5 years.</p>
+<p>Stay: $20M × 5 = <b>$100M</b>. Migrate: $15M + $14M × 5 = <b>$85M</b>. Five-year saving <b>$15M</b>. Run-rate saving $6M a year, so payback = $15M ÷ $6M = <b>2.5 years</b>.</p>
+<div class="fwcalc">
+<div class="eyebrow" style="color:var(--acc2)">Try it: payback calculator ($M)</div>
+<div class="fwcalc-in">
+<label>Current annual cost<input type="number" id="fc-cur" value="20" step="0.5" oninput="fwCalc()"></label>
+<label>Upfront cost<input type="number" id="fc-up" value="15" step="0.5" oninput="fwCalc()"></label>
+<label>New annual cost<input type="number" id="fc-new" value="14" step="0.5" oninput="fwCalc()"></label>
+<label>Horizon (years)<input type="number" id="fc-yr" value="5" step="1" min="1" oninput="fwCalc()"></label>
+</div><div id="fc-out" class="fwcalc-out"></div></div>
+<div class="box key"><div class="bx-h">AI twist: unit economics</div>For GenAI cases, size it per unit of work: <b>cost per resolved contact</b> = (inference + retrieval + human review of escalations + eval/monitoring) ÷ contacts resolved. Compare it to today's fully loaded cost per contact, then multiply by <em>realistic</em> containment, not the client's hoped-for rate.</div>`,
+src:"Hacking the Case Interview, Tech Consulting Case Interview video and guide (2026); AI unit-economics extension is ours"},
+
+/* ---------- TECH CONSULTING ---------- */
+{id:"ppt",grp:"tech",name:"PPT: People, Process, Technology",tag:"Default starting block",
+one:"Technology only creates value when the people and the process around it change too. Check all three are aligned.",
+when:"Digital transformation, system implementations, change management, and almost any \"why isn't our tool delivering?\" case.",
+parts:[["People","Skills, roles, leadership buy-in, incentives, capacity to change"],["Process","Current workflows, bottlenecks, handoffs, what must be redesigned"],["Technology","Tools, scalability, integration with existing systems, data"]],
+ai:"A bank rolled out a GenAI copilot and usage is 12%. <b>People:</b> no training, managers still measure handle time the old way. <b>Process:</b> the copilot sits outside the CRM so agents copy-paste. <b>Technology:</b> answers lack citations so agents don't trust them. The fix is mostly not the model.",
+say:"\"I'd look at this through people, process and technology, because adoption problems are rarely only technical.\"",
+trap:"Treating it as three boxes to list. The value is in the misalignment between them: name where they conflict.",
+src:"Common practitioner framework (often attributed to Harold Leavitt's 1960s change model); Hacking the Case Interview"},
+
+{id:"techeval",grp:"tech",name:"Technology Evaluation",tag:"Build vs buy, vendor choice",
+one:"Score options on three core criteria, then check the secondary ones before deciding.",
+when:"Build vs buy, vendor selection, platform choice, \"which model provider?\"",
+parts:[["Meets requirements","Functional fit, customisation, how much of the need it covers out of the box"],["Total cost of ownership","Licence or build, implementation, training, run and maintenance over the horizon"],["Time to launch","How fast value starts, which moves payback"],["Secondary checks","Vendor reputation and stability, scalability, integration effort, exit and switching costs"]],
+ai:"Buy a contact-centre AI platform or build on a model API? Buy wins on time to launch; build wins on customisation and data control; TCO depends on volume. Ask about <b>exit cost</b>: can you take your prompts, evals and conversation data with you?",
+say:"\"I'd compare the options on three things: how well each meets the requirements, total cost of ownership, and time to launch, then pressure-test vendor stability and exit costs.\"",
+trap:"Comparing sticker price instead of TCO, and forgetting the cost of switching later.",
+src:"Hacking the Case Interview, Tech Consulting Case Interview guide (2026)",link:["module/m10","M10 · Economics, TCO, Vendors & Procurement"]},
+
+{id:"itil",grp:"tech",name:"ITIL",tag:"IT service management",
+one:"The Information Technology Infrastructure Library: the reference model for running IT as a set of services.",
+when:"Service desk, application support, IT operating model, outsourcing of IT operations, \"our IT is always firefighting\".",
+parts:[["Service strategy","What services, for whom, at what value"],["Service design","SLAs, capacity, availability, continuity"],["Service transition","Change, release and knowledge management"],["Service operation","Incidents, problems, requests, the service desk"],["Continual improvement","Measure, review, improve"]],
+ai:"Running an LLM assistant in production is an ITIL problem in disguise: who owns incidents when it gives a harmful answer, what is the SLA, how are prompt and model changes released?",
+say:"\"For the operating model I'd use the ITIL lifecycle: strategy, design, transition, operation and continual improvement, and check where the gaps are.\"",
+trap:"The five-stage lifecycle is ITIL v3. ITIL 4 (2019) reframes it as a service value system. Interviews mostly use the lifecycle; just don't claim it's the current version.",
+src:"AXELOS / PeopleCert ITIL; Hacking the Case Interview"},
+
+{id:"togaf",grp:"tech",name:"TOGAF",tag:"Enterprise architecture",
+one:"The Open Group Architecture Framework: how business, data, applications and infrastructure fit together, and how to move from today's state to a target state.",
+when:"A client redesigning how its business, data and systems connect: post-merger integration, platform consolidation, ERP replacement.",
+parts:[["Business architecture","Strategy, capabilities, processes, organisation"],["Data architecture","Data assets, ownership, flows, governance"],["Application architecture","The systems and how they interact"],["Technology architecture","Infrastructure, networks, cloud, platforms"],["ADM","The Architecture Development Method: a cycle from vision through each architecture to migration planning and governance"]],
+ai:"An enterprise AI platform touches all four domains: which capabilities get AI (business), which governed data feeds it (data), which apps call it (application), and where models run (technology).",
+say:"\"I'd map current and target state across the four architecture domains, business, data, applications and technology, then plan the migration in between.\"",
+trap:"Going deep on technology architecture and skipping business architecture. The business domain is what makes it a consulting answer.",
+src:"The Open Group, TOGAF Standard; Hacking the Case Interview"},
+
+{id:"cmmi",grp:"tech",name:"CMMI",tag:"Maturity assessment",
+one:"Capability Maturity Model Integration: rates how mature an organisation's processes are on five levels.",
+when:"Software development organisations, outsourcing decisions, IT maturity assessments, \"how good is our engineering really?\"",
+parts:[["1 · Initial","Ad hoc and reactive; success depends on heroes"],["2 · Managed","Projects are planned and tracked"],["3 · Defined","Standard processes across the organisation"],["4 · Quantitatively managed","Processes measured and controlled with data"],["5 · Optimizing","Continuous improvement from quantitative feedback"]],
+ai:"The same ladder works for ML practice: level 1 is notebooks on a laptop, level 3 is a standard pipeline with versioned data and models, level 5 is eval-gated releases and drift monitoring feeding improvements.",
+say:"\"I'd place them on a maturity scale first, because the right recommendation for a level-2 organisation is very different from a level-4 one.\"",
+trap:"Recommending level-5 practices to a level-1 client. Move one level at a time.",
+src:"CMMI Institute (ISACA); Hacking the Case Interview"},
+
+{id:"caf",grp:"tech",name:"Cloud Adoption Framework",tag:"Cloud migration",
+one:"Every major cloud provider publishes one; the core logic is the same six questions.",
+when:"Cloud migration, data-centre exit, \"should we move to cloud?\"",
+parts:[["Business case & ROI","Why move, what it saves or enables, payback"],["Workload assessment","Which apps, in which order, with which dependencies"],["Migration approach","Per workload: rehost, refactor, rebuild or retire (AWS extends this to 7 Rs: retire, retain, rehost, relocate, repurchase, replatform, refactor)"],["Security & compliance","Data residency, access, regulatory constraints"],["Operating model & skills","Who runs it, which skills are missing"],["Cost governance","FinOps: tagging, budgets, reserved capacity, stopping waste"]],
+ai:"AI workloads add two questions: data residency for prompts and outputs (which region does inference run in?) and GPU capacity versus pay-per-token APIs.",
+say:"\"I'd assess it on the business case, which workloads move and how, security and compliance, the operating model and skills, and cost governance.\"",
+trap:"Assuming cloud is always cheaper. Lift-and-shift without cost governance often costs more.",
+src:"AWS, Microsoft Azure and Google Cloud adoption frameworks; Hacking the Case Interview"},
+
+/* ---------- AI CONSULTING ---------- */
+{id:"usecase",grp:"ai",name:"Use-case prioritisation: value × feasibility",tag:"What to build first",
+one:"Score every candidate use case on business value and on feasibility, plot them on a 2×2, start top-right.",
+when:"\"Where should we use AI?\", AI strategy, building a roadmap from a long list of ideas.",
+parts:[["Value","Cost saved, revenue, risk reduced, customer experience; multiplied by volume (how often it happens)"],["Feasibility","Data available and accessible, technical maturity, integration effort, regulatory exposure"],["Error tolerance","The GenAI-specific axis: what does one wrong answer cost, and can a human catch it?"],["The 2×2","High/high: quick wins. High value, low feasibility: strategic bets (fix data first). Low value, high feasibility: fill-ins. Low/low: drop"]],
+ai:"For a telco: drafting agent replies (high volume, human in loop, tolerant) is a quick win; autonomous billing disputes (high value, low error tolerance, messy data) is a strategic bet.",
+say:"\"I'd score the long list on value and feasibility, with error tolerance as a feasibility check, and start with the top-right quadrant to fund the harder bets.\"",
+trap:"Picking the flashiest use case first. The first project's job is to earn trust and prove the delivery model.",
+src:"Standard consulting prioritisation matrix, adapted for GenAI",link:["module/m3","M3 · Data Foundations & Readiness"]},
+
+{id:"readiness",grp:"ai",name:"AI readiness & maturity",tag:"Where the client stands",
+one:"Place the client on a maturity level, then diagnose readiness across a handful of pillars to see what blocks the next level.",
+when:"Opening an AI strategy engagement, \"are we ready for AI?\", explaining why pilots aren't scaling.",
+parts:[["Gartner's 5 levels","Awareness → Active (experiments) → Operational (ML in daily work) → Systemic (new business models) → Transformational (AI central to the value proposition)"],["Pillar: Strategy","Clear use cases tied to P&L owners"],["Pillar: Data","Quality, access, ownership, governance"],["Pillar: Platform","Where models run, integration, MLOps/LLMOps"],["Pillar: Talent","Skills in-house vs partners"],["Pillar: Governance","Risk, policy, compliance, responsible AI"],["Pillar: Adoption","Culture, change management, incentives"]],
+ai:"\"Lots of pilots, nothing in production\" usually means Active level with weak Platform and Governance pillars: the fix is a shared delivery platform and an approval path, not more pilots.",
+say:"\"Before recommending use cases I'd place them on a maturity scale and check the readiness pillars, because the binding constraint is usually data or governance, not models.\"",
+trap:"Presenting the maturity score as the deliverable. Clients pay for the plan to reach the next level.",
+src:"Gartner AI maturity model (levels); pillars are a common consulting composite"},
+
+{id:"crispdm",grp:"ai",name:"CRISP-DM",tag:"The ML project lifecycle",
+one:"Cross-Industry Standard Process for Data Mining: the six-phase loop most data science projects still follow.",
+when:"Scoping an ML or analytics project, explaining delivery phases to a client, diagnosing why a model never shipped.",
+parts:[["1 · Business understanding","The decision to improve and how success is measured"],["2 · Data understanding","What exists, its quality, its gaps"],["3 · Data preparation","Cleaning, joining, features; usually most of the effort"],["4 · Modelling","Try candidate approaches"],["5 · Evaluation","Does it meet the business criterion from phase 1?"],["6 · Deployment","Put it into the workflow, then monitor and loop back"]],
+ai:"For GenAI the same loop holds with new names: data prep becomes document curation and chunking, modelling becomes prompt/RAG design, evaluation becomes golden sets and LLM judges.",
+say:"\"I'd run it as a CRISP-DM loop, and I'd anchor evaluation to the business metric we agree in phase one, not to model accuracy.\"",
+trap:"Skipping phase 1. Most failed models answer a question nobody asked.",
+src:"CRISP-DM 1.0 (1999 industry consortium)",link:["module/m7","M7 · Evaluation & Quality Systems"]},
+
+{id:"ladder",grp:"ai",name:"Build / buy / partner & the adaptation ladder",tag:"How to get the capability",
+one:"Decide who builds it, then climb the cheapest rung of customisation that meets the bar.",
+when:"\"Should we build our own model?\", vendor vs in-house, choosing between RAG and fine-tuning.",
+parts:[["Buy","SaaS with AI built in. Fastest, least differentiated"],["Partner","A vendor or integrator builds on a platform for you"],["Build","Your team on model APIs or open models. Most control, most ownership cost"],["Rung 1 · Prompting","Instructions and examples. Hours to change"],["Rung 2 · RAG","Ground answers in the client's documents. For changing knowledge"],["Rung 3 · Fine-tuning","Teach format, tone or narrow skills. Not a knowledge store"],["Rung 4 · Pre-training","Almost never justified for an enterprise"]],
+ai:"\"We want our own LLM trained on our data\" is usually solved at rung 2: RAG over their documents, with evals proving it before anyone talks about fine-tuning.",
+say:"\"Buy where it isn't a differentiator, build where it is, and climb the adaptation ladder only when evals show the lower rung can't hit the bar.\"",
+trap:"Recommending fine-tuning to add knowledge. Knowledge that changes belongs in retrieval.",
+src:"Ours, synthesised from course modules 5 and 10",link:["lesson/m5/l4","M5 L4 · RAG vs fine-tuning vs long context"]},
+
+{id:"bizcase",grp:"ai",name:"The AI business case",tag:"Survive the CFO",
+one:"Value from four levers, minus every cost line, against a measured baseline, as a range with an owner.",
+when:"Any AI investment decision, \"what's the ROI?\", defending a programme budget.",
+parts:[["Value levers","Cost (time saved, deflection), revenue (conversion, new products), risk (errors, fraud, compliance), speed (cycle time)"],["Baseline","Today's measured cost and performance. No baseline, no credible benefit"],["Cost lines","Inference, retrieval and data infra, integration, evals and monitoring, human review, change management, run team"],["Ranges","Low / mid / high benefit, not a point estimate"],["Owner","A P&L owner who signs for the benefit"]],
+ai:"Call-centre deflection: 1M contacts × 30% containment × $4 saved = $1.2M if containment holds. Show 15% / 25% / 30% cases and the cost of reviewing escalations.",
+say:"\"I'd build it bottom-up from a measured baseline, show a range rather than a point, include change management as a cost line, and get a P&L owner to sign the benefit.\"",
+trap:"Leaving out human review and change management, the two costs finance always finds.",
+src:"Ours, synthesised from course module 10",link:["module/m10","M10 · Economics, TCO, Vendors & Procurement"]},
+
+{id:"autonomy",grp:"ai",name:"The autonomy ladder (human in the loop)",tag:"How much to automate",
+one:"Set the AI's autonomy by the cost of an error and whether it can be reversed, not by what the model can do.",
+when:"Designing any GenAI workflow, agent scope, \"can we fully automate this?\"",
+parts:[["Assist","AI suggests, human decides (search, summaries)"],["Augment","AI drafts, human approves every output"],["Automate with review","AI acts; humans sample or review flagged cases"],["Autonomous within guardrails","AI acts alone inside hard limits, with monitoring and rollback"],["The rule","Low error cost and reversible → climb. High cost or irreversible → stay low"]],
+ai:"A travel agent bot can autonomously answer baggage questions, should draft refunds for approval, and should never cancel bookings on the strength of an inbound email.",
+say:"\"I'd set autonomy by error cost and reversibility: start at augment, earn autonomy with eval data, and keep irreversible actions behind a human.\"",
+trap:"Jumping to full autonomy because the demo worked. Climb one rung at a time on evidence.",
+src:"Ours, synthesised from course modules 6 and 8",link:["module/m6","M6 · Agents & Orchestration"]},
+
+{id:"pilot",grp:"ai",name:"POC → pilot → production gates",tag:"De-risk delivery",
+one:"Three stages, each answering a different question, each with exit criteria agreed up front.",
+when:"Planning delivery, rescuing a stalled pilot, \"why do our pilots never scale?\"",
+parts:[["POC","Can it work at all? Small data, offline evals, days to weeks"],["Pilot","Does it work here? Real users, real data, one team or region, measured against baseline"],["Production","Can we run it? Reliability, security review, monitoring, cost controls, an owner and on-call"],["Exit criteria","Quality bar, adoption bar, cost per unit, risk sign-off. Agreed before the stage starts"]],
+ai:"The pilot that \"went well\" but has no production plan is the most common failure. Write the production criteria during the POC.",
+say:"\"I'd stage it POC, pilot, production, with exit criteria agreed up front, so going to the next stage is a decision, not a drift.\"",
+trap:"Measuring a pilot on enthusiasm instead of against the baseline.",
+src:"Ours, synthesised from course module 9",link:["lesson/m9/l1","M9 L1 · The POC-to-production gap"]},
+
+{id:"nist",grp:"ai",name:"NIST AI Risk Management Framework",tag:"Govern the risk",
+one:"A voluntary US framework with four functions for managing AI risk across the lifecycle; the default vocabulary for AI governance work.",
+when:"Responsible AI programmes, risk assessments, building an AI governance operating model.",
+parts:[["Govern","Policies, accountability, culture; runs across everything"],["Map","Context: intended use, who is affected, what could go wrong"],["Measure","Assess and track the risks with metrics and tests"],["Manage","Prioritise, treat, monitor and respond"],["GenAI profile","NIST AI 600-1 (2024) applies the framework to generative AI risks"]],
+ai:"For a GenAI HR assistant: Map flags bias and privacy, Measure means bias evals and leakage tests, Manage means escalation and audits, Govern names the accountable owner. ISO/IEC 42001 is the certifiable management-system counterpart.",
+say:"\"I'd structure governance on the NIST AI RMF, Govern, Map, Measure, Manage, because it's risk-based and maps cleanly onto the EU AI Act and ISO 42001.\"",
+trap:"Treating governance as a one-off review. Govern runs continuously.",
+src:"NIST AI 100-1 (2023) and NIST AI 600-1 (2024)",link:["module/m11","M11 · Governance, Risk & Responsible AI"]},
+
+{id:"euai",grp:"ai",name:"EU AI Act risk tiers",tag:"Regulation",
+one:"Obligations scale with risk. Four tiers, applied to anyone placing AI on the EU market, wherever they are based.",
+when:"Any client with EU exposure, regulatory risk questions, classifying a use case.",
+parts:[["Prohibited","Banned outright (e.g. social scoring, certain manipulative or biometric uses). Applies since Feb 2025"],["High-risk","Hiring, credit, education, critical infrastructure, essential services: risk management, data governance, documentation, human oversight, conformity assessment"],["Limited risk","Transparency duties: tell people they're talking to AI, label synthetic content"],["Minimal risk","No new obligations"],["Dates (as of Nov 2026)","The AI Omnibus (Reg. 2026/1744, in force 27 Jul 2026) moved stand-alone high-risk (Annex III) to 2 Dec 2027 and AI in regulated products (Annex I) to 2 Aug 2028. General-purpose model duties applied from Aug 2025"]],
+ai:"A CV-screening model is high-risk; an internal meeting summariser is minimal; a customer chatbot is limited (must disclose it's AI).",
+say:"\"First I'd classify the use case by risk tier, because that decides the obligations, then check the current application dates, which moved in 2026.\"",
+trap:"Quoting old dates. High-risk was originally due Aug 2026; the Omnibus deferred it.",
+src:"Regulation (EU) 2024/1689; AI Omnibus Regulation (EU) 2026/1744 (Mondaq, Gibson Dunn summaries)",link:["module/m11","M11 · Governance, Risk & Responsible AI"]},
+
+{id:"adkar",grp:"ai",name:"ADKAR for AI adoption",tag:"Make people use it",
+one:"Prosci's individual change model: people move through five stages, and adoption stalls at the first one that's missing.",
+when:"Low usage of a deployed tool, rollout planning, the change-management workstream of any AI programme.",
+parts:[["Awareness","Why is this changing?"],["Desire","What's in it for me? The honest answer on job security goes here"],["Knowledge","How do I use it?"],["Ability","Can I actually do it in my real workflow?"],["Reinforcement","Will it stick? Incentives, metrics, recognition"]],
+ai:"Copilot at 12% usage with good training scores is an Ability or Desire gap, not Knowledge: fix the workflow integration and the incentive, not the training deck.",
+say:"\"I'd diagnose adoption with ADKAR to find the stage where people drop off, because the fix for a desire gap is very different from a knowledge gap.\"",
+trap:"Answering every adoption problem with more training.",
+src:"Prosci ADKAR model",link:["module/m12","M12 · Consulting Craft & the Case Method"]},
+
+/* ---------- CRAFT ---------- */
+{id:"mece",grp:"craft",name:"MECE & issue trees",tag:"Build any framework",
+one:"Break the problem into branches that don't overlap and leave nothing out. Every framework above is a pre-built MECE tree.",
+when:"Always. When no named framework fits, build your own tree.",
+parts:[["Mutually exclusive","No overlap between branches"],["Collectively exhaustive","Nothing missing"],["Issue tree","Key question at the root, sub-questions below, down to answerable analyses"],["Four ways to build one","Use a formula (profit = revenue − cost), follow the process steps, split by stakeholder, or adapt a named framework"]],
+ai:"\"Why is our RAG bot wrong?\" splits MECE into retrieval (right chunk not found) vs generation (found but misused) vs source (the document itself is wrong).",
+say:"\"Let me take a minute to structure this.\" Then present 3 to 4 branches and say why each matters.",
+trap:"Reciting a named framework when a formula or process split would fit the case better.",
+src:"McKinsey problem-solving tradition; Hacking the Case Interview framework guide",link:["lesson/m12/l1","M12 L1 · Hypothesis-first, MECE & the Pyramid"]},
+
+{id:"pyramid",grp:"craft",name:"Pyramid Principle & SCQA",tag:"Deliver the answer",
+one:"Answer first, then the grouped reasons, then the evidence. SCQA is how you open the story.",
+when:"Every recommendation, every executive update, every slide headline.",
+parts:[["Situation","The context everyone agrees on"],["Complication","What changed or what's wrong"],["Question","What the client therefore needs to decide"],["Answer","Your recommendation, first"],["Pyramid","2 to 3 grouped reasons under the answer, evidence under each"]],
+ai:"\"Your support costs are rising (S). GenAI could deflect simple contacts, but your knowledge base is outdated (C). Should you invest now (Q)? Yes, but fix the knowledge base first; here are three reasons (A).\"",
+say:"Lead with the one-sentence answer, then: \"for three reasons…\"",
+trap:"Walking the interviewer through your analysis chronologically before giving the answer.",
+src:"Barbara Minto, The Pyramid Principle",link:["lesson/m12/l1","M12 L1 · Hypothesis-first, MECE & the Pyramid"]},
+
+{id:"horizons",grp:"craft",name:"Roadmap horizons: 30 / 90 / 365",tag:"Close with a plan",
+one:"Tech cases want an implementation answer. Split actions by time horizon so the plan is concrete and sequenced.",
+when:"Cybersecurity responses, transformation roadmaps, any recommendation that needs next steps.",
+parts:[["30 days","Stabilise and decide: contain the issue, quick wins, governance set up, pilot scoped"],["90 days","Prove it: pilot running against baseline, key hires or partners in place"],["365 days","Scale: roll out, retire legacy, embed in operating model and metrics"]],
+ai:"GenAI contact centre: 30 days to fix the top 50 knowledge articles and pick one queue; 90 days for a measured pilot at augment level; 12 months to scale to 30% containment with review sampling.",
+say:"\"I'd split the plan into what we do in the first 30 days, by 90 days, and over the year.\"",
+trap:"A roadmap with no owners or decision points. Each horizon should end in a go / no-go.",
+src:"Hacking the Case Interview (cybersecurity case approach); common consulting practice"}
+];
+
+/* "Which framework?" drill */
+window.FW_DRILL=[
+{q:"A 100-year-old retailer bought a modern e-commerce stack two years ago; online sales still lag. Where do you start?",opts:["CMMI","PPT: People, Process, Technology","Cloud Adoption Framework","CRISP-DM"],a:1,why:"The technology exists; the gap is almost certainly people and process. PPT surfaces the misalignment."},
+{q:"An insurer is choosing between two claims-processing vendors.",opts:["Technology Evaluation","ADKAR","TOGAF","NIST AI RMF"],a:0,why:"Vendor selection: requirements fit, TCO, time to launch, then vendor stability and exit costs."},
+{q:"A CIO says the service desk is permanently firefighting and SLAs are missed.",opts:["Value × feasibility matrix","ITIL","Pyramid Principle","EU AI Act tiers"],a:1,why:"Service desk and IT operations are ITIL territory: operation, transition and continual improvement."},
+{q:"Post-merger, two banks must combine their data, apps and infrastructure into one target state.",opts:["TOGAF","PPT","Autonomy ladder","CMMI"],a:0,why:"Mapping current and target state across business, data, application and technology domains is enterprise architecture."},
+{q:"A client wants to know whether to outsource software development to a vendor and how good the vendor's process is.",opts:["CRISP-DM","CMMI","SCQA","Cloud Adoption Framework"],a:1,why:"CMMI rates process maturity; it's the classic lens for outsourcing and software capability decisions."},
+{q:"A CEO hands you 40 AI ideas from across the business and asks where to start.",opts:["ITIL","Value × feasibility prioritisation","TOGAF","Roadmap horizons"],a:1,why:"Score on value and feasibility (with error tolerance), start top-right."},
+{q:"A company has run nine GenAI pilots in a year; none are in production.",opts:["AI readiness & maturity","Technology Evaluation","Pyramid Principle","CMMI"],a:0,why:"Classic Active-level pattern: diagnose the pillars (usually platform and governance) blocking the next level. Pilot gates help fix it after."},
+{q:"A client wants an agent that can issue refunds and cancel bookings automatically.",opts:["Autonomy ladder","CRISP-DM","Cloud Adoption Framework","ADKAR"],a:0,why:"Set autonomy by error cost and reversibility: refunds drafted for approval, irreversible cancellations behind a human."},
+{q:"A deployed copilot has great training scores but 12% weekly usage.",opts:["ADKAR","TOGAF","Technology Evaluation","EU AI Act tiers"],a:0,why:"Knowledge is fine; the drop-off is at Desire or Ability. ADKAR finds which."},
+{q:"A European bank wants to use a model to screen job applicants.",opts:["EU AI Act risk tiers","CMMI","Value × feasibility matrix","ITIL"],a:0,why:"Hiring is a high-risk use case: classify first, because the tier sets the obligations (and dates moved in 2026)."}
+];
+</script>
+
+<script>
 /* =================== STATE / STORAGE =================== */
 const KEY="aict_v1";
-const DEF={xp:0,streak:0,last:null,started:null,lessons:{},quizzes:{},exams:{},cards:{},drills:{},seen:{},cases:{},caseNotes:{},activity:{}};
+const DEF={xp:0,streak:0,last:null,started:null,lessons:{},quizzes:{},exams:{},cards:{},drills:{},seen:{},cases:{},caseNotes:{},activity:{},fw:{}};
 let S=load();
 function load(){try{const r=JSON.parse(localStorage.getItem(KEY));return Object.assign({},DEF,r||{})}catch(e){return Object.assign({},DEF)}}
 function save(){localStorage.setItem(KEY,JSON.stringify(S))}
@@ -1810,7 +2106,8 @@ const IC={
   lock:'<rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/>',
   arrow:'<path d="M5 12h14M13 6l6 6-6 6"/>',
   play:'<path d="M6 4l14 8-14 8z" fill="currentColor" stroke="none"/>',
-  reset:'<path d="M3 12a9 9 0 109-9 9 9 0 00-6.7 3M3 4v4h4"/>'
+  reset:'<path d="M3 12a9 9 0 109-9 9 9 0 00-6.7 3M3 4v4h4"/>',
+  grid:'<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>'
 };
 function svg(p,w){return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="'+(w||2)+'" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>';}
 
@@ -1828,6 +2125,8 @@ function route(){
   if(p[0]==="dashboard")viewDash(v);
   else if(p[0]==="cards")viewCards(v);
   else if(p[0]==="lab")viewLab(v);
+  else if(p[0]==="frameworks")viewFrameworks(v);
+  else if(p[0]==="fw")viewFramework(v,p[1]);
   else if(p[0]==="case")viewCase(v,p[1]);
   else if(p[0]==="final")viewFinal(v);
   else if(p[0]==="module")viewModule(v,p[1]);
@@ -1835,6 +2134,100 @@ function route(){
   else if(p[0]==="exam")viewExam(v,p[1]);
   else viewDash(v);
   renderNav();
+}
+
+
+/* =================== FRAMEWORKS VIEW =================== */
+function fwList(){return window.FRAMEWORKS||[]}
+function fwDoneN(){return fwList().filter(f=>S.fw&&S.fw[f.id]).length}
+function fwDrillN(){return (window.FW_DRILL||[]).filter((d,i)=>S.seen["fwd"+i]).length}
+function viewFrameworks(v){
+  setCrumb("Frameworks");
+  let secs='';
+  (window.FW_GROUPS||[]).forEach(g=>{
+    const items=fwList().filter(f=>f.grp===g[0]);
+    let cards='';
+    items.forEach(f=>{
+      const dn=S.fw&&S.fw[f.id];
+      cards+='<button class="modcard '+(dn?'dn':'')+'" onclick="go(\'fw/'+f.id+'\')">'+
+        '<div class="top"><span class="num">'+(dn?svg(IC.check,2.5):svg(IC.grid,2))+'</span>'+
+        '<h3 style="flex:1">'+f.name+'</h3></div>'+
+        '<p>'+f.one+'</p>'+
+        '<div class="meta"><span class="fwtag">'+f.tag+'</span>'+(dn?'<span class="pill pass" style="font-size:10px">reviewed</span>':'')+
+        '<span style="margin-left:auto">'+svg(IC.arrow,2)+'</span></div></button>';
+    });
+    secs+='<div style="margin:28px 0 12px"><div class="eyebrow" style="color:var(--acc2)">'+g[1]+'</div>'+
+      '<p style="font-size:13px;color:var(--tx2);margin:4px 0 0">'+g[2]+'</p></div><div class="grid g2">'+cards+'</div>';
+  });
+  let drill='';
+  (window.FW_DRILL||[]).forEach((d,i)=>{
+    let opts='';d.opts.forEach((o,k)=>{opts+='<button class="opt" onclick="fwPick('+i+','+k+',this)"><span class="mk">'+String.fromCharCode(65+k)+'</span><span>'+o+'</span></button>';});
+    drill+='<div class="card fwq" id="fwq'+i+'"><div class="fwq-h"><span class="mono">'+(i+1)+'/'+window.FW_DRILL.length+'</span> '+d.q+'</div><div class="opts">'+opts+'</div><div class="why" id="fww'+i+'"></div></div>';
+  });
+  v.innerHTML='<div class="page-in">'+
+    '<div class="eyebrow">Reference library · AI &amp; tech consulting</div>'+
+    '<h1 class="h-hero">Frameworks</h1>'+
+    '<p class="sub">Every structure you might reach for in an AI or tech consulting interview, with when to use it, how it applies to an AI case, and the line to say out loud. '+fwDoneN()+' of '+fwList().length+' reviewed.</p>'+
+    '<div class="box key" style="margin-top:18px"><div class="bx-h">'+svg(IC.play,2)+' How to use it</div>Frameworks are starting blocks, not scripts. Learn the parts, then practise <em>adapting</em> them: the drill at the bottom gives you a prompt and asks which one you\'d start from.</div>'+
+    secs+
+    '<div style="margin:34px 0 12px"><div class="eyebrow" style="color:var(--acc2)">Drill · which framework?</div>'+
+    '<p style="font-size:13px;color:var(--tx2);margin:4px 0 0">Read the prompt, pick the starting framework. '+fwDrillN()+' of '+(window.FW_DRILL||[]).length+' answered.</p></div>'+
+    '<div class="fwdrill">'+drill+'</div></div>';
+}
+function fwPick(i,k,el){
+  const d=window.FW_DRILL[i];const box=document.getElementById("fwq"+i);
+  if(box.dataset.done)return;box.dataset.done=1;
+  box.querySelectorAll(".opt").forEach((b,j)=>{b.classList.add("locked");if(j===d.a)b.classList.add("correct");else if(j===k)b.classList.add("wrong");else b.classList.add("muted");});
+  const w=document.getElementById("fww"+i);w.innerHTML=(k===d.a?'<b>Correct.</b> ':'<b>Not quite.</b> ')+d.why;w.classList.add("show");
+  if(!S.seen["fwd"+i]){S.seen["fwd"+i]=1;save();touchStreak();if(k===d.a)addXP(6,"Correct");}
+}
+function viewFramework(v,id){
+  const L=fwList();const ix=L.findIndex(f=>f.id===id);
+  if(ix<0){go("frameworks");return;}
+  const f=L[ix];const grp=(window.FW_GROUPS||[]).find(g=>g[0]===f.grp);
+  setCrumb('<b onclick="go(\'frameworks\')" style="cursor:pointer">Frameworks</b> / '+f.name);
+  let body='';
+  if(f.html){body=f.html;}
+  else{
+    let rows='';f.parts.forEach(p=>{rows+='<tr><td><b>'+p[0]+'</b></td><td>'+p[1]+'</td></tr>';});
+    body='<div class="box"><div class="bx-h">Use it when</div>'+f.when+'</div>'+
+      '<h3>The parts</h3><table class="tbl">'+rows+'</table>'+
+      '<h3>Applied to an AI case</h3><p>'+f.ai+'</p>'+
+      '<div class="box key"><div class="bx-h">Say it like this</div>'+f.say+'</div>'+
+      '<div class="box warnbx"><div class="bx-h">The trap</div>'+f.trap+'</div>';
+  }
+  const dn=S.fw&&S.fw[f.id];
+  const prev=ix>0?L[ix-1]:null,next=ix<L.length-1?L[ix+1]:null;
+  v.innerHTML='<div class="page-in read">'+
+    '<div class="eyebrow">'+(grp?grp[1]:'Framework')+' · '+f.tag+'</div>'+
+    '<h1 class="h-hero" style="font-size:30px">'+f.name+'</h1>'+
+    '<p class="lead">'+f.one+'</p>'+body+
+    (f.link?'<p style="margin-top:18px"><button class="btn ghost sm" onclick="go(\''+f.link[0]+'\')">'+svg(IC.book,2)+' Go deeper: '+f.link[1]+'</button></p>':'')+
+    '<p class="fwsrc">Source: '+f.src+'</p>'+
+    '<div class="row" style="justify-content:space-between;gap:10px;margin-top:26px;flex-wrap:wrap">'+
+      (prev?'<button class="btn ghost" onclick="go(\'fw/'+prev.id+'\')">← '+prev.name+'</button>':'<span></span>')+
+      '<button class="btn '+(dn?'ghost':'pri')+'" id="fwmark" onclick="fwMark(\''+f.id+'\')">'+svg(IC.check,2.4)+' '+(dn?'Reviewed':'Mark reviewed')+'</button>'+
+      (next?'<button class="btn ghost" onclick="go(\'fw/'+next.id+'\')">'+next.name+' →</button>':'<button class="btn ghost" onclick="go(\'frameworks\')">All frameworks →</button>')+
+    '</div></div>';
+  if(f.id==="tc-math")fwCalc();
+}
+function fwMark(id){
+  if(!S.fw)S.fw={};
+  if(S.fw[id])return;
+  S.fw[id]=1;save();touchStreak();addXP(8,"Framework reviewed");
+  const b=document.getElementById("fwmark");if(b){b.className="btn ghost";b.innerHTML=svg(IC.check,2.4)+' Reviewed';}
+}
+function fwCalc(){
+  const g=id=>parseFloat((document.getElementById(id)||{}).value);
+  const cur=g("fc-cur"),up=g("fc-up"),nw=g("fc-new"),yr=g("fc-yr");
+  const out=document.getElementById("fc-out");if(!out)return;
+  if([cur,up,nw,yr].some(x=>isNaN(x))){out.innerHTML="Fill in all four numbers.";return;}
+  const stay=cur*yr,mig=up+nw*yr,save5=stay-mig,run=cur-nw;
+  const f=x=>"$"+(Math.round(x*10)/10)+"M";
+  const pay=run>0?(Math.round(up/run*10)/10)+" years":"never (no run-rate saving)";
+  out.innerHTML='<div><span>Cost of staying</span><b>'+f(stay)+'</b></div><div><span>Cost of switching</span><b>'+f(mig)+'</b></div>'+
+    '<div><span>'+yr+'-year saving</span><b style="color:'+(save5>=0?'var(--good)':'var(--crit)')+'">'+f(save5)+'</b></div>'+
+    '<div><span>Payback</span><b>'+pay+'</b></div>';
 }
 
 /* =================== CHROME =================== */
@@ -1850,10 +2243,10 @@ function renderNav(){
   const nav=document.getElementById("nav");
   const h=location.hash.replace(/^#\/?/,"")||"dashboard";
   let html='';
-  const top=[["dashboard","home","Dashboard"],["lab","target","Case Lab"],["cards","cards","Flashcards"],["final","award","Interview Gauntlet"]];
+  const top=[["dashboard","home","Dashboard"],["lab","target","Case Lab"],["frameworks","grid","Frameworks"],["cards","cards","Flashcards"],["final","award","Interview Gauntlet"]];
   top.forEach(t=>{
     const seg=h.split("/")[0];
-    const on=(seg===t[0])||(t[0]==="lab"&&seg==="case");
+    const on=(seg===t[0])||(t[0]==="lab"&&seg==="case")||(t[0]==="frameworks"&&seg==="fw");
     html+='<button class="navitem '+(on?"on":"")+'" onclick="go(\''+t[0]+'\')"><span class="ico">'+svg(IC[t[1]],2)+'</span><span class="lbl">'+t[2]+'</span>'+(t[0]==="cards"&&cardsDue()>0?'<span class="pct" style="color:var(--gold);font-weight:700">'+cardsDue()+' due</span>':'')+'</button>';
   });
   html+='<div class="navsec">Curriculum</div>';
@@ -1916,6 +2309,7 @@ function viewDash(v){
     '<div class="grid g3">'+
       dashLink("lab","Case Lab — mock cases","Work real consulting cases end to end: draft your structure, reveal a model answer, score yourself on the rubric.",casesDoneN()+" / "+casesTotal()+" done")+
       dashLink("cards","Flashcards & spaced repetition","Numbers to know cold and the one-liners that win rooms. Reviews resurface on a +1w / +1m schedule.",due>0?due+" cards due":"deck ready")+
+      dashLink("frameworks","Frameworks library","AI & tech consulting frameworks: the tech case playbook, PPT to TOGAF, and the AI-specific structures, with a which-framework drill.",fwDoneN()+" / "+fwList().length+" reviewed")+
       dashLink("final","The Interview Gauntlet","A mixed final drawn from every module, plus the flagship-system drill at three depths.",finalStatus())+
     '</div>'+
     '<div class="row" style="justify-content:center;gap:10px;margin-top:32px">'+
@@ -1925,7 +2319,7 @@ function viewDash(v){
   '</div>';
 }
 function tile(lab,big,foot,cls){return '<div class="tile '+cls+'"><div class="lab">'+lab+'</div><div class="big">'+big+'</div><div class="foot">'+foot+'</div></div>';}
-function dashLink(href,t,d,badge){var ic=href==="cards"?"cards":(href==="lab"?"target":"award");return '<button class="modcard" onclick="go(\''+href+'\')"><div class="top"><span class="num">'+svg(IC[ic],2)+'</span><h3 style="font-size:14.5px">'+t+'</h3></div><p>'+d+'</p><div class="meta"><span style="color:var(--acc)">'+badge+'</span><span style="margin-left:auto">'+svg(IC.arrow,2)+'</span></div></button>';}
+function dashLink(href,t,d,badge){var ic=href==="cards"?"cards":(href==="lab"?"target":(href==="frameworks"?"grid":"award"));return '<button class="modcard" onclick="go(\''+href+'\')"><div class="top"><span class="num">'+svg(IC[ic],2)+'</span><h3 style="font-size:14.5px">'+t+'</h3></div><p>'+d+'</p><div class="meta"><span style="color:var(--acc)">'+badge+'</span><span style="margin-left:auto">'+svg(IC.arrow,2)+'</span></div></button>';}
 function finalStatus(){const e=S.exams["final"];return e?(e.passed?"passed · "+e.best+"%":"attempted · "+e.best+"%"):"not attempted";}
 
 function nextAction(){
