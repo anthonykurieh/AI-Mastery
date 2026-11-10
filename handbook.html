@@ -1,0 +1,1840 @@
+<title>Consulting Handbook — Interactive</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --ink:#0f1518; --ink2:#151d21; --ink3:#1c262b;
+  --paper:#f3f6f4; --paper2:#ffffff; --paper3:#e9eeec;
+  --bg:var(--paper); --surf:var(--paper2); --surf2:var(--paper3);
+  --line:#d3ddd9; --line2:#c2cec9;
+  --tx:#12201d; --tx2:#3b4e48; --tx3:#55675e;
+  --acc:#0a6e62; --acc2:#0a5a50; --accdim:#7fcdc4; --accwash:#dcf0ed;
+  --gold:#8c6310; --goldwash:#f6ecd6;
+  --good:#157a49; --warn:#8a6410; --crit:#b92e2b;
+  --goodwash:#dcf0e5; --critwash:#f6dede;
+  --shadow:0 1px 2px rgba(16,40,36,.06),0 8px 24px -12px rgba(16,40,36,.14);
+  --shadow2:0 2px 4px rgba(16,40,36,.05),0 18px 44px -20px rgba(16,40,36,.22);
+  --mono:ui-monospace,"SF Mono","Cascadia Code","JetBrains Mono",Menlo,Consolas,monospace;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --r:14px; --r2:10px; --r3:7px;
+  --rail:270px;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#0d1316; --surf:#111a1e; --surf2:#16211f;
+    --line:#25322f; --line2:#31413d;
+    --tx:#e7efec; --tx2:#a7b9b3; --tx3:#8a9b94;
+    --acc:#28bda9; --acc2:#3ccdba; --accdim:#2f5a55; --accwash:#123029;
+    --gold:#e0b054; --goldwash:#2b2313;
+    --good:#3cc37f; --warn:#e0a94e; --crit:#ef6b6b;
+    --goodwash:#12291f; --critwash:#2c1717;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px -14px rgba(0,0,0,.6);
+    --shadow2:0 2px 6px rgba(0,0,0,.35),0 22px 50px -22px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0d1316; --surf:#111a1e; --surf2:#16211f;
+  --line:#25322f; --line2:#31413d;
+  --tx:#e7efec; --tx2:#a7b9b3; --tx3:#8a9b94;
+  --acc:#28bda9; --acc2:#3ccdba; --accdim:#2f5a55; --accwash:#123029;
+  --gold:#e0b054; --goldwash:#2b2313;
+  --good:#3cc37f; --warn:#e0a94e; --crit:#ef6b6b;
+  --goodwash:#12291f; --critwash:#2c1717;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px -14px rgba(0,0,0,.6);
+  --shadow2:0 2px 6px rgba(0,0,0,.35),0 22px 50px -22px rgba(0,0,0,.7);
+}
+:root[data-theme="light"]{
+  --bg:#f3f6f4; --surf:#ffffff; --surf2:#e9eeec;
+  --line:#d3ddd9; --line2:#c2cec9;
+  --tx:#12201d; --tx2:#3b4e48; --tx3:#55675e;
+  --acc:#0a6e62; --acc2:#0a5a50; --accdim:#7fcdc4; --accwash:#dcf0ed;
+  --gold:#8c6310; --goldwash:#f6ecd6;
+  --good:#157a49; --warn:#8a6410; --crit:#b92e2b;
+  --goodwash:#dcf0e5; --critwash:#f6dede;
+}
+:root{--onfill:#fff}
+@media (prefers-color-scheme:dark){:root{--onfill:#08201c}}
+:root[data-theme="dark"]{--onfill:#08201c}
+:root[data-theme="light"]{--onfill:#fff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:var(--sans);line-height:1.6;
+  -webkit-font-smoothing:antialiased;font-size:16px}
+h1,h2,h3,h4{line-height:1.2;text-wrap:balance;margin:0}
+a{color:var(--acc);text-decoration:none}
+button{font-family:inherit;color:inherit}svg{flex:none}
+::selection{background:var(--accwash);color:var(--tx)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--tx3);font-weight:600}
+
+/* ============ SHELL ============ */
+.app{display:grid;grid-template-columns:var(--rail) 1fr;min-height:100vh}
+.rail{position:sticky;top:0;height:100vh;overflow-y:auto;background:var(--surf);border-right:1px solid var(--line);
+  display:flex;flex-direction:column;z-index:40}
+.rail::-webkit-scrollbar{width:8px}.rail::-webkit-scrollbar-thumb{background:var(--line2);border-radius:8px}
+.brand{padding:18px 18px 14px;border-bottom:1px solid var(--line);display:flex;gap:11px;align-items:center}
+.brand .mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(150deg,var(--acc),var(--acc2));
+  display:grid;place-items:center;flex:none;box-shadow:0 3px 10px -3px var(--acc)}
+.brand .mark svg{width:19px;height:19px}
+.brand b{font-size:14.5px;letter-spacing:-.01em;display:block;line-height:1.15}
+.brand span{font-family:var(--mono);font-size:10px;color:var(--tx3);letter-spacing:.08em;text-transform:uppercase}
+.railprog{padding:14px 18px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:9px}
+.navwrap{padding:10px 10px 26px;flex:1}
+.navsec{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--tx3);
+  padding:14px 10px 6px;font-weight:600}
+.navitem{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:0;background:none;cursor:pointer;
+  padding:8px 10px;border-radius:9px;color:var(--tx2);font-size:13.5px;transition:background .12s,color .12s;position:relative}
+.navitem:hover{background:var(--surf2);color:var(--tx)}
+.navitem.on{background:var(--accwash);color:var(--acc2);font-weight:600}
+.navitem .ico{width:26px;height:26px;border-radius:7px;display:grid;place-items:center;flex:none;
+  font-family:var(--mono);font-size:11px;font-weight:700;background:var(--surf2);color:var(--tx2)}
+.navitem.on .ico{background:var(--acc);color:var(--onfill)}
+.navitem .lbl{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.navitem .pct{font-family:var(--mono);font-size:10.5px;color:var(--tx3)}
+.navitem.done .ico::after{content:"";position:absolute}
+.navdone{color:var(--good)!important}
+
+.courseswitch{display:flex;gap:4px;padding:10px 10px;border-bottom:1px solid var(--line)}.cs-opt{flex:1;min-width:0;display:flex;align-items:center;justify-content:center;gap:4px;font-size:11.5px;font-weight:650;padding:8px 4px;white-space:nowrap;border-radius:8px;text-decoration:none;color:var(--tx2);border:1px solid transparent;transition:.12s;white-space:nowrap}.cs-opt:hover{background:var(--surf2);color:var(--tx)}.cs-opt.active{background:var(--accwash);color:var(--acc2);border-color:var(--accdim);cursor:default}
+/* ============ TOPBAR ============ */
+.main{min-width:0;display:flex;flex-direction:column}
+.topbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;padding:11px 26px;
+  background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.burger{display:none}
+.crumb{font-family:var(--mono);font-size:11.5px;color:var(--tx3);letter-spacing:.03em;flex:1;min-width:0;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.crumb b{color:var(--tx2)}
+.stat{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:12.5px;font-weight:600;
+  padding:5px 10px;border-radius:20px;background:var(--surf);border:1px solid var(--line);color:var(--tx2)}
+.stat svg{width:14px;height:14px}
+.stat.xp{color:var(--gold);border-color:color-mix(in srgb,var(--gold) 32%,var(--line))}
+.stat.streak{color:var(--warn)}
+.iconbtn{width:34px;height:34px;border-radius:9px;border:1px solid var(--line);background:var(--surf);cursor:pointer;
+  display:grid;place-items:center;color:var(--tx2);transition:.12s}
+.iconbtn:hover{color:var(--tx);border-color:var(--line2)}
+.iconbtn svg{width:16px;height:16px}
+
+/* ============ CONTENT ============ */
+.content{padding:34px 26px 90px;max-width:1080px;width:100%;margin:0 auto;flex:1}
+.read{max-width:70ch}
+.page-in{animation:fade .32s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* headings + prose */
+.h-hero{font-size:clamp(26px,4vw,38px);letter-spacing:-.02em;font-weight:800;margin-bottom:8px}
+.sub{color:var(--tx2);font-size:16px;max-width:64ch}
+.lead{font-size:17px;color:var(--tx2)}
+.prose h3{font-size:19px;font-weight:750;margin:30px 0 8px;letter-spacing:-.01em}
+.prose h4{font-size:14px;font-weight:700;margin:22px 0 6px;color:var(--acc2);
+  font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em}
+.prose p{margin:0 0 14px}
+.prose ul,.prose ol{margin:0 0 16px;padding-left:20px}
+.prose li{margin:5px 0}
+.prose strong{color:var(--tx);font-weight:700}
+.prose code{font-family:var(--mono);font-size:.86em;background:var(--surf2);padding:1.5px 5px;border-radius:5px;
+  border:1px solid var(--line)}
+.prose em{color:var(--tx);font-style:italic}
+.kd{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+/* callouts */
+.box{border:1px solid var(--line);border-radius:var(--r2);padding:15px 17px;margin:18px 0;background:var(--surf)}
+.box .bx-h{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;
+  margin-bottom:7px;display:flex;align-items:center;gap:7px}
+.box.key{background:var(--accwash);border-color:color-mix(in srgb,var(--acc) 26%,var(--line))}
+.box.key .bx-h{color:var(--acc2)}
+.box.warnbx{background:var(--critwash);border-color:color-mix(in srgb,var(--crit) 30%,var(--line))}
+.box.warnbx .bx-h{color:var(--crit)}
+.box.add{background:var(--goldwash);border-color:color-mix(in srgb,var(--gold) 34%,var(--line))}
+.box.add .bx-h{color:var(--gold)}
+.box.num{background:var(--surf2);font-family:var(--mono);font-size:13.5px;line-height:1.75;white-space:pre-wrap;
+  overflow-x:auto}
+
+.tag{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:10px;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:20px;border:1px solid transparent}
+.tag.added{background:var(--goldwash);color:var(--gold);border-color:color-mix(in srgb,var(--gold) 34%,transparent)}
+.tag.spine{background:var(--accwash);color:var(--acc2)}
+
+/* data table */
+.tbl{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.5px;overflow:hidden;border-radius:10px;
+  border:1px solid var(--line)}
+.tblwrap{overflow-x:auto;margin:16px 0}
+.tbl th{background:var(--surf2);text-align:left;padding:9px 12px;font-family:var(--mono);font-size:11px;
+  letter-spacing:.05em;text-transform:uppercase;color:var(--tx2);border-bottom:1px solid var(--line)}
+.tbl td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl tr:last-child td{border-bottom:0}
+.tbl .mono{font-size:12.5px}
+
+/* ============ CARDS / GRIDS ============ */
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:820px){.g4{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:1fr}.g2{grid-template-columns:1fr}}
+.card{background:var(--surf);border:1px solid var(--line);border-radius:var(--r);padding:18px;box-shadow:var(--shadow)}
+.tile{background:var(--surf);border:1px solid var(--line);border-radius:var(--r);padding:16px 17px;position:relative}
+.tile .lab{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--tx3);font-weight:600}
+.tile .big{font-family:var(--mono);font-size:30px;font-weight:800;letter-spacing:-.02em;margin-top:6px;font-variant-numeric:tabular-nums}
+.tile .foot{font-size:12px;color:var(--tx3);margin-top:3px}
+.tile.accent .big{color:var(--acc)}
+.tile.gold .big{color:var(--gold)}
+
+/* module cards */
+.modcard{display:flex;flex-direction:column;gap:12px;cursor:pointer;transition:.15s;text-align:left;
+  border:1px solid var(--line);background:var(--surf);border-radius:var(--r);padding:18px;box-shadow:var(--shadow)}
+.modcard:hover{transform:translateY(-2px);box-shadow:var(--shadow2);border-color:var(--line2)}
+.modcard .top{display:flex;align-items:center;gap:11px}
+.modcard .num{width:34px;height:34px;border-radius:9px;background:var(--surf2);display:grid;place-items:center;
+  font-family:var(--mono);font-weight:800;font-size:14px;color:var(--tx2);flex:none}
+.modcard.dn .num{background:var(--acc);color:var(--onfill)}
+.modcard h3{font-size:15.5px;letter-spacing:-.01em;flex:1;color:var(--tx)}
+.modcard p{font-size:13px;color:var(--tx2);margin:0;flex:1}
+.modcard .meta{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:11px;color:var(--tx3)}
+
+/* progress bar + ring */
+.bar{height:7px;border-radius:6px;background:var(--surf2);overflow:hidden}
+.bar>i{display:block;height:100%;background:linear-gradient(90deg,var(--acc2),var(--acc));border-radius:6px;transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.bar.gold>i{background:linear-gradient(90deg,var(--gold),#e8bd66)}
+.ring{--v:0;width:64px;height:64px;border-radius:50%;flex:none;
+  background:conic-gradient(var(--acc) calc(var(--v)*1%),var(--surf2) 0);
+  display:grid;place-items:center;position:relative}
+.ring::before{content:"";position:absolute;inset:6px;border-radius:50%;background:var(--surf)}
+.ring b{position:relative;font-family:var(--mono);font-size:14px;font-weight:800}
+
+/* ============ BUTTONS ============ */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;border-radius:10px;
+  font-size:14px;font-weight:650;padding:10px 17px;border:1px solid var(--line2);background:var(--surf);color:var(--tx);
+  transition:.14s;text-align:center}
+.btn:hover{border-color:var(--tx3)}
+.btn.pri{background:var(--acc);border-color:var(--acc);color:var(--onfill);box-shadow:0 4px 12px -4px var(--acc)}
+.btn.pri:hover{background:var(--acc2);border-color:var(--acc2)}
+.btn.gold{background:var(--gold);border-color:var(--gold);color:var(--onfill)}
+.btn.sm{padding:7px 12px;font-size:12.5px}
+.btn.ghost{background:none}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn svg{width:15px;height:15px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+
+/* ============ QUIZ / CHECK ============ */
+.quiz{border:1px solid var(--line);border-radius:var(--r);background:var(--surf);padding:18px;margin:22px 0;box-shadow:var(--shadow)}
+.quiz .qh{display:flex;align-items:center;gap:9px;margin-bottom:4px}
+.quiz .qh .qi{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--acc2)}
+.quiz .qq{font-size:15.5px;font-weight:650;margin:8px 0 14px;line-height:1.4}
+.opt{display:flex;gap:11px;align-items:flex-start;width:100%;text-align:left;cursor:pointer;border:1px solid var(--line);
+  background:var(--surf);border-radius:10px;padding:11px 13px;margin-bottom:9px;transition:.12s;font-size:14px;color:var(--tx)}
+.opt:hover:not(.locked){border-color:var(--acc);background:var(--accwash)}
+.opt .mk{width:23px;height:23px;border-radius:6px;border:1.5px solid var(--line2);flex:none;display:grid;place-items:center;
+  font-family:var(--mono);font-size:11px;font-weight:700;color:var(--tx3);transition:.12s}
+.opt.locked{cursor:default}
+.opt.correct{border-color:var(--good);background:var(--goodwash)}
+.opt.correct .mk{background:var(--good);border-color:var(--good);color:var(--onfill)}
+.opt.wrong{border-color:var(--crit);background:var(--critwash)}
+.opt.wrong .mk{background:var(--crit);border-color:var(--crit);color:var(--onfill)}
+.opt.muted{opacity:.55}
+.why{margin-top:6px;padding:12px 14px;border-radius:10px;background:var(--surf2);font-size:13.5px;line-height:1.6;
+  border-left:3px solid var(--acc);display:none}
+.why.show{display:block;animation:fade .25s}
+.why b{color:var(--acc2)}
+.why.bad{border-left-color:var(--crit)}.why.bad b{color:var(--crit)}
+
+/* ============ DRILL (calculators) ============ */
+.drill{border:1px solid var(--line2);border-radius:var(--r);background:var(--surf);padding:18px;margin:22px 0;box-shadow:var(--shadow)}
+.drill h4{font-family:var(--mono);color:var(--acc2);margin:0 0 4px;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.drill .di{font-size:13.5px;color:var(--tx2);margin-bottom:14px}
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:14px}
+.field label{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--tx3);margin-bottom:4px}
+.field input,.field select{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:var(--bg);
+  color:var(--tx);font-family:var(--mono);font-size:14px;font-variant-numeric:tabular-nums}
+.field input:focus,.field select:focus{outline:2px solid var(--acc);outline-offset:1px;border-color:var(--acc)}
+.dout{background:var(--surf2);border-radius:10px;padding:14px 16px;font-family:var(--mono);font-size:13.5px;line-height:1.8;
+  white-space:pre-wrap;border:1px dashed var(--line2)}
+.dout b{color:var(--acc)}
+.dguess{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;margin-top:12px}
+.verdict{font-family:var(--mono);font-size:13px;font-weight:700;padding:8px 12px;border-radius:8px;display:none}
+.verdict.ok{display:inline-block;background:var(--goodwash);color:var(--good)}
+.verdict.no{display:inline-block;background:var(--critwash);color:var(--crit)}
+
+/* ============ CASE LAB ============ */
+.ta{width:100%;min-height:120px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--tx);font-family:inherit;font-size:14px;line-height:1.55;resize:vertical}
+.ta:focus{outline:2px solid var(--acc);outline-offset:1px;border-color:var(--acc)}
+.stepbar{display:flex;gap:5px;margin:12px 0 18px}
+.stepbar i{height:5px;flex:1;border-radius:5px;background:var(--surf2);transition:background .3s}
+.stepbar i.on{background:var(--acc)}
+.stepbar i.done{background:var(--acc2)}
+.reveal{margin-top:16px;border:1px solid var(--accdim);background:var(--accwash);border-radius:12px;padding:16px 18px;display:none}
+.reveal.show{display:block;animation:fade .3s}
+.reveal h4{font-family:var(--mono);color:var(--acc2);text-transform:uppercase;letter-spacing:.06em;font-size:11px;margin:0 0 8px}
+.reveal .model{font-size:14px;line-height:1.6}
+.reveal .model b{color:var(--tx)}
+.rubric{list-style:none;padding:0;margin:12px 0 0}
+.rubric li{display:flex;gap:11px;align-items:flex-start;padding:9px 0;border-top:1px dashed var(--line2);font-size:13.5px;cursor:pointer;color:var(--tx2)}
+.rubric li .cb{width:21px;height:21px;border-radius:6px;border:1.6px solid var(--line2);flex:none;display:grid;place-items:center;color:transparent;transition:.12s}
+.rubric li .cb svg{width:13px;height:13px}
+.rubric li.on{color:var(--tx)}
+.rubric li.on .cb{background:var(--good);border-color:var(--good);color:var(--onfill)}
+.casetype{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:20px;flex:none}
+.casetype.ai{background:var(--accwash);color:var(--acc2)}
+.casetype.gen{background:var(--goldwash);color:var(--gold)}
+.casetype.run{background:var(--critwash);color:var(--crit)}
+
+/* ============ FLASHCARDS ============ */
+.fc-stage{max-width:620px;margin:0 auto}
+.fc{perspective:1600px;height:320px;margin:20px 0;cursor:pointer}
+.fc-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.fc.flip .fc-inner{transform:rotateY(180deg)}
+.fc-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--r);border:1px solid var(--line);
+  background:var(--surf);box-shadow:var(--shadow2);display:flex;flex-direction:column;justify-content:center;
+  align-items:center;text-align:center;padding:34px}
+.fc-face .k{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--tx3);
+  position:absolute;top:16px;left:18px}
+.fc-front .q{font-size:20px;font-weight:650;line-height:1.35}
+.fc-back{transform:rotateY(180deg);background:var(--accwash);border-color:var(--accdim)}
+.fc-back .a{font-size:17px;line-height:1.5}
+.fc-hint{text-align:center;font-family:var(--mono);font-size:11px;color:var(--tx3);margin-top:-8px}
+.fc-grade{display:flex;gap:10px;justify-content:center;margin-top:18px}
+
+/* ============ EXAM ============ */
+.exam-intro{text-align:center;max-width:520px;margin:20px auto}
+.result-hero{text-align:center;padding:24px}
+.result-hero .score{font-family:var(--mono);font-size:60px;font-weight:800;letter-spacing:-.03em}
+.pill{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11.5px;font-weight:700;
+  padding:4px 11px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em}
+.pill.pass{background:var(--goodwash);color:var(--good)}
+.pill.fail{background:var(--critwash);color:var(--crit)}
+.pill.lock{background:var(--surf2);color:var(--tx3)}
+
+/* misc */
+.divider{height:1px;background:var(--line);margin:26px 0;border:0}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);opacity:0;z-index:100;
+  background:var(--tx);color:var(--bg);padding:11px 18px;border-radius:11px;font-size:13.5px;font-weight:600;
+  box-shadow:var(--shadow2);transition:.3s;display:flex;gap:9px;align-items:center;pointer-events:none;max-width:90vw}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast .xpv{font-family:var(--mono);color:var(--gold)}
+.empty{text-align:center;color:var(--tx3);padding:50px 20px}
+.scrim{display:none}
+
+/* focus-visible for keyboard users */
+a:focus-visible,button:focus-visible,.opt:focus-visible,.modcard:focus-visible,.navitem:focus-visible,.fc:focus-visible,.iconbtn:focus-visible,.btn:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.rubric li:focus-visible{outline:2px solid var(--acc);outline-offset:2px;border-radius:6px}
+
+/* reading progress */
+.readbar{position:absolute;left:0;right:0;bottom:-1px;height:2px;opacity:0;transition:opacity .25s;pointer-events:none}
+.readbar>i{display:block;height:100%;width:0;background:var(--acc);box-shadow:0 0 8px var(--acc)}
+
+/* keyhint */
+.keyhint{font-family:var(--mono);font-size:10.5px;color:var(--tx3);letter-spacing:.02em}
+.kbd{display:inline-block;font-family:var(--mono);font-size:10px;padding:1px 5px;border:1px solid var(--line2);border-radius:5px;background:var(--surf2);color:var(--tx2)}
+
+/* modal */
+.modal{position:fixed;inset:0;z-index:90;display:none;align-items:center;justify-content:center;padding:20px;
+  background:rgba(8,16,14,.55);backdrop-filter:blur(3px)}
+.modal.on{display:flex;animation:fade .2s}
+.modal .sheet{background:var(--surf);border:1px solid var(--line);border-radius:var(--r);max-width:540px;width:100%;
+  padding:24px;box-shadow:var(--shadow2);max-height:86vh;overflow:auto}
+.modal .sheet h3{font-size:18px;letter-spacing:-.01em}
+
+/* exercises: code completion + ordering */
+.exbox{border:1px solid var(--line);border-radius:var(--r);background:var(--surf);padding:16px 18px;margin:18px 0;box-shadow:var(--shadow)}
+.ex-h{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--acc2);font-weight:700;display:flex;gap:7px;align-items:center;margin-bottom:6px}
+.ex-h svg{width:13px;height:13px}
+.ex-i{font-size:13.5px;color:var(--tx2);margin-bottom:12px}
+.codeex{font-family:var(--mono);font-size:12.5px;line-height:2.05;background:var(--surf2);color:var(--tx);padding:14px 16px;border-radius:10px;overflow-x:auto;white-space:pre;margin:0;border:1px solid var(--line);tab-size:2}
+.blankin{font-family:var(--mono);font-size:12.5px;background:var(--bg);border:1px solid var(--line2);border-bottom:2px solid var(--acc);border-radius:5px;padding:1px 6px;color:var(--tx);min-width:46px;font-variant-numeric:tabular-nums}
+.blankin:focus{outline:2px solid var(--acc);outline-offset:1px}
+.blankin.ok{border-color:var(--good);border-bottom-color:var(--good);background:var(--goodwash);color:var(--good)}
+.blankin.bad{border-color:var(--crit);border-bottom-color:var(--crit);background:var(--critwash)}
+.exmsg{font-family:var(--mono);font-size:12px;font-weight:700;margin-left:2px}
+.exmsg.ok{color:var(--good)}.exmsg.bad{color:var(--crit)}
+.orderlist{list-style:none;padding:0;margin:6px 0 0;counter-reset:o}
+.ordli{display:flex;align-items:center;gap:11px;padding:9px 12px;border:1px solid var(--line);border-radius:9px;margin-bottom:8px;background:var(--surf);font-size:13.5px;transition:.12s}
+.ordli.ok{border-color:var(--good);background:var(--goodwash)}
+.ordli.bad{border-color:var(--crit);background:var(--critwash)}
+.ord-num{font-family:var(--mono);font-size:11px;color:var(--tx3);font-weight:700;min-width:15px}
+.ord-num::before{counter-increment:o;content:counter(o)}
+.ord-move{display:flex;flex-direction:column;gap:2px}
+.ord-btn{width:24px;height:15px;border:1px solid var(--line2);background:var(--surf2);border-radius:4px;cursor:pointer;font-size:7px;color:var(--tx2);display:grid;place-items:center;line-height:1;padding:0}
+.ord-btn:hover{border-color:var(--acc);color:var(--acc)}
+
+/* dashboard charts */
+.chartcard{background:var(--surf);border:1px solid var(--line);border-radius:var(--r);padding:17px 18px;box-shadow:var(--shadow)}
+.mrow{display:flex;align-items:center;gap:9px;padding:2.5px 0}
+.mrow .mn{font-family:var(--mono);font-size:10.5px;font-weight:700;color:var(--tx3);min-width:15px}
+.mrow .ml{font-size:11.5px;color:var(--tx2);flex:0 0 120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mrow .mp{font-family:var(--mono);font-size:10.5px;font-weight:700;color:var(--acc);min-width:32px;text-align:right}
+@media(max-width:560px){.mrow .ml{flex-basis:84px}}
+
+/* schematic diagrams (theme-aware via tokens) */
+.fig{margin:18px 0;border:1px solid var(--line);border-radius:var(--r2);background:var(--surf2);padding:16px}
+.fig figcaption{font-size:12px;color:var(--tx3);text-align:center;margin-top:10px;font-style:italic}
+.diagram{display:flex;gap:12px;flex-wrap:wrap}
+.dcol{flex:1;min-width:180px;border:1px solid var(--line);border-radius:10px;background:var(--surf);padding:13px}
+.dcol h5{margin:0 0 8px;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.05em}
+.dtok{display:inline-block;font-family:var(--mono);font-size:11px;padding:3px 8px;border-radius:6px;border:1px solid var(--line2);margin:2px;background:var(--bg)}
+.dnote{font-size:11.5px;color:var(--tx2);margin-top:9px;line-height:1.5}
+
+/* ============ RESPONSIVE ============ */
+@media(max-width:900px){
+  :root{--rail:0px}
+  .app{grid-template-columns:1fr}
+  .rail{position:fixed;left:0;top:0;width:280px;transform:translateX(-100%);transition:transform .25s;box-shadow:var(--shadow2)}
+  .rail.open{transform:none}
+  .scrim.on{display:block;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:35}
+  .burger{display:grid}
+  .content{padding:24px 16px 80px}
+  .topbar{padding:10px 14px}
+  .hide-sm{display:none}
+}
+</style>
+
+<div class="app">
+  <aside class="rail" id="rail">
+    <div class="brand">
+      <div class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg></div>
+      <div><b>Consulting Handbook</b><span>Interactive Studio</span></div>
+    </div>
+    <div class="courseswitch" aria-label="Switch course"><a class="cs-opt" href="index.html">🧭 Consulting</a><a class="cs-opt" href="agentic-patterns.html">🕸️ Agentic</a><span class="cs-opt active" aria-current="page">📘 Handbook</span></div>
+    <div class="railprog">
+      <div style="display:flex;justify-content:space-between;align-items:baseline">
+        <span class="eyebrow">Overall</span>
+        <span class="mono" id="railPct" style="font-size:13px;font-weight:700;color:var(--acc)">0%</span>
+      </div>
+      <div class="bar"><i id="railBar" style="width:0"></i></div>
+      <div class="mono" id="railSub" style="font-size:10.5px;color:var(--tx3)">0 of 0 lessons complete</div>
+    </div>
+    <nav class="navwrap" id="nav"></nav>
+  </aside>
+  <div class="scrim" id="scrim"></div>
+
+  <div class="main">
+    <header class="topbar">
+      <button class="iconbtn burger" id="burger" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+      <div class="crumb" id="crumb">Dashboard</div>
+      <div class="stat streak hide-sm" title="Day streak"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c1 4 5 5 5 9a5 5 0 01-10 0c0-1 .5-2 1-3 1 1 2 1 2 0 0-2-1-3 2-6z"/></svg><span id="streakN">0</span></div>
+      <div class="stat xp" title="Experience"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l2.9 6.3L22 9.3l-5 4.7 1.3 6.9L12 17.6 5.7 20.9 7 14 2 9.3l7.1-1z"/></svg><span id="xpN">0</span></div>
+      <button class="iconbtn" id="themeBtn" aria-label="Toggle theme"><svg id="themeIco" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg></button>
+      <div class="readbar" id="readbar"><i></i></div>
+    </header>
+    <main class="content" id="view"></main>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<div class="modal" id="modal" role="dialog" aria-modal="true"><div class="sheet"></div></div>
+
+<script src="lesson-audio.js"></script>
+<script>window.MODULES=[];window.CARDS=[];</script>
+<script>
+/* ============ INTERACTIVE DRILLS ============ */
+var DRILLS={
+  kvcache:{
+    title:"KV-cache sizer — derive, don't recite",
+    desc:"The formula that replaces folklore: KV bytes/token = 2 × layers × kv_heads × head_dim × bytes. Change any input and watch the memory move. Defaults model a Llama-70B-class model with GQA.",
+    fields:[
+      {id:"layers",label:"n_layers",def:80},
+      {id:"heads",label:"kv_heads (GQA)",def:8},
+      {id:"dim",label:"head_dim",def:128},
+      {id:"bytes",label:"bytes/value (FP16=2)",def:2},
+      {id:"ctx",label:"context tokens",def:100000}
+    ],
+    compute:function(k){
+      var b=2*val(k,"layers")*val(k,"heads")*val(k,"dim")*val(k,"bytes");
+      var mb=b/1e6, gb=b*val(k,"ctx")/1e9;
+      document.getElementById(k+"_out").innerHTML=
+        "bytes/token = 2 × "+val(k,"layers")+" × "+val(k,"heads")+" × "+val(k,"dim")+" × "+val(k,"bytes")+" = <b>"+b.toLocaleString()+" B</b>\n"+
+        "            ≈ <b>"+mb.toFixed(2)+" MB / token</b>\n"+
+        "at "+val(k,"ctx").toLocaleString()+" tokens → <b>"+gb.toFixed(1)+" GB</b> of KV cache\n"+
+        "note: without GQA (say 64 kv_heads) this would be ~"+(mb*8).toFixed(1)+" MB/token — the whole reason GQA exists.";
+    },
+    guess:{label:"Your GB estimate"},
+    answer:function(k){return 2*val(k,"layers")*val(k,"heads")*val(k,"dim")*val(k,"bytes")*val(k,"ctx")/1e9;},
+    fmt:function(x){return x.toFixed(1)+" GB";},
+    tip:"Interview move: an 80GB GPU can't even hold the weights of a 70B model (~140GB in FP16) — so long-context concurrent serving needs multiple GPUs. That's why the advertised context window is a ceiling, not a recommendation."
+  },
+  callcost:{
+    title:"Anatomy of one call's cost — cut output first",
+    desc:"A retrieval-augmented call on a mid-tier model. Watch which line dominates the bill. Rates are $ per million tokens.",
+    fields:[
+      {id:"cached",label:"cached prefix tok",def:10000},
+      {id:"fresh",label:"fresh input tok",def:2000},
+      {id:"out",label:"output tok",def:500},
+      {id:"crate",label:"cached $/Mtok",def:0.30},
+      {id:"irate",label:"input $/Mtok",def:3},
+      {id:"orate",label:"output $/Mtok",def:15}
+    ],
+    compute:function(k){
+      var cc=val(k,"cached")*val(k,"crate")/1e6, ic=val(k,"fresh")*val(k,"irate")/1e6, oc=val(k,"out")*val(k,"orate")/1e6;
+      var tot=cc+ic+oc; var pc=function(x){return tot?Math.round(x/tot*100):0;};
+      var totTok=val(k,"cached")+val(k,"fresh")+val(k,"out");
+      var seg=function(w,c){return w>0?'<div style="width:'+w+'%;background:'+c+'"></div>':'';};
+      var txt="cached prefix  $"+cc.toFixed(4)+"   "+pc(cc)+"% of bill\n"+
+        "fresh input    $"+ic.toFixed(4)+"   "+pc(ic)+"%\n"+
+        "output         $"+oc.toFixed(4)+"   <b>"+pc(oc)+"%</b>  ← "+Math.round(val(k,"out")/totTok*100)+"% of the tokens\n"+
+        "─────────────────────────\n"+
+        "total          <b>$"+tot.toFixed(4)+"</b> / call\n"+
+        "one output token ≈ "+(val(k,"orate")/val(k,"irate")).toFixed(0)+"× a fresh input token, "+(val(k,"orate")/val(k,"crate")).toFixed(0)+"× a cached one.";
+      var bar='<div style="display:flex;height:20px;border-radius:6px;overflow:hidden;margin-top:15px;gap:2px" role="img" aria-label="Share of the bill: cached '+pc(cc)+'%, input '+pc(ic)+'%, output '+pc(oc)+'%">'+seg(pc(cc),"var(--accdim)")+seg(pc(ic),"var(--acc)")+seg(pc(oc),"var(--acc2)")+'</div>'+
+        '<div style="display:flex;gap:14px;margin-top:7px;font-family:var(--mono);font-size:10.5px;color:var(--tx2)"><span><b style="color:var(--accdim)">■</b> cached '+pc(cc)+'%</span><span><b style="color:var(--acc)">■</b> input '+pc(ic)+'%</span><span><b style="color:var(--acc2)">■</b> output '+pc(oc)+'%</span></div>';
+      document.getElementById(k+"_out").innerHTML='<div style="white-space:pre-wrap">'+txt+'</div>'+bar;
+    },
+    guess:{label:"Output's % of bill"},
+    answer:function(k){var cc=val(k,"cached")*val(k,"crate"),ic=val(k,"fresh")*val(k,"irate"),oc=val(k,"out")*val(k,"orate");return oc/(cc+ic+oc)*100;},
+    fmt:function(x){return Math.round(x)+"%";},
+    tip:"The first law of LLM cost optimization: generate fewer output tokens — tight instructions, structured outputs, max-token caps — before touching anything else."
+  },
+  cache:{
+    title:"Prompt-cache break-even — one reuse already wins",
+    desc:"A stable prefix of P tokens, reused N times within the cache lifetime. Cached reads cost ~10% of input; the write costs ~1.25× (5-min tier). See where caching pays off.",
+    fields:[
+      {id:"p",label:"prefix tokens (P)",def:20000},
+      {id:"n",label:"reuses (N)",def:500},
+      {id:"rate",label:"input $/Mtok",def:3},
+      {id:"read",label:"cache read mult",def:0.1},
+      {id:"write",label:"cache write mult",def:1.25}
+    ],
+    compute:function(k){
+      var P=val(k,"p"),N=val(k,"n"),c=val(k,"rate")/1e6;
+      var uncached=(N+1)*P*c;
+      var cached=val(k,"write")*P*c + N*val(k,"read")*P*c;
+      var save=uncached-cached, pct=uncached?Math.round(save/uncached*100):0;
+      document.getElementById(k+"_out").innerHTML=
+        "uncached total  $"+uncached.toFixed(4)+"\n"+
+        "cached total    $"+cached.toFixed(4)+"  (1 write + "+N+" reads)\n"+
+        "─────────────────────────\n"+
+        "saving          <b>$"+save.toFixed(4)+"</b>   <b>"+pct+"%</b> off that prefix\n"+
+        "break-even at N > "+(( (val(k,"write")-1) / (1-val(k,"read")) ).toFixed(2))+" reuses — a single reuse already wins.";
+    },
+    guess:{label:"Your % saving estimate"},
+    answer:function(k){var P=val(k,"p"),N=val(k,"n"),c=val(k,"rate")/1e6;var u=(N+1)*P*c;var ca=val(k,"write")*P*c+N*val(k,"read")*P*c;return (u-ca)/u*100;},
+    fmt:function(x){return Math.round(x)+"%";},
+    tip:"Corrected rule (v1 said ~3 reuses): cache any stable prefix of meaningful size that will plausibly be hit even once. Keep timestamps and IDs BELOW the cache point — byte-stability is the whole game."
+  },
+  marketsize:{
+    title:"Market sizing — build the estimate multiplicatively",
+    desc:"Top-down Fermi structure. The skill isn't the exact number — it's a defensible chain of stated assumptions plus a sanity check. Worked example: the annual market for replacement electric-toothbrush heads in a country of 30M.",
+    fields:[
+      {id:"pop",label:"population",def:30000000},
+      {id:"pct",label:"% using electric brush",def:25},
+      {id:"peryear",label:"heads / user / year",def:4},
+      {id:"price",label:"price per head ($)",def:5}
+    ],
+    compute:function(k){
+      var users=val(k,"pop")*val(k,"pct")/100;
+      var units=users*val(k,"peryear");
+      var mkt=units*val(k,"price");
+      document.getElementById(k+"_out").innerHTML=
+        "users        = "+val(k,"pop").toLocaleString()+" × "+val(k,"pct")+"%  = <b>"+Math.round(users).toLocaleString()+"</b>\n"+
+        "units / year = "+Math.round(users).toLocaleString()+" × "+val(k,"peryear")+" = <b>"+Math.round(units).toLocaleString()+"</b>\n"+
+        "market / yr  = units × $"+val(k,"price")+" = <b>$"+(mkt/1e6).toFixed(1)+"M</b>\n"+
+        "sanity: ≈ $"+(mkt/val(k,"pop")).toFixed(2)+" per capita/year — plausible?";
+    },
+    guess:{label:"Your estimate ($ millions)"},
+    answer:function(k){return val(k,"pop")*val(k,"pct")/100*val(k,"peryear")*val(k,"price")/1e6;},
+    fmt:function(x){return "$"+x.toFixed(1)+"M";},
+    tip:"Interview move: state every assumption out loud, segment where it matters, and always end with a per-capita sanity check. A defensible chain beats a precise-looking guess every time."
+  }
+};
+
+/* ============ FLASHCARDS: numbers & one-liners to know cold ============ */
+window.CARDS=[
+{id:"hb1",k:"Consulting",q:"Consulting revenue formula?",a:"Headcount × utilization × billing rate × realization."},
+{id:"hb2",k:"Consulting",q:"SCQ framing?",a:"Situation (agreed context), Complication (what changed), Question (what must be answered)."},
+{id:"hb3",k:"Consulting",q:"Three kinds of issue tree?",a:"Diagnostic (why), solution (how), deductive (math, MECE by construction)."},
+{id:"hb4",k:"Finance",q:"Break-even volume?",a:"Fixed costs ÷ (price − variable cost per unit)."},
+{id:"hb5",k:"Finance",q:"Healthy LTV:CAC?",a:"At least about 3:1, with CAC paid back in roughly 12 to 18 months."},
+{id:"hb6",k:"Strategy",q:"Ansoff matrix, low to high risk?",a:"Market penetration, product development, market development, diversification."},
+{id:"hb7",k:"Strategy",q:"Market entry structure?",a:"Attractiveness, ability to win, economics, entry mode (build, buy, partner). End with go or no-go plus conditions."},
+{id:"hb8",k:"M&A",q:"Which synergies are more reliable?",a:"Cost synergies. Revenue synergies are often overestimated, so discount them."},
+{id:"hb9",k:"Pricing",q:"Effect of a 1% price rise on a 10% margin business?",a:"About +10% operating profit, if volume holds."},
+{id:"hb10",k:"Change",q:"ADKAR?",a:"Awareness, Desire, Knowledge, Ability, Reinforcement."},
+{id:"hb11",k:"Change",q:"RAID log?",a:"Risks, Assumptions, Issues, Dependencies."},
+{id:"hb12",k:"Client craft",q:"Trust equation?",a:"(Credibility + Reliability + Intimacy) ÷ Self-orientation."}
+];
+</script>
+<script>
+var FINAL=[];
+</script>
+<script>
+/* ============ PART II: THE CONSULTING HANDBOOK (general consulting, chapters 14-19) ============ */
+window.MODULES.push({
+id:"m1",n:"1",spine:false,t:"The Consulting Business",
+sub:"What consultants actually sell, how firms make money, and the life of an engagement from first meeting to follow-on. The context every other chapter assumes.",
+lessons:[
+{id:"l1",t:"What consultants sell & who sells it",min:7,html:`
+<p class="lead">Clients don't buy slides. They buy a better decision, made faster and with less risk than they could manage alone. Everything a consultant does should trace back to that.</p>
+<h3>Why clients hire consultants</h3>
+<p>There are five honest reasons, and knowing which one is in play tells you what ‘good' looks like on the engagement:</p>
+<ul>
+<li><strong>Expertise</strong>: the client lacks a skill or a pattern library (pricing, M&amp;A integration, AI architecture).</li>
+<li><strong>Capacity</strong>: they know what to do but don't have the people to do it in time.</li>
+<li><strong>Objectivity</strong>: an outsider can say what insiders can't, and can compare against other companies.</li>
+<li><strong>Speed</strong>: a team that has done this twenty times gets there in weeks, not quarters.</li>
+<li><strong>Legitimacy</strong>: a board or regulator wants an independent view, or a leader needs backing for a hard call.</li>
+</ul>
+<div class="box key"><div class="bx-h">Read the real brief</div>If the reason is legitimacy, the deliverable must survive scrutiny from skeptics. If it's capacity, speed and execution matter more than novelty. Ask early: ‘what will you do with our answer, and who has to agree with it?'</div>
+<h3>The firm landscape</h3>
+<div class="tblwrap"><table class="tbl"><tr><th>Type</th><th>Examples</th><th>Typical work</th></tr>
+<tr><td>Strategy houses</td><td>McKinsey, BCG, Bain (MBB)</td><td>CEO-level strategy, growth, M&amp;A, transformation, short intense projects</td></tr>
+<tr><td>Big Four advisory</td><td>Deloitte, PwC, EY, KPMG (with strategy arms such as EY-Parthenon, Strategy&amp;, Monitor Deloitte)</td><td>Strategy through implementation, transactions, risk, tech, tax and audit-adjacent work</td></tr>
+<tr><td>Implementation and tech</td><td>Accenture, Capgemini, IBM Consulting</td><td>Large technology and operations programs, long multi-year delivery</td></tr>
+<tr><td>Boutiques</td><td>Sector or function specialists</td><td>Deep niche expertise (pricing, healthcare, AI), senior attention</td></tr>
+<tr><td>In-house strategy</td><td>Corporate strategy and transformation teams</td><td>The same methods, applied from the inside</td></tr>
+</table></div>
+<h3>The main practice areas</h3>
+<p><strong>Strategy</strong> (where to play, how to win), <strong>operations</strong> (cost, supply chain, process), <strong>technology and digital</strong> (including AI), <strong>organization and people</strong> (structure, culture, change), <strong>transactions</strong> (due diligence, integration) and <strong>risk and regulation</strong>. Most real engagements mix two or three of these.</p>
+`,checks:[
+{q:"A CEO hires you to review a restructuring she has already decided on, mainly so the board will accept it. The main reason you were hired is:",opts:["Expertise","Speed","Legitimacy","Capacity"],a:2,why:"When legitimacy is the real brief, the standard is defensibility: transparent evidence, tested alternatives, and conclusions a skeptic can check."}
+]},
+{id:"l2",t:"How a consulting firm makes money",min:6,html:`
+<p class="lead">Understanding the firm's economics explains almost every behavior you'll see on a project: the staffing pyramid, the obsession with scope, and why partners sell follow-on work.</p>
+<h3>The leverage pyramid</h3>
+<p>A typical team is a <strong>partner</strong> (sells and owns the relationship), a <strong>principal or associate partner</strong> (shapes the answer across projects), an <strong>engagement manager</strong> (runs the day-to-day), and several <strong>consultants and analysts</strong> (do the analysis). Juniors bill at lower rates but carry most of the hours, so the pyramid's shape (its <strong>leverage</strong>) drives profit.</p>
+<div class="box num">Revenue = headcount × utilization × billing rate × realization</div>
+<ul>
+<li><strong>Utilization</strong>: the share of available hours that are billable. Bench time is pure cost.</li>
+<li><strong>Billing rate</strong>: set by seniority and brand.</li>
+<li><strong>Realization</strong>: the share of billed value actually collected after discounts and write-offs.</li>
+</ul>
+<h3>Fee models</h3>
+<div class="tblwrap"><table class="tbl"><tr><th>Model</th><th>How it works</th><th>Risk sits with</th></tr>
+<tr><td>Time and materials</td><td>Pay for hours worked</td><td>The client (open-ended cost)</td></tr>
+<tr><td>Fixed fee</td><td>A set price for defined deliverables</td><td>The firm (overruns eat margin)</td></tr>
+<tr><td>Value or outcome-based</td><td>Part of the fee tied to measured results (savings, revenue)</td><td>Shared, needs a clean baseline</td></tr>
+<tr><td>Retainer</td><td>Recurring fee for ongoing access</td><td>Balanced, relationship-driven</td></tr>
+</table></div>
+<div class="box warnbx"><div class="bx-h">Why scope creep matters so much</div>Most project work is fixed fee. Every ‘small extra analysis' agreed in a hallway is unpaid work that lowers realization. Good managers log every request and route anything outside scope into a formal change request or a phase two.</div>
+`,checks:[
+{q:"Your fixed-fee project keeps absorbing extra requests. The firm's economics suffer mainly through:",opts:["Lower realization","Worse leverage","Higher billing rates","Lower utilization"],a:0,why:"On a fixed fee, extra hours don't add revenue, so the collected value per hour (realization) falls. That's why scope is managed formally."}
+]},
+{id:"l3",t:"The engagement lifecycle",min:7,html:`
+<p class="lead">Every engagement follows the same arc. Knowing where you are in it tells you what the client needs from you this week.</p>
+<h3>The seven stages</h3>
+<ol>
+<li><strong>Origination</strong>: a relationship, a referral, or an RFP surfaces a need.</li>
+<li><strong>Proposal</strong>: situation, objectives, approach, deliverables, team, timeline and fees. A good proposal already contains an early hypothesis.</li>
+<li><strong>Kickoff</strong>: align on the key question, success criteria, governance (who decides), data access and interviews.</li>
+<li><strong>Diagnostic</strong>: understand the current state with data, interviews and benchmarks. Typically the first 2 to 4 weeks.</li>
+<li><strong>Solution design</strong>: develop and test options, size the impact, choose.</li>
+<li><strong>Recommendation</strong>: the final steering committee with a clear answer, a business case and a roadmap.</li>
+<li><strong>Implementation and close</strong>: support the rollout, transfer knowledge, capture impact, and shape the follow-on.</li>
+</ol>
+<h3>Governance that keeps a project healthy</h3>
+<p>A <strong>steering committee</strong> (senior client sponsors) meets every 2 to 4 weeks to make decisions. A <strong>weekly check-in</strong> with the day-to-day client lead keeps work aligned. The cardinal rule: <strong>no surprises in the steering committee</strong>. Every major finding is pre-wired with the key stakeholders before the meeting.</p>
+<div class="box key"><div class="bx-h">The proposal in one page</div>Situation (what's happening) · Objectives (what success means, measurably) · Approach (phases and key analyses) · Deliverables · Team · Timeline · Fees. If you can't write the objectives measurably, the engagement isn't ready to start.</div>
+`,checks:[
+{q:"A finding in your deck will embarrass the CFO. The right move before the steering committee is:",opts:["Pre-wire it privately with the CFO first","Soften it so it no longer names finance","Remove it to protect the relationship","Present it and let the meeting debate it"],a:0,why:"No surprises in the steering committee. Pre-wiring turns a potential ambush into a supported decision and often improves the finding itself."}
+]}
+],
+exam:[
+{q:"Which is NOT one of the five reasons clients hire consultants?",opts:["Extra capacity","Legitimacy with the board","Objectivity and independence","Guaranteed outcomes"],a:3,why:"The five are expertise, capacity, objectivity, speed and legitimacy. Nobody can honestly guarantee an outcome."},
+{q:"Consulting revenue can be written as:",opts:["Headcount × billing rate × total hours worked per year","Headcount × utilization × billing rate × realization","Utilization × average salary × leverage ratio","Partners × projects per partner × average project fee"],a:1,why:"Each factor is a lever: keep people billable, price by seniority, and collect what you bill."},
+{q:"On a fixed-fee contract, the cost-overrun risk sits with:",opts:["Shared equally","The client","The consulting firm","The client's procurement team"],a:2,why:"The firm promised deliverables for a set price, so extra hours cut its margin. That's why scope is tightly managed."},
+{q:"The cardinal rule for steering committees is:",opts:["Keep it short: never more than thirty minutes","No surprises: pre-wire major findings beforehand","Show progress: always present new analysis each time","Let the client lead and present the findings"],a:1,why:"Steering committees exist to decide, not to be ambushed. Pre-wiring builds support and stress-tests findings."},
+{q:"A proposal is not ready if:",opts:["The fee isn't broken down by week","Its objectives can't be stated measurably","It doesn't list every analysis planned","It doesn't include an early hypothesis"],a:1,why:"Unmeasurable objectives mean nobody can agree when the work is done or whether it worked."}
+]
+});
+
+window.MODULES.push({
+id:"m2",n:"2",spine:false,t:"Problem Solving",
+sub:"The core method: define the problem precisely, break it into a MECE tree, form hypotheses, and plan only the analyses that can change the answer.",
+lessons:[
+{id:"l1",t:"Defining the problem",min:7,html:`
+<p class="lead">Most failed projects solved the wrong problem well. A precise problem statement is the cheapest insurance you'll ever buy.</p>
+<h3>The key question</h3>
+<p>Turn a vague brief into one <strong>key question</strong> that is specific, measurable, action-oriented, relevant and time-bound. Compare:</p>
+<div class="tblwrap"><table class="tbl"><tr><th>Weak</th><th>Strong</th></tr>
+<tr><td>How can we improve our stores?</td><td>How can we raise like-for-like store profit by 10% within 18 months without cutting service scores?</td></tr>
+<tr><td>Should we use AI?</td><td>Which three customer-service processes can automation take 30% cost out of by end of next year, and at what investment?</td></tr>
+</table></div>
+<h3>The problem statement worksheet</h3>
+<ul>
+<li><strong>Key question</strong>: the one sentence above.</li>
+<li><strong>Context</strong>: what's happening and why now.</li>
+<li><strong>Success criteria</strong>: how the client will judge the outcome.</li>
+<li><strong>Scope</strong>: what's in and, just as important, what's out.</li>
+<li><strong>Constraints</strong>: budget, timing, things that can't change (no layoffs, no new IT system).</li>
+<li><strong>Stakeholders</strong>: who decides, who must agree, who can block.</li>
+<li><strong>Sources of insight</strong>: data, people, and benchmarks you'll use.</li>
+</ul>
+<div class="box key"><div class="bx-h">Framing with SCQ</div>A clean way to open any problem: <strong>Situation</strong> (the stable context everyone agrees with), <strong>Complication</strong> (what changed or what's wrong), <strong>Question</strong> (what we must answer as a result). ‘We've led the regional market for a decade (S). A low-cost entrant has taken 6 points of share in a year (C). How should we respond to protect profit (Q)?'</div>
+`,checks:[
+{q:"Which is the strongest key question?",opts:["How can we use digital and AI to grow revenue and reduce costs at the same time?","How can we grow EBITDA $20M in two years in existing markets, without M&A?","What growth strategy should we adopt to stay competitive in our core markets?","How can we become the clear leading player in our region over the next decade?"],a:1,why:"It's specific, measurable, action-oriented, scoped (existing markets, no acquisitions) and time-bound."}
+]},
+{id:"l2",t:"Issue trees & hypothesis trees",min:8,html:`
+<p class="lead">An issue tree turns one big question into smaller ones you can actually answer. It's the backbone of the workplan, the interview guide and eventually the storyline.</p>
+<h3>Three kinds of tree</h3>
+<div class="tblwrap"><table class="tbl"><tr><th>Tree</th><th>Asks</th><th>Example branches</th></tr>
+<tr><td>Diagnostic (why)</td><td>Why is this happening?</td><td>Profit fell: revenue down? costs up? mix shift?</td></tr>
+<tr><td>Solution (how)</td><td>What could we do?</td><td>Grow profit: raise price, sell more, cut cost, change mix</td></tr>
+<tr><td>Deductive (math)</td><td>What does this equal?</td><td>Revenue = customers × visits × spend per visit</td></tr>
+</table></div>
+<p>Deductive trees are the most powerful because they are MECE by construction: if the arithmetic holds, nothing is missing and nothing overlaps.</p>
+<h3>Testing for MECE</h3>
+<ul>
+<li><strong>Mutually exclusive</strong>: could one fact fall into two branches? If so, redraw.</li>
+<li><strong>Collectively exhaustive</strong>: is there any cause that fits no branch? Add an ‘other' only as a last resort.</li>
+<li>Go 3 to 4 levels deep, until each leaf is something you can test with one analysis.</li>
+</ul>
+<h3>From issue tree to hypothesis tree</h3>
+<p>Once you have a view, restate the branches as claims you believe are true: ‘profit fell mainly because input costs rose', supported by ‘bean prices rose 20%' and ‘we did not pass costs through to price'. Each claim names the analysis that would prove or kill it. This is the <strong>Day-1 answer</strong>: a best guess at the final recommendation, written on the first day and revised as evidence arrives.</p>
+<div class="box key"><div class="bx-h">The ghost deck</div>Draft the final presentation's slide titles on day one, with empty charts underneath. It forces you to name what you must prove, exposes gaps early, and keeps the team from collecting data nobody will use.</div>
+`,checks:[
+{q:"Why are deductive (math) trees especially useful?",opts:["They're MECE by construction","They're easier for clients to read","They replace the need for hypotheses","They don't need any data to build"],a:0,why:"Revenue = customers × frequency × spend leaves no gaps and no overlaps, so every driver is covered."},
+{q:"A Day-1 answer is:",opts:["A falsifiable best guess, revised as evidence arrives","The client's own view of the answer","A list of the data needed on day one","The final answer, defended throughout the project"],a:0,why:"It focuses the work on proving or killing a specific claim instead of collecting everything."}
+]},
+{id:"l3",t:"Prioritizing & building the workplan",min:7,html:`
+<p class="lead">You will never have time to analyze everything. The skill is choosing the few analyses that can change the answer.</p>
+<h3>Prioritize the tree</h3>
+<ul>
+<li><strong>80/20</strong>: a few branches usually hold most of the value. Size each branch roughly before diving in.</li>
+<li><strong>Impact × ease</strong>: plot options on a 2x2. High impact, easy to test goes first.</li>
+<li><strong>Can it change the decision?</strong> If no plausible result of an analysis would change the recommendation, skip it.</li>
+</ul>
+<h3>The workplan</h3>
+<p>For each hypothesis, one row:</p>
+<div class="tblwrap"><table class="tbl"><tr><th>Hypothesis</th><th>Analysis</th><th>Data source</th><th>Owner</th><th>Due</th><th>End product</th></tr>
+<tr><td>Bean costs drove the profit drop</td><td>Cost per cup by component, this year vs last</td><td>Finance ledger, supplier invoices</td><td>Analyst A</td><td>Week 2</td><td>Waterfall chart</td></tr>
+<tr><td>Prices weren't adjusted</td><td>Price history vs competitors</td><td>POS data, store checks</td><td>Analyst B</td><td>Week 2</td><td>Price benchmark table</td></tr>
+</table></div>
+<h3>The ‘so what' discipline</h3>
+<p>Every analysis must end in a sentence the client can act on. ‘Labor is 30% of cost' is a fact. ‘Labor scheduling doesn't follow footfall, so we overstaff mornings by about 15%' is a so-what. Ask ‘so what?' until the answer is a decision or an action.</p>
+<div class="box warnbx"><div class="bx-h">Don't boil the ocean</div>The classic junior mistake is gathering every available dataset before forming a view. It feels thorough and produces nothing. Hypothesis first, then the minimum data to test it.</div>
+`,checks:[
+{q:"An analysis would take a week, but no plausible result would change your recommendation. You should:",opts:["Hand it to the client's own team to run in parallel","Do a lighter version in two days to cover the base","Skip it; spend the time where results can change the answer","Do it anyway, so the final deck is complete and defensible"],a:2,why:"The test of an analysis is whether it can change the answer. Effort spent elsewhere is waste."}
+]}
+],
+exam:[
+{q:"A good key question is:",opts:["Broad enough to cover every possible issue the client faces","Short enough to fit comfortably into a single slide title","Agreed with every single stakeholder before you start drafting","Specific, measurable, action-oriented, relevant, time-bound"],a:3,why:"A sharp key question defines success and scope, which protects the whole engagement."},
+{q:"SCQ stands for:",opts:["Summary, Complication, Quote","Situation, Complication, Question","Situation, Cause, Quantification","Scope, Context, Question"],a:1,why:"Situation sets agreed context, Complication says what changed, Question is what must be answered."},
+{q:"A diagnostic tree asks:",opts:["Which option is best?","Why is this happening?","How could we fix it?","What does this number equal?"],a:1,why:"Diagnostic trees find causes. Solution trees list options. Deductive trees break a number into its drivers."},
+{q:"The ghost deck is:",opts:["A short pre-read sent before the steering committee","Final slide titles drafted on day one with empty charts","The deck from a similar past project, reused","The appendix of backup analyses"],a:1,why:"It names what you must prove and keeps the team from gathering data nobody needs."},
+{q:"‘Labor is 30% of cost' fails the so-what test because:",opts:["It needs a benchmark to be meaningful","It's a fact with no implication or action","It should be shown as a chart instead","It's too precise for an executive audience"],a:1,why:"A so-what says what it means and what to do, e.g. scheduling doesn't follow footfall, so mornings are overstaffed."}
+]
+});
+
+window.MODULES.push({
+id:"m3",n:"3",spine:false,t:"The Analyst's Toolkit",
+sub:"The frameworks, financial math, research methods and operations tools you'll reach for on almost every project, and when each one actually fits.",
+lessons:[
+{id:"l1",t:"Strategy frameworks, and when each fits",min:8,html:`
+<p class="lead">A framework is a checklist for not forgetting things. Use it to generate your tree, then throw away whatever doesn't fit the problem.</p>
+<div class="tblwrap"><table class="tbl"><tr><th>Framework</th><th>What it does</th><th>Use it for</th></tr>
+<tr><td>Porter's Five Forces</td><td>Rivalry, new entrants, substitutes, buyer power, supplier power</td><td>How attractive and profitable an industry is</td></tr>
+<tr><td>PESTEL</td><td>Political, economic, social, technological, environmental, legal trends</td><td>Scanning the macro environment, e.g. before market entry</td></tr>
+<tr><td>3Cs</td><td>Customers, company, competitors</td><td>A quick first structure for most strategy questions</td></tr>
+<tr><td>Value chain</td><td>The activities that create value, from inputs to after-sales</td><td>Finding where cost or advantage sits</td></tr>
+<tr><td>Ansoff matrix</td><td>Existing or new products × existing or new markets</td><td>Mapping growth options by risk</td></tr>
+<tr><td>BCG growth-share matrix</td><td>Market growth × relative share (stars, cash cows, question marks, dogs)</td><td>Portfolio decisions across business units</td></tr>
+<tr><td>Three Horizons</td><td>Core today, emerging next, options for the future</td><td>Balancing investment across time</td></tr>
+<tr><td>McKinsey 7S</td><td>Strategy, structure, systems, shared values, style, staff, skills</td><td>Diagnosing organizational alignment</td></tr>
+<tr><td>SWOT</td><td>Strengths, weaknesses, opportunities, threats</td><td>A workshop summary, rarely an analysis on its own</td></tr>
+</table></div>
+<h3>Ansoff in more detail</h3>
+<p>Growth options rise in risk as you move away from what you know: <strong>market penetration</strong> (sell more of today's products to today's customers), <strong>product development</strong> (new products, same customers), <strong>market development</strong> (same products, new markets) and <strong>diversification</strong> (new products in new markets, the riskiest).</p>
+<div class="box warnbx"><div class="bx-h">Why SWOT is weak on its own</div>It lists facts without priorities, causes or actions. If you use it, follow every item with ‘so what do we do?' and size it.</div>
+`,checks:[
+{q:"A client asks whether the industry it might enter is structurally profitable. The best-fitting lens is:",opts:["McKinsey 7S","BCG growth-share matrix","Ansoff matrix","Porter's Five Forces"],a:3,why:"Five Forces explains industry profitability through rivalry, entry barriers, substitutes and the power of buyers and suppliers."},
+{q:"In the Ansoff matrix, the riskiest growth option is:",opts:["Market penetration","Market development","Diversification","Product development"],a:2,why:"Diversification combines a new product with a new market, so the firm leaves everything it knows."}
+]},
+{id:"l2",t:"Financial analysis for consultants",min:9,html:`
+<p class="lead">Almost every recommendation ends in money. You need a handful of formulas you can apply on a whiteboard without hesitation.</p>
+<h3>The P&amp;L in one line</h3>
+<p>Revenue minus cost of goods sold gives <strong>gross profit</strong>. Minus operating expenses gives <strong>EBITDA</strong> (earnings before interest, taxes, depreciation and amortization), the usual proxy for operating cash profit. Then depreciation, interest and tax down to <strong>net income</strong>.</p>
+<h3>Unit economics and break-even</h3>
+<div class="box num">Contribution margin per unit = price − variable cost per unit
+Break-even volume = fixed costs ÷ contribution margin per unit</div>
+<p>Example: a product sells for $10 with $6 of variable cost, so each unit contributes $4. With $2M of fixed costs, break-even is 500,000 units.</p>
+<h3>Investment decisions</h3>
+<ul>
+<li><strong>Payback period</strong>: how long until cumulative cash flow turns positive. Simple and intuitive, but ignores the time value of money.</li>
+<li><strong>NPV (net present value)</strong>: the sum of future cash flows discounted at the cost of capital, minus the investment. Positive NPV creates value.</li>
+<li><strong>IRR (internal rate of return)</strong>: the discount rate at which NPV equals zero. Compare it to the hurdle rate.</li>
+</ul>
+<div class="box num">NPV = Σ CFₜ ÷ (1 + r)ᵗ − initial investment</div>
+<h3>Customer economics</h3>
+<ul>
+<li><strong>CAC</strong>: cost to acquire one customer (sales and marketing spend ÷ new customers).</li>
+<li><strong>CLV or LTV</strong>: margin a customer generates over their lifetime. A quick version: annual margin per customer × expected years retained.</li>
+<li>A common rule of thumb is <strong>LTV:CAC of at least 3:1</strong>, with CAC paid back within about 12 to 18 months.</li>
+</ul>
+<div class="box key"><div class="bx-h">Always show sensitivity</div>A business case is only as good as its assumptions. Show which one moves the answer most (usually volume, price or adoption) and the break-even value of that assumption. ‘This works as long as adoption exceeds 22%' is far more useful than a single NPV.</div>
+`,checks:[
+{q:"Price $50, variable cost $30, fixed costs $1M. Break-even volume is:",opts:["20,000 units","25,000 units","50,000 units","33,333 units"],a:2,why:"Contribution is $50 − $30 = $20 per unit, and $1M ÷ $20 = 50,000 units."},
+{q:"Why is NPV preferred over payback for comparing investments?",opts:["It's easier to calculate and explain to client executives","It ignores risk, which makes comparing projects fairer","It always produces a shorter, more attractive payback period","It discounts cash flows and counts those after payback"],a:3,why:"Payback ignores discounting and anything after the payback point, so it can favor fast but small returns."}
+]},
+{id:"l3",t:"Research: interviews, experts & data",min:7,html:`
+<p class="lead">Good consulting answers rest on facts the client didn't already have. The craft is getting them fast and triangulating so no single source can mislead you.</p>
+<h3>The main sources</h3>
+<ul>
+<li><strong>Client interviews</strong>: leaders, front-line staff and skeptics. Front-line staff often know the real cause.</li>
+<li><strong>Expert calls</strong>: former industry executives via expert networks (GLG, AlphaSights, Third Bridge). Great for market structure and competitor practices.</li>
+<li><strong>Customer research</strong>: interviews for the why, surveys for the how many. Never use a survey to discover something you don't yet understand.</li>
+<li><strong>Internal data</strong>: finance, operations, CRM, transactions. Profile it early because it is always messier than promised.</li>
+<li><strong>External data</strong>: annual reports, industry reports, government statistics, pricing scrapes, store visits.</li>
+</ul>
+<h3>Interview technique</h3>
+<ol>
+<li>Prepare a short guide built from your issue tree, not a long questionnaire.</li>
+<li>Open broad (‘what's really driving this?'), then narrow to test your hypotheses.</li>
+<li>Ask for examples and numbers: ‘when did that last happen, and how much did it cost?'</li>
+<li>Close with ‘what should I have asked that I didn't?' and ‘who else should I talk to?'</li>
+<li>Write up within 24 hours: key facts, quotes, and implications for each hypothesis.</li>
+</ol>
+<div class="box key"><div class="bx-h">Triangulate everything that matters</div>A key number should be confirmed from at least two independent directions, for example a market size estimated top-down from population and bottom-up from competitor revenues. When sources disagree, the gap itself is often the insight.</div>
+`,checks:[
+{q:"You don't yet understand why customers are leaving. The best first research method is:",opts:["A large survey listing all the likely reasons for leaving","Benchmark the churn rate against several direct competitors","Interviews first, then a survey to size the reasons","Analyze every pricing change made over the past year or two"],a:2,why:"Interviews uncover the why. A survey can only measure options you already know to ask about."}
+]},
+{id:"l4",t:"Operations & organization tools",min:8,html:`
+<p class="lead">Cost and performance problems usually live in processes and structures. These tools find where.</p>
+<h3>Process and operations</h3>
+<ul>
+<li><strong>Process mapping</strong>: draw each step, owner, hand-off and wait time. Waiting time usually dwarfs working time.</li>
+<li><strong>Lean's seven wastes</strong>: transport, inventory, motion, waiting, overproduction, over-processing and defects.</li>
+<li><strong>Bottleneck analysis</strong>: a system's output equals the capacity of its slowest step. Improving anything else adds no throughput.</li>
+<li><strong>Benchmarking</strong>: compare cost and performance per unit against peers, internal sites or best practice to size the gap.</li>
+</ul>
+<h3>Cost tools</h3>
+<ul>
+<li><strong>Cost baseline</strong>: one agreed view of spend by category, function and driver. Without it, savings can't be proven.</li>
+<li><strong>Zero-based budgeting</strong>: rebuild each budget from what is actually needed, instead of last year plus inflation.</li>
+<li><strong>Procurement levers</strong>: consolidate suppliers, renegotiate, standardize specifications, manage demand.</li>
+</ul>
+<h3>Organization tools</h3>
+<ul>
+<li><strong>Spans and layers</strong>: how many direct reports each manager has and how many levels sit between the CEO and the front line. Narrow spans and many layers slow decisions and add cost.</li>
+<li><strong>RACI</strong>: for each decision or activity, who is Responsible, Accountable (one person only), Consulted and Informed.</li>
+</ul>
+<div class="box key"><div class="bx-h">Fix the constraint first</div>If a loan approval process has a two-day underwriting queue, speeding up document intake changes nothing. Find the bottleneck, fix it, then find the next one.</div>
+`,checks:[
+{q:"A factory's assembly step can handle 80 units an hour while every other step handles 120. Doubling packaging capacity will:",opts:["Double output to 160 units an hour","Raise output modestly, to about 100 an hour","Add no output, since assembly is the bottleneck","Raise output to 120 units an hour"],a:2,why:"Throughput equals the slowest step's capacity. Only improving assembly raises output."},
+{q:"In a RACI, how many people should be Accountable for one decision?",opts:["At least two, for backup","As many as are Responsible","Exactly one","One per team involved"],a:2,why:"Single accountability prevents decisions from falling between people."}
+]}
+],
+exam:[
+{q:"To assess whether an industry is structurally attractive, use:",opts:["SWOT analysis","McKinsey 7S","BCG growth-share matrix","Porter's Five Forces"],a:3,why:"Five Forces explains industry profitability."},
+{q:"Break-even volume equals:",opts:["Fixed costs ÷ contribution margin per unit","Variable costs ÷ price per unit","Total costs ÷ contribution margin per unit","Fixed costs ÷ price per unit"],a:0,why:"Each unit contributes price minus variable cost toward fixed costs."},
+{q:"A positive NPV means:",opts:["The project's internal rate of return is exactly zero","The project pays back its investment within the first year","The project carries no meaningful financial or delivery risk","Value is created after discounting at the cost of capital"],a:3,why:"Discounted future cash flows exceed the investment."},
+{q:"A healthy rule of thumb for LTV:CAC is:",opts:["At least 3:1","About 1:3","About 1:1","At least 10:1"],a:0,why:"Below about 3:1, acquisition spend struggles to earn back its cost with margin to spare."},
+{q:"System throughput is set by:",opts:["The first step","The slowest step","The fastest step","The average step"],a:1,why:"Improving a non-bottleneck step adds no output."},
+{q:"Surveys are best used to:",opts:["Discover reasons you don't yet know","Find expert contacts","Size things you already understand","Replace customer interviews"],a:2,why:"Interviews discover; surveys measure."}
+]
+});
+
+window.MODULES.push({
+id:"m4",n:"4",spine:false,t:"Storylining & Communication",
+sub:"How to turn analysis into a recommendation people act on: the storyline, slides that carry one message each, and the stakeholder work that happens outside the meeting.",
+lessons:[
+{id:"l1",t:"The storyline: SCR & the pyramid",min:7,html:`
+<p class="lead">The analysis is not the product. The product is a decision, and the storyline is how you get the client to make it.</p>
+<h3>Situation, Complication, Resolution</h3>
+<p>Most consulting stories follow <strong>SCR</strong>. The <strong>situation</strong> states context the audience already accepts. The <strong>complication</strong> says what changed or what is at risk. The <strong>resolution</strong> is your answer. Keep the first two short: their only job is to make the resolution feel necessary.</p>
+<h3>The pyramid behind the deck</h3>
+<ul>
+<li><strong>Governing thought</strong>: one sentence that answers the key question.</li>
+<li><strong>Key line</strong>: 2 to 4 supporting arguments, each a full sentence, that together prove the governing thought.</li>
+<li><strong>Support</strong>: the evidence under each argument, one level down.</li>
+</ul>
+<p>Two logic checks: <strong>vertical</strong> (each level answers the ‘why?' or ‘how?' raised by the level above) and <strong>horizontal</strong> (the arguments at one level are MECE and in a deliberate order, such as by size, time or sequence).</p>
+<h3>The executive summary</h3>
+<p>One page that reads as the whole story: the answer first, then the 3 or so reasons with their key numbers, then what you need from the audience. If a reader only sees this page, they should still be able to make the decision.</p>
+<div class="box key"><div class="bx-h">The dot-dash test</div>Write the storyline as bullets (dots) with sub-bullets (dashes) before building any slides. If the dots, read alone, don't tell a convincing story, no amount of chart design will save the deck.</div>
+`,checks:[
+{q:"In SCR, what is the main job of the situation and complication?",opts:["To list every option considered","To set out the project scope","To make the resolution feel necessary","To show how much research the team did"],a:2,why:"They set up the answer. Long situations bury the point; keep them short and agreed."}
+]},
+{id:"l2",t:"Slides that carry one message",min:7,html:`
+<p class="lead">A consulting slide is an argument, not a container. One slide, one message, stated in the title.</p>
+<h3>Action titles</h3>
+<p>The title is a full sentence stating the so-what, ideally under two lines. ‘Revenue by region' is a label. ‘Two regions drive 80% of the decline, both after the 2025 price change' is an action title. Reading only the titles in order should tell the whole story.</p>
+<h3>The body proves the title</h3>
+<ul>
+<li>Pick the chart that matches the message: a <strong>bar</strong> to compare items, a <strong>line</strong> for change over time, a <strong>waterfall</strong> to explain how one number became another, a <strong>stacked bar</strong> for parts of a whole.</li>
+<li>Highlight the data point the title talks about. Grey out the rest.</li>
+<li>Label units, source and date. A number without a source will be challenged.</li>
+<li>Move detail to the appendix. Main slides carry only what the argument needs.</li>
+</ul>
+<h3>Spreadsheets clients will reuse</h3>
+<p>Separate inputs, calculations and outputs. Never hardcode a number inside a formula. Label every assumption and its source, and add checks (totals that must match) so errors show up.</p>
+<div class="box warnbx"><div class="bx-h">The common failure</div>A beautiful chart under a vague title. If the reader has to work out the point themselves, many will reach a different one.</div>
+`,checks:[
+{q:"Which is the best action title?",opts:["Churn is concentrated in SMB customers on monthly plans","Overview of churn analysis and supporting data","Monthly churn rate by customer segment, 2024 to 2026","Churn has changed across several segments recently"],a:0,why:"It states a specific, checkable so-what. The others are labels or vague."},
+{q:"To show how last year's profit became this year's, the best chart is usually:",opts:["A pie chart","A line chart","A waterfall","A scatter plot"],a:2,why:"A waterfall shows each driver's contribution between two totals."}
+]},
+{id:"l3",t:"Meetings, workshops & stakeholders",min:7,html:`
+<p class="lead">Recommendations are adopted or killed in conversations before and after the meeting, not in it.</p>
+<h3>Stakeholder mapping</h3>
+<p>Plot each stakeholder by <strong>influence</strong> over the decision and current <strong>support</strong>. High influence, low support needs the most time: understand their concerns early and address them in the work. High influence, high support become your sponsors and messengers.</p>
+<h3>Pre-wiring</h3>
+<p>Walk key people through the findings one-on-one before any group meeting. You learn objections while you can still respond, people feel consulted, and the meeting becomes a confirmation rather than a debate.</p>
+<h3>Running a workshop</h3>
+<ol>
+<li>Set one clear objective and the decision or output you need by the end.</li>
+<li>Send a short pre-read so the session is spent deciding, not presenting.</li>
+<li>Structure the time: diverge (generate options), then converge (choose with explicit criteria).</li>
+<li>Capture decisions, owners and dates live, and send them the same day.</li>
+</ol>
+<h3>Handling pushback</h3>
+<p>Get curious before you get defensive. Ask what the concern is based on, check whether it reveals a gap in your analysis, and separate disagreement on facts (resolve with data) from disagreement on priorities (escalate to the decision owner).</p>
+<div class="box key"><div class="bx-h">Write emails answer-first too</div>The first line of any update says the conclusion or the ask. ‘We recommend option B; I need your approval by Thursday.' Then the reasons.</div>
+`,checks:[
+{q:"A powerful executive is skeptical of your recommendation. Your best move before the steering committee is:",opts:["Bring the strongest data to win the argument in the meeting","Ask your sponsor to overrule them on the day","Leave them off the invite to keep the meeting focused","Meet them privately first and address the concern in the work"],a:3,why:"High influence, low support needs early one-on-one engagement. Their objection may also improve the work."}
+]}
+],
+exam:[
+{q:"In the pyramid principle, horizontal logic checks that:",opts:["The executive summary fits on one page without appendices","Each level answers the question raised by the level above","Arguments on one level are MECE and deliberately ordered","Every slide in the main body carries exactly one chart"],a:2,why:"Vertical logic links levels. Horizontal logic checks the arguments on one level."},
+{q:"An action title should:",opts:["State the so-what in a full sentence","Pose a question that the slide answers","Use three words or fewer, for scanning","Name the data and the period on the slide"],a:0,why:"Reading titles alone should tell the story."},
+{q:"The dot-dash test checks:",opts:["Whether the deck follows the firm's brand template throughout","Whether the bullet storyline persuades before slides exist","Whether every chart is labelled, sourced and dated correctly","Whether the appendix supports each claim made in the main deck"],a:1,why:"If the bullet storyline doesn't persuade, slide design won't fix it."},
+{q:"Disagreement on priorities, rather than facts, is best resolved by:",opts:["Average the positions into a compromise","Escalate to the decision owner","Drop the contested recommendation","Run analysis until one side concedes"],a:1,why:"Data settles facts. Trade-offs between priorities belong to the decision owner."},
+{q:"In a good spreadsheet model, assumptions should be:",opts:["In labelled input cells with sources","Typed into the formulas that use them","Rounded to whole numbers","On a hidden, locked sheet"],a:0,why:"Separating inputs from calculations makes the model auditable and reusable."}
+]
+});
+
+window.MODULES.push({
+id:"m5",n:"5",spine:false,t:"The Case Types Playbook",
+sub:"Structures and key questions for the case types you'll meet in interviews and on real projects: growth, market entry, M&A, pricing, cost reduction and the unusual ones.",
+lessons:[
+{id:"l1",t:"Growth & profitability",min:8,html:`
+<p class="lead">Most business problems reduce to ‘make more money'. These two structures cover a large share of all cases.</p>
+<h3>Profitability: why is profit falling?</h3>
+<div class="box num">Profit = Revenue − Cost
+Revenue = volume × price (by product, channel, region)
+Cost = fixed + variable</div>
+<p>Compare against last year and against competitors. If revenue is flat, look at cost and mix. If revenue fell, split volume from price. Find the one or two drivers that explain most of the change before suggesting fixes.</p>
+<h3>Growth: how do we grow revenue?</h3>
+<ul>
+<li><strong>Existing customers</strong>: raise frequency, basket size or share of wallet, reduce churn.</li>
+<li><strong>New customers</strong> in existing markets: win share, new segments, new channels.</li>
+<li><strong>New products</strong> for existing customers: cross-sell, upsell, adjacent offers.</li>
+<li><strong>New markets</strong>: geographic expansion (see market entry).</li>
+<li><strong>Inorganic</strong>: acquisitions and partnerships.</li>
+<li><strong>Price</strong>: often the fastest lever and the most under-used.</li>
+</ul>
+<h3>Key questions to ask</h3>
+<p>What is the target and by when? Is the market growing, and are we gaining or losing share? Which customers are most profitable? What capabilities and budget constraints apply?</p>
+<div class="box key"><div class="bx-h">Separate market from share</div>Revenue growth = market growth + share change. A company growing 5% in a market growing 12% is losing ground. Always check which one is moving.</div>
+`,checks:[
+{q:"A company's revenue grew 4% last year. Before calling that a success, the most important thing to check is:",opts:["Price versus volume growth","Whether costs grew more slowly","How fast the market grew","Whether it hit the CEO's target"],a:2,why:"All are useful, but if the market grew 10%, the company lost share. Market versus share comes first."}
+]},
+{id:"l2",t:"Market entry & new products",min:8,html:`
+<p class="lead">‘Should we enter?' cases are about attractiveness, ability to win, and economics, ending in a clear go or no-go.</p>
+<h3>The four-part structure</h3>
+<ol>
+<li><strong>Market attractiveness</strong>: size, growth, profitability, customer needs, regulation, and industry structure (Five Forces).</li>
+<li><strong>Ability to win</strong>: competitors and their positions, our differentiating capabilities, brand, channel access.</li>
+<li><strong>Economics</strong>: entry investment, unit economics, time to break-even, NPV under realistic share assumptions.</li>
+<li><strong>Entry mode</strong>: build (organic), buy (acquire), or partner (joint venture, licensing). Trade speed and control against cost and risk.</li>
+</ol>
+<h3>Build, buy or partner</h3>
+<div class="tblwrap"><table class="tbl"><tr><th>Mode</th><th>Strength</th><th>Weakness</th></tr>
+<tr><td>Build</td><td>Full control, lower upfront cost</td><td>Slow, must build capabilities from scratch</td></tr>
+<tr><td>Buy</td><td>Fast, immediate share and capabilities</td><td>Expensive, integration risk</td></tr>
+<tr><td>Partner</td><td>Shared risk, local knowledge</td><td>Less control, shared returns, alignment issues</td></tr>
+</table></div>
+<h3>New product launches</h3>
+<p>Same logic, plus cannibalization (how much of the new product's sales come from our existing products) and the launch plan: target segment, positioning, price, channel and a test-and-learn pilot before full rollout.</p>
+<div class="box key"><div class="bx-h">End with conditions</div>Don't stop at ‘yes'. Say ‘go, provided we reach 8% share by year three, which needs X; if the pilot shows less than Y, stop.' Conditions turn a recommendation into a decision rule.</div>
+`,checks:[
+{q:"A client wants to enter a new country quickly and lacks local distribution. Which entry mode usually fits best?",opts:["License the brand","Acquire or partner locally","Export first, expand later","Build organically"],a:1,why:"Speed and missing distribution favor buying or partnering, at the cost of price or control."},
+{q:"Cannibalization in a product launch means:",opts:["Unit costs rising as production volume grows","Rivals cutting their prices in response to it","Competitors copying the new product quickly","Sales taken from the company's own products"],a:3,why:"Net new revenue is the launch's revenue minus what it takes from existing products."}
+]},
+{id:"l3",t:"M&A & due diligence",min:8,html:`
+<p class="lead">Acquisition cases ask whether a deal creates value: is the target worth more to us than we pay, after integration costs and risks?</p>
+<h3>The structure</h3>
+<ol>
+<li><strong>Strategic rationale</strong>: why this deal? Growth, new capabilities, scale, market access, or removing a competitor.</li>
+<li><strong>Target attractiveness</strong>: its market, position, financial health, and quality of earnings.</li>
+<li><strong>Synergies</strong>: <strong>cost synergies</strong> (combined procurement, overlapping functions, sites) are more reliable than <strong>revenue synergies</strong> (cross-selling, new markets), which are often overestimated.</li>
+<li><strong>Valuation and price</strong>: standalone value plus realistic synergies, minus integration cost. Compare with the price asked.</li>
+<li><strong>Risks and integration</strong>: culture, key people, systems, regulatory approval, customer loss.</li>
+</ol>
+<h3>Commercial due diligence</h3>
+<p>For investors (often private equity) the key question is whether the business plan is achievable. Test market growth, the target's share and its drivers, customer loyalty (interviews, churn data), competitive threats, and whether margins are sustainable.</p>
+<h3>Valuation methods to name</h3>
+<p><strong>DCF</strong> (discounted cash flow, intrinsic value), <strong>trading comparables</strong> (multiples such as EV/EBITDA of similar listed companies) and <strong>precedent transactions</strong> (multiples paid in similar deals, which include a control premium).</p>
+<div class="box warnbx"><div class="bx-h">Why many deals destroy value</div>Overpaying for revenue synergies that never arrive, and underestimating integration. Discount revenue synergies heavily and plan integration before signing.</div>
+`,checks:[
+{q:"Which synergies should you trust most in a deal model?",opts:["Revenue synergies","Market-entry synergies","Cost synergies","Brand synergies"],a:2,why:"Cost synergies are more within management's control. Revenue synergies depend on customers and are often overestimated."}
+]},
+{id:"l4",t:"Pricing",min:7,html:`
+<p class="lead">Price is usually the biggest profit lever: a 1% price rise often lifts operating profit far more than a 1% volume rise, because it costs nothing to deliver.</p>
+<h3>Three ways to set price</h3>
+<ul>
+<li><strong>Cost-plus</strong>: cost plus a margin. Simple, but ignores what customers will pay.</li>
+<li><strong>Competitor-based</strong>: price relative to alternatives. Useful in commoditized markets.</li>
+<li><strong>Value-based</strong>: price from the value the customer gets (savings, revenue, avoided risk). Captures the most, but needs customer insight.</li>
+</ul>
+<p>Cost sets the floor, value sets the ceiling, and competitors tell you where in between you can land.</p>
+<h3>Elasticity</h3>
+<p>Price elasticity is the percentage change in volume for a 1% change in price. Necessities and differentiated products tend to be inelastic. Commodities with close substitutes are elastic. Test with pilots before full rollout.</p>
+<h3>Other tools</h3>
+<ul>
+<li><strong>Price waterfall</strong>: from list price down through discounts, rebates and terms to the pocket price actually received. Leakage is often large and fixable.</li>
+<li><strong>Good, better, best</strong>: tiered offers that let customers self-select.</li>
+<li><strong>Bundling</strong> and <strong>dynamic pricing</strong> where demand varies by time or segment.</li>
+</ul>
+<div class="box key"><div class="bx-h">Quick math</div>With a 10% operating margin, a 1% price rise with no volume loss raises profit by about 10%. That's why the price waterfall is often the first place to look.</div>
+`,checks:[
+{q:"A company has a 10% operating margin. A 2% price rise with no volume change increases operating profit by roughly:",opts:["2%","20%","12%","10%"],a:1,why:"The extra 2% of revenue is all profit. On a 10% margin base, 2 ÷ 10 = a 20% profit increase."},
+{q:"The price waterfall analyzes:",opts:["List price down to the pocket price received","Our prices compared with each competitor's prices","How volume responds to each change in price","How our prices changed over the past several years"],a:0,why:"It traces discounts, rebates and terms that leak value from the list price."}
+]},
+{id:"l5",t:"Cost reduction & unusual cases",min:8,html:`
+<p class="lead">Cost cases reward a clean baseline and prioritized levers. Unusual cases reward adapting your structure to a different objective.</p>
+<h3>Cost reduction</h3>
+<ol>
+<li><strong>Baseline</strong>: total cost by category, function and driver, compared with benchmarks.</li>
+<li><strong>Levers</strong>: procurement (what we buy and at what price), operations (process and productivity), organization (spans, layers, location), and demand (stop doing low-value work).</li>
+<li><strong>Prioritize</strong>: size each lever against effort and risk, and protect what customers value.</li>
+<li><strong>Sustain</strong>: track savings against the baseline and build them into budgets so costs don't creep back.</li>
+</ol>
+<h3>Cases with a different objective</h3>
+<ul>
+<li><strong>Public sector and non-profit</strong>: the goal is impact per dollar, not profit. Define the outcome metric first (patients treated, students graduating).</li>
+<li><strong>Competitive response</strong>: a rival cut prices or launched a product. Assess the threat's size before reacting, and avoid a price war you can't win.</li>
+<li><strong>Digital and AI transformation</strong>: start from business outcomes and use cases, then data readiness, capabilities and change management. Technology is rarely the constraint.</li>
+<li><strong>Operations</strong>: capacity, bottlenecks, quality and supply chain. Use process maps and throughput math.</li>
+</ul>
+<div class="box key"><div class="bx-h">The universal fallback</div>If a case fits no template, go back to first principles: what is the objective, how is it measured, what drives that measure, and which driver can we move most?</div>
+`,checks:[
+{q:"A rival cut prices by 15%. The best first step is:",opts:["Cut costs by 15% so that margins hold at the new, lower price point","Match the cut at once, before customers start to switch away to them","Size the threat: which customers are at risk and how price-sensitive","Launch a premium tier and move away from the price fight altogether"],a:2,why:"Reacting before sizing the threat risks an expensive price war over customers who may not switch."},
+{q:"In a public hospital case, what should you define first?",opts:["The budget for new equipment","The outcome metric, such as patients treated","Cost benchmarks against private hospitals","The hospital's operating profit target"],a:1,why:"Non-profit cases optimize impact, so the objective metric replaces profit at the top of the tree."}
+]}
+],
+exam:[
+{q:"Revenue grew 6% while the market grew 11%. The company:",opts:["Lost market share","Gained market share","Held share constant","Can't tell without profit data"],a:0,why:"Growing slower than the market means a falling share."},
+{q:"The four parts of a market entry structure are:",opts:["Customers, company, competitors and cost structure","Attractiveness, ability to win, economics, entry mode","Strengths, weaknesses, opportunities and threats","Product, price, place and promotion, then a decision"],a:1,why:"End with a go or no-go and the conditions that would change it."},
+{q:"Precedent transaction multiples usually exceed trading multiples because they include:",opts:["Lower interest rates","A control premium","Realized revenue synergies","Future capital expenditure"],a:1,why:"Buyers pay extra for control of the company."},
+{q:"Value-based pricing sets price according to:",opts:["Cost plus a target margin","What the sales team can sell easily","The average competitor price","The value customers receive"],a:3,why:"Cost is the floor, value is the ceiling."},
+{q:"In cost reduction, savings tend to creep back unless you:",opts:["Track them against the baseline and lock them into budgets","Announce the savings publicly so leaders are held accountable","Repeat the whole cost exercise every quarter from scratch","Cut evenly across every department so it feels fair to all"],a:0,why:"Sustaining savings requires measurement and budget changes."},
+{q:"A case fits no standard template. Your fallback is:",opts:["Use the profitability framework anyway, then adapt","Return to the objective, its metric and its drivers","Ask the interviewer which framework they'd like to see","Use SWOT, since it covers every angle of the case"],a:1,why:"First principles always work, and adapting your structure is what interviewers want to see."}
+]
+});
+
+window.MODULES.push({
+id:"m6",n:"6",spine:false,t:"Delivering Change & Client Craft",
+sub:"Why good recommendations fail in implementation, how to run a program that lands, and the client-management habits that build trust and repeat work.",
+lessons:[
+{id:"l1",t:"Why change fails & the change models",min:7,html:`
+<p class="lead">A recommendation only creates value when people change what they do. Most failed transformations had sound strategy and weak adoption.</p>
+<h3>Why implementation fails</h3>
+<ul>
+<li>No visible, sustained sponsor at the top.</li>
+<li>The ‘why' was never explained to the people who must change.</li>
+<li>Too many initiatives at once, with no capacity freed up.</li>
+<li>Incentives, systems and processes still reward the old way.</li>
+<li>Early wins weren't created or celebrated, so momentum faded.</li>
+</ul>
+<p>You'll often hear that ‘70% of transformations fail'. Treat that figure as folklore: the evidence behind it is weak. The underlying point, that adoption is the hard part, is well supported.</p>
+<h3>Two models worth knowing</h3>
+<p><strong>Kotter's eight steps</strong> (organization level): create urgency, build a guiding coalition, form a vision, communicate it, remove obstacles, create short-term wins, build on the change, anchor it in the culture.</p>
+<p><strong>ADKAR</strong> (individual level): <strong>Awareness</strong> of the need, <strong>Desire</strong> to take part, <strong>Knowledge</strong> of how, <strong>Ability</strong> to do it, <strong>Reinforcement</strong> to make it stick. Use it to find where a specific group is stuck.</p>
+<div class="box key"><div class="bx-h">Design for adoption from day one</div>Involve the people who will use the change in designing it, change incentives and systems alongside the process, and plan visible early wins in the first 90 days.</div>
+`,checks:[
+{q:"Staff understand why a new process matters and want to use it, but keep making errors with it. In ADKAR, they are stuck at:",opts:["Ability","Reinforcement","Desire","Awareness"],a:0,why:"They know why and want to, and probably know how, but can't yet do it well. That calls for practice and coaching."}
+]},
+{id:"l2",t:"Running the program",min:7,html:`
+<p class="lead">Large changes are delivered as programs: several workstreams, one governance rhythm, and a relentless focus on benefits.</p>
+<h3>The structure</h3>
+<ul>
+<li><strong>Steering committee</strong>: senior sponsors who make decisions and remove blockers.</li>
+<li><strong>PMO</strong> (program management office): tracks plans, risks, dependencies and benefits across workstreams.</li>
+<li><strong>Workstreams</strong>: each with a client owner, a plan, milestones and KPIs.</li>
+</ul>
+<h3>The tools</h3>
+<ul>
+<li><strong>RAID log</strong>: Risks, Assumptions, Issues and Dependencies, reviewed weekly.</li>
+<li><strong>RAG status</strong>: red, amber or green per workstream, with honest criteria. An amber that stays amber for months is usually red.</li>
+<li><strong>Benefits tracking</strong>: savings or revenue measured against the agreed baseline, signed off by finance.</li>
+<li><strong>Stage gates</strong>: go or no-go checkpoints with explicit criteria before each phase.</li>
+</ul>
+<h3>Leading and lagging indicators</h3>
+<p>Lagging indicators (cost, revenue) confirm results months later. Leading indicators (adoption rate, process compliance, pipeline) warn you early. Track both.</p>
+<div class="box warnbx"><div class="bx-h">Watermelon reporting</div>Green on the outside, red on the inside. Status reports that never show red teach sponsors to stop trusting them. Escalate early with options, not late with excuses.</div>
+`,checks:[
+{q:"Which is a leading indicator for a new CRM rollout?",opts:["Customer satisfaction score at the end of the year","Annual revenue growth in the first full year","Total project cost against the approved budget","Share of reps logging deals in the CRM each week"],a:3,why:"Adoption shows early whether results will follow. The others confirm outcomes much later."}
+]},
+{id:"l3",t:"Client management & trust",min:7,html:`
+<p class="lead">Repeat work comes from trust, and trust is built in small, consistent behaviors over the whole engagement.</p>
+<h3>The trust equation</h3>
+<div class="box num">Trust = (Credibility + Reliability + Intimacy) ÷ Self-orientation</div>
+<p>From Maister, Green and Galford's <em>The Trusted Advisor</em>. <strong>Credibility</strong> is whether your words are believable. <strong>Reliability</strong> is whether you do what you say. <strong>Intimacy</strong> is whether the client feels safe sharing concerns. <strong>Self-orientation</strong> (focusing on yourself, your firm or the next sale) divides everything else.</p>
+<h3>Managing scope and expectations</h3>
+<ul>
+<li>Agree what ‘done' looks like at the start and revisit it at each steering committee.</li>
+<li>When new requests arrive, say yes to the need and then discuss the trade-off: what moves out, or a change request.</li>
+<li>Under-promise on timing, then deliver early. Never surprise the client with a slip.</li>
+</ul>
+<h3>Difficult conversations</h3>
+<p>Deliver bad news early, in person, with the facts and options. ‘The data won't support a 15% saving; here's what will, at 9%, and two ways to close the gap.' Clients forgive bad news. They don't forgive hiding it.</p>
+<h3>Professional standards</h3>
+<p>Protect confidential information, declare conflicts of interest, and never shade findings to please a sponsor. Your independence is the product.</p>
+`,checks:[
+{q:"In the trust equation, which factor reduces trust the most when it rises?",opts:["Self-orientation","Intimacy and openness","Credibility with the client","Reliability over time"],a:0,why:"Self-orientation is the denominator, so it divides every other factor."},
+{q:"The client asks for an extra analysis outside the agreed scope. The best response is:",opts:["Do it quietly, to keep the relationship as strong as possible","Acknowledge the need, then agree a trade-off or change request","Decline it outright, since it isn't covered in the contract","Do it now, then add the extra cost to the final invoice"],a:1,why:"Saying yes to the need while being explicit about the trade-off protects both the relationship and the project."}
+]}
+],
+exam:[
+{q:"ADKAR describes change at the level of:",opts:["The organization","The individual","The steering committee","The industry"],a:1,why:"Kotter's model works at organization level; ADKAR diagnoses where individuals are stuck."},
+{q:"The first step in Kotter's model is:",opts:["Communicate the vision","Generate short-term wins","Form a guiding coalition","Create urgency"],a:3,why:"Without urgency, people don't engage with the rest of the process."},
+{q:"A RAID log tracks:",opts:["Roles, accountabilities, inputs, deliverables","Risks, assumptions, issues, dependencies","Revenue, assets, investment, debt","Reports, actions, ideas, decisions"],a:1,why:"It's the PMO's weekly view of what could derail the program."},
+{q:"‘Watermelon reporting' means:",opts:["Mixed red and green statuses","Green status hiding red reality","Reports sent too late to act on","A colour-coded template"],a:1,why:"It destroys trust in status reports. Escalate early with options."},
+{q:"The 70% transformation-failure figure is best treated as:",opts:["Weak evidence, but a valid point","A figure specific to IT projects","A well-established research finding","A target for programs to beat"],a:0,why:"The number is shaky, but adoption really is the hard part."}
+]
+});
+
+
+FINAL.push.apply(FINAL,[].concat.apply([],window.MODULES.map(function(m){return m.exam||[];})));
+</script>
+<script>
+/* ============ CASE LAB DATA ============ */
+window.CASES=[
+{id:"prof",cls:"gen",type:"General · Profitability",title:"The coffee chain's shrinking profit",
+blurb:"A regional coffee chain's profit fell 18% on flat revenue. Diagnose why and recommend what to do.",
+scenario:"<b>GreenCup</b> is a 120-store regional coffee chain. Last year revenue was flat at ~$50M, but operating profit fell 18% — from ~$10M to ~$8.2M. The CEO wants to know what's driving it and what to do. You have the CFO and the head of operations available for questions.",
+debrief:"Notice the arc: you led with the profit identity, isolated the driver with arithmetic instead of guessing, and recommended answer-first with a quantified action and a named risk. That structure — not the exact numbers — is what a profitability case rewards.",
+steps:[
+{t:"Clarify & structure",prompt:"How do you open? Lay out your clarifying questions and your structure for finding the cause.",hint:"Start from an identity, then build a MECE tree. Ask 2–3 sharp questions first.",
+model:"Open from <b>Profit = Revenue − Cost</b>. Since revenue is flat but profit fell, the driver is the <b>cost side or a margin-mix shift</b>. Clarifying questions: is this one-off or structural? Uniform across stores or concentrated? Any change in product mix or channel? Then a MECE tree: <b>Revenue</b> (volume × price, by product/channel) and <b>Cost</b> (variable: COGS, hourly labor, packaging; fixed: rent, salaried staff, marketing, overhead).",
+rubric:["Stated Profit = Revenue − Cost explicitly","Reasoned that flat revenue + falling profit ⇒ cost side or mix","Built a MECE tree (revenue drivers + fixed vs variable costs)","Asked 2–3 sharp clarifying questions (one-off vs structural, concentration, mix)"]},
+{t:"Hypothesize & pull the right data",prompt:"State a falsifiable hypothesis and name exactly what you'd ask the CFO for.",hint:"Prioritize the biggest cost lines and the mix.",
+model:"Hypothesis: <b>variable cost per cup rose</b> (bean prices and/or wages) <em>or</em> the mix shifted toward lower-margin items. Ask for: the cost breakdown by line this year vs last, gross margin by product, and any wage or supplier-price changes. Prioritize the largest lines first — for a coffee chain that's COGS and labor, so a few points of movement there dwarfs a big swing in a small line.",
+rubric:["Stated a falsifiable hypothesis (cost-per-unit up, or mix shift)","Named the specific data to pull (cost by line, margin by product)","Prioritized the biggest cost lines (COGS, labor) over small ones","Kept mix-shift on the table as an alternative"]},
+{t:"Do the arithmetic",prompt:"The CFO says COGS is ~35% of revenue and bean prices rose ~20%; labor held. Size the impact and reconcile it against the profit drop.",hint:"Work in round numbers, out loud.",
+model:"COGS ≈ 35% × $50M = <b>$17.5M</b>. A 20% rise on the bean portion of COGS: if beans are ~half of COGS (~$8.75M), a 20% increase adds ≈ <b>$1.75M</b> of cost. That alone explains essentially all of the ~$1.8M profit drop. So the story is <b>input-cost inflation on beans</b>, not a demand or labor problem — which sharpens the recommendation.",
+rubric:["Computed COGS in round numbers ($17.5M)","Isolated the bean portion and applied the 20% rise (~$1.75M)","Reconciled it against the ~$1.8M profit drop","Concluded the driver is bean-price inflation, not labor/demand"]},
+{t:"Recommend, answer-first",prompt:"Give the CEO your recommendation.",hint:"Answer first, 2–3 grouped actions, a risk, a next step.",
+model:"‘<b>Profit fell because bean costs rose ~20% while you held prices — that's ~$1.75M, essentially the whole drop.</b> Three moves: (1) a <b>selective price increase</b> on the most inelastic items (a 3–4% rise on espresso drinks likely recovers most of it); (2) <b>hedge or renegotiate</b> bean supply to cap volatility; (3) <b>nudge the mix</b> toward higher-margin drinks via menu and promo. The risk is price elasticity, so I'd <b>test the increase in a few stores first</b> and read volume before rolling out.'",
+rubric:["Led with the answer in one sentence","Gave 2–3 grouped, concrete actions","Quantified the expected recovery","Named the key risk (elasticity) and a de-risking next step (price test)"]}
+]},
+{id:"size",cls:"gen",type:"General · Market sizing",title:"Size the coffee-cup lid market",
+blurb:"Estimate the annual market for disposable coffee-cup lids in a country of 40 million. A pure structure-and-assumptions drill.",
+scenario:"A packaging manufacturer is considering entering the <b>disposable coffee-cup lid</b> business in a country of ~40 million people. Estimate the annual market size (units and revenue). There is no ‘right' answer — you're graded on the structure, the assumptions, and the sanity check.",
+debrief:"The number is almost irrelevant — what mattered was the multiplicative chain, segmenting coffee-drinkers from the whole population, rounding to clean anchors, and closing with a per-capita reasonableness check. That's the market-sizing muscle. Try the interactive sizer in the General Case Craft module to feel the levers.",
+steps:[
+{t:"Structure the estimate",prompt:"Lay out your top-down structure before any numbers.",hint:"Population → drinkers → to-go cups → lids → price.",
+model:"Top-down: <b>population → share who drink coffee → to-go cups per drinker per day → days per year → % of to-go cups that use a lid → price per lid</b>. Only <b>takeaway</b> cups need disposable lids, so I'll separate to-go from sit-in. I'll also note the buyer is really cafés and chains, so ‘market' = units × wholesale lid price.",
+rubric:["Laid out a clear multiplicative chain","Isolated takeaway cups (not all coffee) as the lid-relevant segment","Identified price per lid as the final multiplier","Noted the real buyer is cafés/chains (wholesale price)"]},
+{t:"State assumptions & compute",prompt:"Put round numbers on each step and compute units and revenue.",hint:"Round hard; narrate the arithmetic.",
+model:"Say ~50% drink coffee = <b>20M drinkers</b>; ~0.5 to-go coffees/drinker/day on average = <b>10M to-go cups/day</b>; × 365 ≈ <b>3.65B to-go cups/year</b>; ~90% use a lid ≈ <b>3.3B lids/year</b>. At a wholesale ~$0.03/lid → ≈ <b>$100M/year</b>. (All figures rounded for clean mental math.)",
+rubric:["Put an explicit, reasonable number on every step","Rounded to clean anchors and narrated the arithmetic","Reached a unit figure and a revenue figure","Kept assumptions visible and defensible"]},
+{t:"Sanity-check",prompt:"Is your answer plausible? Pressure-test it.",hint:"Per-capita or per-cup reasonableness.",
+model:"Sanity check: 3.3B lids ÷ 40M people ≈ <b>~80 lids per person per year</b> — i.e. ~1.5 takeaway coffees a week on average across the whole population, which is reasonable for a coffee-drinking country. Revenue ~$100M on lids alone is plausible for a 40M market. If the interviewer thinks coffee culture is lighter, I'd flex the drinker share or cups/day and the answer scales linearly — which is the point: the structure holds, the inputs flex.",
+rubric:["Ran a per-capita (or per-cup) sanity check","Judged the result plausible with reasoning","Named which single assumption most moves the answer","Showed the structure is robust even as inputs flex"]}
+]},
+{id:"entry",cls:"gen",type:"General · Market entry",title:"Should the grocer enter meal kits?",
+blurb:"A European grocery chain is weighing entry into the meal-kit delivery market. Give a structured go/no-go.",
+scenario:"<b>FreshMart</b>, a mid-sized European grocery chain (~$4B revenue), is considering launching a <b>meal-kit delivery</b> business. The board wants a structured recommendation: should they, and if so, how? You have market data available on request.",
+debrief:"A strong market-entry answer never jumps to yes/no — it walks attractiveness, ability to win, economics, and entry mode, then lands a conditional recommendation. Note how ‘build vs buy vs partner' turned an all-or-nothing question into a de-risked path.",
+steps:[
+{t:"Structure the decision",prompt:"Lay out the framework you'll use to reach a recommendation.",hint:"Four questions — adapt them to this company.",
+model:"Four questions: <b>(1) Is the market attractive?</b> — size, growth, margins, and how crowded/consolidated it is. <b>(2) Can FreshMart win?</b> — its differentiated assets (supplier relationships, fresh sourcing, brand, existing customer base, store network as pickup points) vs incumbents. <b>(3) Do the economics work?</b> — meal-kit unit economics are notoriously thin (high CAC, churn, cold-chain logistics, food waste); what's the payback? <b>(4) How to enter?</b> — build, buy an existing player, or partner/white-label.",
+rubric:["Used the four market-entry questions","Tailored ‘can we win' to FreshMart's real assets (sourcing, stores, base)","Flagged meal-kit economics as historically thin (CAC, churn, logistics)","Included entry mode (build/buy/partner) as an explicit question"]},
+{t:"Hypothesize & probe",prompt:"State your leaning and the two or three data points that would confirm or kill it.",hint:"Be falsifiable.",
+model:"Leaning: <b>cautious yes, but partner/acquire rather than build from scratch</b>, and use stores as a moat. It would be killed if: the market is already saturated with thin margins and no differentiation available; CAC/payback is worse than FreshMart's existing customer economics; or the cold-chain build is prohibitive. I'd pull market growth and incumbent margins, a CAC/LTV benchmark, and the cost of a fulfillment build vs an acquisition.",
+rubric:["Stated a falsifiable leaning","Named specific kill criteria","Identified the data that would confirm or refute it","Connected the recommendation to FreshMart's structural advantage (stores/sourcing)"]},
+{t:"Recommend with conditions",prompt:"Give the board your answer.",hint:"Go/no-go + how + conditions + risk.",
+model:"‘<b>Enter — but by acquiring or partnering with an existing meal-kit player rather than building, and by leaning on your stores as low-cost pickup/fulfillment nodes to beat rivals on last-mile cost.</b> This turns your two real advantages — fresh sourcing and a store network — into a moat pure-play rivals don't have. Conditions: proceed only if a target is available at a sane multiple and pilot CAC/payback beats your current customer economics. Biggest risk is thin unit economics, so I'd run a limited-region pilot before a national rollout.'",
+rubric:["Answer-first with a clear go/no-go","Chose an entry mode and justified it (buy/partner, not build)","Turned FreshMart's assets into the competitive angle (stores, sourcing)","Attached conditions and a de-risking pilot before full commitment"]}
+]},
+{id:"mna",cls:"gen",type:"General · M&A",title:"Should the dairy buy the juice brand?",
+blurb:"A dairy company wants to acquire a fast-growing juice brand. Decide whether the deal creates value at the asking price.",
+scenario:"<b>Alba Dairy</b> ($1.2B revenue, 9% EBITDA margin) is considering buying <b>FreshPress</b>, a juice brand with $150M revenue growing 15% a year and a 12% EBITDA margin. The seller asks <b>$360M</b>, about 20× EBITDA. Comparable listed beverage companies trade around 12 to 14× EBITDA. The CEO asks: should we do it?",
+debrief:"The arc: rationale first, then a standalone valuation, then synergies split by reliability, then a price-based recommendation with conditions. Strong candidates separate cost from revenue synergies and refuse to let optimistic synergies justify the full price.",
+steps:[
+{t:"Clarify & structure",prompt:"How do you structure the decision?",hint:"Rationale, target, synergies, valuation, risks.",
+model:"Clarify the strategic goal (growth outside slow-growing dairy?) and whether Alba has other options. Structure: <b>(1) strategic rationale</b>, <b>(2) target attractiveness</b> (market growth, FreshPress's position, earnings quality), <b>(3) synergies</b> (cost and revenue, separately), <b>(4) valuation versus price</b>, <b>(5) risks and integration</b>.",
+rubric:["Asked about the strategic goal behind the deal","Covered rationale, target, synergies, valuation and risks","Planned to treat cost and revenue synergies separately","Kept the asking price as the central test"]},
+{t:"Value the target standalone",prompt:"Estimate FreshPress's standalone value using the comparables.",hint:"EBITDA × multiple.",
+model:"EBITDA = 12% × $150M = <b>$18M</b>. At 12 to 14×, standalone value is <b>$216M to $252M</b>. A premium for 15% growth might push toward the top, say about $250M. The asking price of $360M is about <b>$110M above</b> standalone value, so synergies must cover that gap.",
+rubric:["Computed EBITDA ($18M)","Applied the 12 to 14× range ($216M to $252M)","Sized the gap to the asking price (about $110M)","Concluded synergies must justify the premium"]},
+{t:"Size synergies",prompt:"Management estimates $8M a year of cost synergies (shared distribution, procurement) and $10M a year of revenue synergies (selling juice through Alba's retail accounts). How much do you trust each?",hint:"Value each stream with a multiple and discount the uncertain one.",
+model:"Cost synergies are fairly controllable: $8M at about 10× (after integration costs) is worth about <b>$80M</b>. Revenue synergies depend on retailers and consumers; at a 25% margin, $10M of revenue is $2.5M EBITDA, and discounting by half for risk gives about <b>$12M</b> of value at 10×. Realistic synergies are about <b>$90M</b>, which doesn't fully cover the $110M premium.",
+rubric:["Treated cost synergies as more reliable","Converted revenue synergies to profit before valuing them","Discounted revenue synergies for risk","Compared total synergy value with the $110M premium"]},
+{t:"Recommend",prompt:"Give the CEO your recommendation.",hint:"Answer first with a walk-away price.",
+model:"‘<b>Do the deal, but not at $360M.</b> FreshPress is worth about $250M alone and realistic synergies add about $90M, so value to us is about $340M. I'd offer around $300M and walk away above $330M. Structure part of the price as an earn-out tied to growth, protect key founders with retention terms, and plan distribution integration before signing.'",
+rubric:["Led with a clear answer","Set a walk-away price based on the analysis","Suggested an earn-out or deal structure to share risk","Named integration and key-people risk"]}
+]},
+{id:"pricing",cls:"gen",type:"General · Pricing",title:"The software firm's price increase",
+blurb:"A B2B software company wants to raise prices 10%. Decide how, and whether it's worth the churn risk.",
+scenario:"<b>Ledgerly</b> sells accounting software to 20,000 small businesses at $50 a month. Gross margin is 80%, and annual churn is 12%. The CFO proposes a 10% price rise across the board. Sales fears churn will spike. You have usage and customer data.",
+debrief:"Good answers compute the break-even churn, segment customers by value received rather than treating them all alike, and recommend a tested, tiered approach instead of a blanket rise.",
+steps:[
+{t:"Structure",prompt:"How do you approach the decision?",hint:"Economics, customer sensitivity, design of the increase.",
+model:"Three parts: <b>(1) economics</b> (how much extra churn can the rise absorb?), <b>(2) customer sensitivity</b> (which segments get most value and have fewest alternatives?), <b>(3) design</b> (blanket rise versus tiers, timing, communication, grandfathering).",
+rubric:["Framed break-even churn as the key economic test","Planned to segment customers by value and sensitivity","Considered alternatives to a blanket rise","Included rollout and communication"]},
+{t:"Break-even churn",prompt:"How many customers could Ledgerly lose before the 10% rise stops paying off?",hint:"Compare contribution before and after.",
+model:"Today: 20,000 × $50 × 80% = <b>$800k</b> monthly contribution. After the rise, price is $55 and contribution per customer is $55 − $10 = <b>$45</b> (variable cost stays $10). Break-even customers = $800k ÷ $45 ≈ <b>17,800</b>. Ledgerly can lose about <b>2,200 customers, or 11%</b>, before it's worse off. That's a large buffer.",
+rubric:["Computed current contribution ($800k a month)","Kept variable cost fixed at $10 per customer","Found break-even at about 17,800 customers","Stated the buffer (about 11% extra churn)"]},
+{t:"Segment",prompt:"Usage data shows 30% of customers use payroll and invoicing heavily; 50% use only basic bookkeeping; 20% barely log in. How do you use this?",hint:"Value received drives willingness to pay.",
+model:"Heavy users get the most value and face high switching costs: they can bear a larger rise, ideally tied to a <b>premium tier</b>. Basic users are more price-sensitive: keep a <b>basic tier</b> near today's price. Low-usage customers are churn risks at any price: focus on <b>activation</b> before raising their price.",
+rubric:["Linked willingness to pay to value received","Proposed tiers instead of one flat rise","Protected the price-sensitive basic segment","Treated low-usage customers as an activation problem"]},
+{t:"Recommend",prompt:"Give the CFO your recommendation.",hint:"Answer first, test before rollout.",
+model:"‘<b>Raise prices, but through tiers rather than a flat 10%.</b> The economics allow up to 11% extra churn before we lose money. Launch a premium tier at about $65 for heavy payroll and invoicing users, keep basic near $50, and run an activation program for low-usage accounts. Test on new customers and one cohort first, measure churn for 60 days, then roll out with 60 days' notice to existing customers.'",
+rubric:["Led with the answer","Used the break-even to justify the decision","Recommended tiered pricing by segment","Proposed a test and a notice period before full rollout"]}
+]}
+];
+
+/* ============ CASE LAB HELPERS ============ */
+function caseDone(id){return !!(S.cases[id]&&S.cases[id].done);}
+function casesTotal(){return (window.CASES||[]).length;}
+function casesDoneN(){return (window.CASES||[]).filter(c=>caseDone(c.id)).length;}
+
+function viewLab(v){
+  setCrumb("Case Lab");
+  const groups=[
+    ["gen","General consulting cases","Classic case-interview scenarios — the reasoning transfers to any strategy or client room."],
+  ];
+  let secs='';
+  groups.forEach(g=>{
+    const items=(window.CASES||[]).filter(c=>c.cls===g[0]);
+    if(!items.length)return;
+    let cards='';
+    items.forEach(c=>{
+      const dn=caseDone(c.id);
+      cards+='<button class="modcard '+(dn?'dn':'')+'" onclick="go(\'case/'+c.id+'\')">'+
+        '<div class="top"><span class="num">'+(dn?svg(IC.check,2.5):svg(IC.target,2))+'</span>'+
+        '<h3 style="flex:1">'+c.title+'</h3><span class="casetype '+c.cls+'">'+c.type.split(" · ")[0]+'</span></div>'+
+        '<p>'+c.blurb+'</p>'+
+        '<div class="meta"><span>'+c.steps.length+' steps</span>'+(dn?'<span class="pill pass" style="font-size:10px">completed</span>':'')+
+        '<span style="margin-left:auto">'+svg(IC.arrow,2)+'</span></div></button>';
+    });
+    secs+='<div style="margin:28px 0 12px"><div class="eyebrow" style="color:var(--acc2)">'+g[1]+'</div>'+
+      '<p style="font-size:13px;color:var(--tx2);margin:4px 0 0">'+g[2]+'</p></div><div class="grid g2">'+cards+'</div>';
+  });
+  v.innerHTML='<div class="page-in">'+
+    '<div class="eyebrow">Do, don\'t just read · self-graded</div>'+
+    '<h1 class="h-hero">Case Lab</h1>'+
+    '<p class="sub">Work real cases end to end. Draft your structure, then reveal a model answer and score yourself against the rubric — the same loop a case interview runs. '+casesDoneN()+' of '+casesTotal()+' completed.</p>'+
+    '<div class="box key" style="margin-top:18px"><div class="bx-h">'+svg(IC.play,2)+' How to use it</div>For each step, think out loud — type your structure in the box — <em>then</em> reveal. Say your answer aloud and timed; the discomfort is the training. The goal isn\'t matching the model word for word, it\'s hitting the rubric and reasoning cleanly.</div>'+
+    secs+'</div>';
+}
+
+function viewCase(v,id){
+  const c=(window.CASES||[]).find(x=>x.id===id);
+  if(!c){go("lab");return;}
+  setCrumb('<b onclick="go(\'lab\')" style="cursor:pointer">Case Lab</b> / '+c.title);
+  let i=0;
+  render();
+  function render(){
+    const step=c.steps[i];
+    const notes=(S.caseNotes[id]&&S.caseNotes[id][i])||"";
+    let bar='';c.steps.forEach((s,k)=>{bar+='<i class="'+(k<i?'done':(k===i?'on':''))+'"></i>';});
+    let rub='';step.rubric.forEach(r=>{rub+='<li onclick="__rubTog(this)"><span class="cb">'+svg(IC.check,2.6)+'</span><span>'+r+'</span></li>';});
+    v.innerHTML='<div class="page-in read">'+
+      '<div class="row" style="justify-content:space-between;align-items:flex-start"><div class="eyebrow" style="flex:1">'+c.type+'</div><span class="casetype '+c.cls+'">'+c.type.split(" · ")[0]+'</span></div>'+
+      '<h1 class="h-hero" style="font-size:clamp(22px,3vw,30px);margin-top:4px">'+c.title+'</h1>'+
+      (i===0?'<div class="box" style="margin:14px 0"><div class="bx-h">'+svg(IC.target,2)+' The brief</div>'+c.scenario+'</div>':'')+
+      '<div class="stepbar">'+bar+'</div>'+
+      '<div class="eyebrow" style="color:var(--acc2)">Step '+(i+1)+' of '+c.steps.length+' · '+step.t+'</div>'+
+      '<div style="font-size:17px;font-weight:650;margin:8px 0 6px;line-height:1.4">'+step.prompt+'</div>'+
+      (step.hint?'<div style="font-size:12.5px;color:var(--tx3);margin-bottom:6px"><b>Hint:</b> '+step.hint+'</div>':'')+
+      '<label class="eyebrow" style="display:block;margin:16px 0 6px">Your working · saved locally</label>'+
+      '<textarea class="ta" id="caseNote" placeholder="Structure your thinking out loud here before revealing the model answer...">'+notes.replace(/</g,"&lt;").replace(/>/g,"&gt;")+'</textarea>'+
+      '<div class="row" style="margin-top:12px"><button class="btn pri" id="revealBtn" onclick="__caseReveal()">Reveal model answer &amp; rubric</button></div>'+
+      '<div class="reveal" id="reveal"><h4>Model answer</h4><div class="model">'+step.model+'</div>'+
+        '<div class="eyebrow" style="color:var(--acc2);margin-top:16px">Did your answer hit these? · tap to self-check</div>'+
+        '<ul class="rubric">'+rub+'</ul>'+
+        '<div class="row" style="margin-top:18px;justify-content:flex-end">'+
+          (i>0?'<button class="btn sm ghost" onclick="__casePrev()">← Previous</button>':'')+
+          '<button class="btn '+(i===c.steps.length-1?'gold':'pri')+'" onclick="__caseNext()">'+(i===c.steps.length-1?'Finish case':'Next step')+' '+svg(IC.arrow,2)+'</button></div>'+
+      '</div></div>';
+    const note=document.getElementById("caseNote");
+    note.addEventListener("input",function(){if(!S.caseNotes[id])S.caseNotes[id]={};S.caseNotes[id][i]=note.value;save();});
+  }
+  window.__rubTog=function(el){el.classList.toggle("on");};
+  window.__caseReveal=function(){var r=document.getElementById("reveal");r.classList.add("show");document.getElementById("revealBtn").style.display="none";r.scrollIntoView({behavior:"smooth",block:"nearest"});};
+  window.__casePrev=function(){if(i>0){i--;render();window.scrollTo(0,0);}};
+  window.__caseNext=function(){
+    if(i<c.steps.length-1){i++;render();window.scrollTo(0,0);}
+    else{
+      const first=!caseDone(id);
+      S.cases[id]={done:true,ts:Date.now()};save();touchStreak();
+      if(first)addXP(45,"Case completed!");
+      caseSummary();
+    }
+  };
+  function caseSummary(){
+    v.innerHTML='<div class="page-in result-hero">'+
+      '<div style="width:78px;height:78px;border-radius:50%;background:var(--goodwash);color:var(--good);display:grid;place-items:center;margin:0 auto 12px"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>'+
+      '<div class="eyebrow" style="color:var(--good)">Case complete</div>'+
+      '<h2 style="margin:6px 0 8px">'+c.title+'</h2>'+
+      '<p class="sub" style="margin:0 auto 22px">'+c.debrief+'</p>'+
+      '<div class="row" style="justify-content:center"><button class="btn" onclick="go(\'lab\')">Back to Case Lab</button><button class="btn pri" onclick="retryCase(\''+id+'\')">Run it again</button></div></div>';
+    window.scrollTo(0,0);renderNav();renderChrome();
+  }
+}
+function retryCase(id){viewCase(document.getElementById("view"),id);window.scrollTo(0,0);}
+</script>
+<script>
+/* ============ CHARTS ============ */
+function activitySpark(){
+  const days=14;const base=new Date(new Date().toISOString().slice(0,10)+"T00:00:00");
+  const arr=[];for(let k=days-1;k>=0;k--){const dd=new Date(base);dd.setDate(dd.getDate()-k);const key=dd.toISOString().slice(0,10);arr.push({key,v:(S.activity&&S.activity[key])||0});}
+  const max=Math.max(1,...arr.map(a=>a.v));const total=arr.reduce((s,a)=>s+a.v,0);
+  const W=100,H=40,gap=1.6,bw=(W-gap*(days-1))/days;
+  let bars='';arr.forEach((a,i)=>{const h=a.v?Math.max(2.5,a.v/max*H):1.2;const x=i*(bw+gap);const y=H-h;const cur=i===days-1;
+    bars+='<rect x="'+x.toFixed(2)+'" y="'+y.toFixed(2)+'" width="'+bw.toFixed(2)+'" height="'+h.toFixed(2)+'" rx="1" fill="'+(a.v?"var(--acc)":"var(--line)")+'" opacity="'+(a.v?(cur?1:0.82):1)+'"><title>'+a.key+" · "+a.v+" XP</title></rect>";});
+  return '<div class="chartcard"><div class="row" style="justify-content:space-between;margin-bottom:8px"><span class="eyebrow">XP earned · last 14 days</span><span class="mono" style="font-size:13px;font-weight:700;color:var(--acc)">'+total+'</span></div>'+
+    '<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" style="width:100%;height:58px;display:block" role="img" aria-label="Experience points earned each of the last 14 days">'+bars+'</svg>'+
+    '<div class="mono" style="font-size:10px;color:var(--tx3);display:flex;justify-content:space-between;margin-top:5px"><span>14 days ago</span><span>today</span></div></div>';
+}
+function masteryChart(){
+  let rows='';M.forEach(m=>{const p=modPct(m);rows+='<div class="mrow"><span class="mn">'+m.n+'</span><span class="ml" title="'+m.t+'">'+m.t+'</span><div class="bar" style="flex:1"><i style="width:'+p+'%"></i></div><span class="mp">'+p+'%</span></div>';});
+  return '<div class="chartcard"><div class="eyebrow" style="margin-bottom:10px">Mastery by module</div>'+rows+'</div>';
+}
+/* ============ EXERCISE ENGINES ============ */
+window.__EX=window.__EX||{};
+function _norm(s){return (s||"").trim().toLowerCase().replace(/\s+/g," ").replace(/[;]+$/,"");}
+function exFillcodeHTML(x,key){
+  window.__EX[key]=x;
+  let esc=x.code.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  esc=esc.replace(/\[\[(\d+)\]\]/g,function(_,n){const b=x.blanks[+n-1];const sz=Math.max(4,(b.a[0]||"").length+1);return '<input class="blankin" data-ex="'+key+'" data-n="'+(+n-1)+'" size="'+sz+'" placeholder="'+(b.ph||"?")+'" aria-label="blank '+n+'" autocapitalize="off" autocorrect="off" spellcheck="false">';});
+  return '<div class="exbox"><div class="ex-h">'+svg(IC.play,2)+' Code completion · '+x.title+'</div>'+
+    (x.intro?'<div class="ex-i">'+x.intro+'</div>':'')+
+    '<pre class="codeex">'+esc+'</pre>'+
+    '<div class="row" style="margin-top:11px"><button class="btn sm pri" onclick="checkFill(\''+key+'\')">Check</button><button class="btn sm ghost" onclick="revealFill(\''+key+'\')">Reveal</button><span class="exmsg" id="msg_'+key+'"></span></div>'+
+    '<div class="why" data-why="'+key+'"><b>Why:</b> '+x.why+'</div></div>';
+}
+function checkFill(key){
+  const x=window.__EX[key];let all=true;
+  document.querySelectorAll('[data-ex="'+key+'"]').forEach(inp=>{const n=+inp.dataset.n;const acc=x.blanks[n].a.map(_norm);const ok=acc.indexOf(_norm(inp.value))>-1;inp.classList.remove("ok","bad");inp.classList.add(ok?"ok":"bad");if(!ok)all=false;});
+  const msg=document.getElementById("msg_"+key);
+  if(all){msg.className="exmsg ok";msg.textContent="All correct ✓";document.querySelector('[data-why="'+key+'"]').classList.add("show");if(!S.drills[key]){S.drills[key]=1;save();touchStreak();addXP(12,"Exercise solved");}}
+  else{msg.className="exmsg bad";msg.textContent="Some blanks are off — adjust or reveal";}
+}
+function revealFill(key){
+  const x=window.__EX[key];
+  document.querySelectorAll('[data-ex="'+key+'"]').forEach(inp=>{const n=+inp.dataset.n;inp.value=x.blanks[n].a[0];inp.classList.remove("bad");inp.classList.add("ok");});
+  document.querySelector('[data-why="'+key+'"]').classList.add("show");const msg=document.getElementById("msg_"+key);msg.className="exmsg";msg.textContent="";
+}
+function exOrderHTML(x,key){
+  window.__EX[key]=x;
+  const idx=x.items.map((_,i)=>i);
+  for(let i=idx.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));const t=idx[i];idx[i]=idx[j];idx[j]=t;}
+  // guard against accidental already-sorted shuffle
+  if(idx.every((v,i)=>v===i)&&idx.length>1){idx.push(idx.shift());}
+  let lis='';idx.forEach(oi=>{lis+='<li class="ordli" data-idx="'+oi+'"><span class="ord-move"><button class="ord-btn" onclick="orderMove(this,-1)" aria-label="Move up">▲</button><button class="ord-btn" onclick="orderMove(this,1)" aria-label="Move down">▼</button></span><span class="ord-num"></span><span>'+x.items[oi]+'</span></li>';});
+  return '<div class="exbox"><div class="ex-h">'+svg(IC.play,2)+' Put it in order · '+x.title+'</div>'+
+    (x.intro?'<div class="ex-i">'+x.intro+'</div>':'')+
+    '<ul class="orderlist" id="ord_'+key+'">'+lis+'</ul>'+
+    '<div class="row" style="margin-top:11px"><button class="btn sm pri" onclick="checkOrder(\''+key+'\')">Check order</button><span class="exmsg" id="msg_'+key+'"></span></div>'+
+    '<div class="why" data-why="'+key+'"><b>Why:</b> '+x.why+'</div></div>';
+}
+function orderMove(btn,dir){
+  const li=btn.closest("li");const list=li.parentNode;
+  if(dir<0){const prev=li.previousElementSibling;if(prev)list.insertBefore(li,prev);}
+  else{const next=li.nextElementSibling;if(next)list.insertBefore(next,li);}
+}
+function checkOrder(key){
+  const list=document.getElementById("ord_"+key);const lis=list.querySelectorAll("li");let ok=true;
+  lis.forEach((li,pos)=>{const good=(+li.dataset.idx===pos);li.classList.remove("ok","bad");li.classList.add(good?"ok":"bad");if(!good)ok=false;});
+  const msg=document.getElementById("msg_"+key);
+  if(ok){msg.className="exmsg ok";msg.textContent="Correct order ✓";document.querySelector('[data-why="'+key+'"]').classList.add("show");if(!S.drills[key]){S.drills[key]=1;save();touchStreak();addXP(12,"Exercise solved");}}
+  else{msg.className="exmsg bad";msg.textContent="Not quite — reorder and check again";}
+}
+</script>
+<!--INSERT-->
+<script>
+/* =================== STATE / STORAGE =================== */
+const KEY="handbook_v1";
+const DEF={xp:0,streak:0,last:null,started:null,lessons:{},quizzes:{},exams:{},cards:{},drills:{},seen:{},cases:{},caseNotes:{},activity:{}};
+let S=load();
+function load(){try{const r=JSON.parse(localStorage.getItem(KEY));return Object.assign({},DEF,r||{})}catch(e){return Object.assign({},DEF)}}
+function save(){localStorage.setItem(KEY,JSON.stringify(S))}
+function today(){return new Date().toISOString().slice(0,10)}
+function daysBetween(a,b){return Math.round((new Date(b)-new Date(a))/864e5)}
+
+function touchStreak(){
+  const t=today();
+  if(!S.started)S.started=t;
+  if(S.last===t){save();return}
+  if(S.last){const d=daysBetween(S.last,t);S.streak=(d===1)?S.streak+1:1;}else{S.streak=1;}
+  S.last=t;save();
+}
+function addXP(n,label){
+  S.xp+=n;
+  const t=today();if(!S.activity)S.activity={};S.activity[t]=(S.activity[t]||0)+n;
+  save();renderChrome();
+  toast((label||"XP earned"),n);
+}
+/* =================== CONTENT INDEX =================== */
+const M=window.MODULES;
+const CARDS=window.CARDS;
+const modById=id=>M.find(m=>m.id===id);
+function allLessons(){let a=[];M.forEach(m=>m.lessons.forEach(l=>a.push({m,l})));return a;}
+function lessonDone(mid,lid){return !!(S.lessons[mid+"."+lid]);}
+function modLessonsDone(m){return m.lessons.filter(l=>lessonDone(m.id,l.id)).length;}
+function modPct(m){const tot=m.lessons.length+(m.exam?1:0);let d=modLessonsDone(m);if(m.exam&&examPassed(m.id))d++;return tot?Math.round(d/tot*100):0;}
+function examPassed(mid){const e=S.exams[mid];return e&&e.passed;}
+function overall(){
+  let tot=0,done=0;
+  M.forEach(m=>{tot+=m.lessons.length;done+=modLessonsDone(m);if(m.exam){tot++;if(examPassed(m.id))done++;}});
+  return {tot,done,pct:tot?Math.round(done/tot*100):0};
+}
+/* spaced repetition (Leitner) */
+const SR_INT=[0,1,3,7,16,35];
+function cardState(id){return S.cards[id]||{box:0,due:today(),seen:false}}
+function cardsDue(){return CARDS.filter(c=>{const st=cardState(c.id);return st.due<=today()}).length}
+function gradeCard(id,ok){
+  let st=cardState(id);st.seen=true;
+  if(ok)st.box=Math.min(st.box+1,SR_INT.length-1);else st.box=Math.max(0,st.box-1);
+  const dd=new Date();dd.setDate(dd.getDate()+SR_INT[st.box]);
+  st.due=dd.toISOString().slice(0,10);
+  S.cards[id]=st;save();
+}
+
+/* =================== ICONS =================== */
+const IC={
+  home:'<path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/>',
+  book:'<path d="M4 5a2 2 0 012-2h13v16H6a2 2 0 00-2 2z"/><path d="M19 3v16"/>',
+  cards:'<rect x="3" y="6" width="14" height="14" rx="2"/><path d="M7 6V4a2 2 0 012-2h9a2 2 0 012 2v12a2 2 0 01-2 2h-1"/>',
+  target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/>',
+  award:'<circle cx="12" cy="9" r="6"/><path d="M9 14l-1.5 8 4.5-3 4.5 3L15 14"/>',
+  check:'<path d="M20 6L9 17l-5-5"/>',
+  lock:'<rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/>',
+  arrow:'<path d="M5 12h14M13 6l6 6-6 6"/>',
+  play:'<path d="M6 4l14 8-14 8z" fill="currentColor" stroke="none"/>',
+  reset:'<path d="M3 12a9 9 0 109-9 9 9 0 00-6.7 3M3 4v4h4"/>'
+};
+function svg(p,w){return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="'+(w||2)+'" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>';}
+
+/* =================== ROUTER =================== */
+function go(h){location.hash=h}
+window.addEventListener("hashchange",route);
+function route(){
+  const h=location.hash.replace(/^#\/?/,"")||"dashboard";
+  const p=h.split("/");
+  closeRail();
+  if(window.__examTimer){clearInterval(window.__examTimer);window.__examTimer=null;}
+  const v=document.getElementById("view");
+  v.scrollTop=0;window.scrollTo(0,0);
+  const rb=document.getElementById("readbar");if(rb){rb.style.opacity=0;rb.querySelector("i").style.width="0";}
+  if(p[0]==="dashboard")viewDash(v);
+  else if(p[0]==="cards")viewCards(v);
+  else if(p[0]==="lab")viewLab(v);
+  else if(p[0]==="case")viewCase(v,p[1]);
+  else if(p[0]==="final")viewFinal(v);
+  else if(p[0]==="module")viewModule(v,p[1]);
+  else if(p[0]==="lesson")viewLesson(v,p[1],p[2]);
+  else if(p[0]==="exam")viewExam(v,p[1]);
+  else viewDash(v);
+  renderNav();
+}
+
+/* =================== CHROME =================== */
+function renderChrome(){
+  document.getElementById("xpN").textContent=S.xp;
+  document.getElementById("streakN").textContent=S.streak;
+  const o=overall();
+  document.getElementById("railPct").textContent=o.pct+"%";
+  document.getElementById("railBar").style.width=o.pct+"%";
+  document.getElementById("railSub").textContent=o.done+" of "+o.tot+" units complete";
+}
+function renderNav(){
+  const nav=document.getElementById("nav");
+  const h=location.hash.replace(/^#\/?/,"")||"dashboard";
+  let html='';
+  const top=[["dashboard","home","Dashboard"],["lab","target","Case Lab"],["cards","cards","Flashcards"],["final","award","Interview Gauntlet"]];
+  top.forEach(t=>{
+    const seg=h.split("/")[0];
+    const on=(seg===t[0])||(t[0]==="lab"&&seg==="case");
+    html+='<button class="navitem '+(on?"on":"")+'" onclick="go(\''+t[0]+'\')"><span class="ico">'+svg(IC[t[1]],2)+'</span><span class="lbl">'+t[2]+'</span>'+(t[0]==="cards"&&cardsDue()>0?'<span class="pct" style="color:var(--gold);font-weight:700">'+cardsDue()+' due</span>':'')+'</button>';
+  });
+  html+='<div class="navsec">Curriculum</div>';
+  M.forEach((m,i)=>{
+    const on=(h.split("/")[1]===m.id);
+    const pct=modPct(m);const dn=pct===100;
+    html+='<button class="navitem '+(on?"on":"")+'" onclick="go(\'module/'+m.id+'\')">'+
+      '<span class="ico '+(dn?"navdone":"")+'" style="'+(dn?"background:var(--goodwash)":"")+'">'+(dn?svg(IC.check,2.4):m.n)+'</span>'+
+      '<span class="lbl">'+m.t+'</span>'+
+      '<span class="pct">'+pct+'%</span></button>';
+  });
+  nav.innerHTML=html;
+}
+function setCrumb(t){document.getElementById("crumb").innerHTML=t}
+
+/* =================== DASHBOARD =================== */
+function viewDash(v){
+  setCrumb("Dashboard");
+  const o=overall();
+  const due=cardsDue();
+  const nextA=nextAction();
+  const rank=rankFor(S.xp);
+  let mods='';
+  M.forEach(m=>{
+    const pct=modPct(m);const dn=pct===100;const done=modLessonsDone(m);
+    mods+='<button class="modcard '+(dn?"dn":"")+'" onclick="go(\'module/'+m.id+'\')">'+
+      '<div class="top"><span class="num">'+(dn?svg(IC.check,2.5):m.n)+'</span>'+
+      '<h3>'+m.t+'</h3>'+(m.spine?'<span class="tag spine">Spine</span>':'')+(m.added?'<span class="tag added">Expanded</span>':'')+'</div>'+
+      '<p>'+m.sub+'</p>'+
+      '<div class="bar"><i style="width:'+pct+'%"></i></div>'+
+      '<div class="meta"><span>'+done+'/'+m.lessons.length+' lessons</span>'+
+      (m.exam?'<span>'+(examPassed(m.id)?'✓ exam':'exam pending')+'</span>':'')+
+      '<span style="margin-left:auto;color:var(--acc)">'+pct+'%</span></div></button>';
+  });
+  v.innerHTML='<div class="page-in">'+
+    '<div class="eyebrow">Judgment under uncertainty · your operating system</div>'+
+    '<h1 class="h-hero">Welcome back'+(S.started?'':', let\'s begin')+'.</h1>'+
+    '<p class="sub">A book you can <em>do</em>. Read, drill, get checked, and track mastery across the consulting craft, from how firms work to cracking any case.</p>'+
+    '<div class="grid g4" style="margin:26px 0">'+
+      tile("Progress",o.pct+"%",o.done+" / "+o.tot+" units","accent")+
+      tile("Experience",S.xp,rank.name,"gold")+
+      tile("Day streak",S.streak,S.streak>0?"keep it alive":"start today","")+
+      tile("Cards due",due,due>0?"review is where it sticks":"all reviewed ✓","")+
+    '</div>'+
+    '<div class="card" style="display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-bottom:26px;background:var(--accwash);border-color:var(--accdim)">'+
+      '<div class="ring" style="--v:'+o.pct+'"><b>'+o.pct+'%</b></div>'+
+      '<div style="flex:1;min-width:220px"><div class="eyebrow" style="color:var(--acc2)">Recommended next</div>'+
+      '<div style="font-size:17px;font-weight:700;margin:3px 0 2px">'+nextA.title+'</div>'+
+      '<div style="font-size:13.5px;color:var(--tx2)">'+nextA.sub+'</div></div>'+
+      '<button class="btn pri" onclick="go(\''+nextA.href+'\')">'+nextA.cta+' '+svg(IC.arrow,2)+'</button>'+
+    '</div>'+
+    '<div class="row" style="justify-content:space-between;margin:4px 0 14px"><h3 style="font-size:16px">Your learning</h3>'+
+      '<span class="mono" style="font-size:12px;color:var(--tx3)">'+rank.name+'</span></div>'+
+    '<div class="grid g2" style="margin-bottom:28px">'+activitySpark()+masteryChart()+'</div>'+
+    '<div class="row" style="justify-content:space-between;margin-bottom:14px"><h3 style="font-size:16px">Curriculum</h3>'+
+      '<span class="mono" style="font-size:12px;color:var(--tx3)">'+M.length+' modules · '+allLessons().length+' lessons</span></div>'+
+    '<div class="grid g2">'+mods+'</div>'+
+    '<div class="divider"></div>'+
+    '<div class="row" style="justify-content:space-between;margin-bottom:14px"><h3 style="font-size:16px">Practice & performance</h3></div>'+
+    '<div class="grid g3">'+
+      dashLink("lab","Case Lab — mock cases","Work real consulting cases end to end: draft your structure, reveal a model answer, score yourself on the rubric.",casesDoneN()+" / "+casesTotal()+" done")+
+      dashLink("cards","Flashcards & spaced repetition","Numbers to know cold and the one-liners that win rooms. Reviews resurface on a +1w / +1m schedule.",due>0?due+" cards due":"deck ready")+
+      dashLink("final","The Interview Gauntlet","A mixed final drawn from every chapter, plus the three-depth case drill.",finalStatus())+
+    '</div>'+
+    '<div class="row" style="justify-content:center;gap:10px;margin-top:32px">'+
+      '<button class="btn ghost sm" onclick="openBackup()">'+svg(IC.book,2)+' Backup &amp; restore</button>'+
+      (S.xp>0?'<button class="btn ghost sm" onclick="resetAll()">'+svg(IC.reset,2)+' Reset progress</button>':'')+
+    '</div>'+
+  '</div>';
+}
+function tile(lab,big,foot,cls){return '<div class="tile '+cls+'"><div class="lab">'+lab+'</div><div class="big">'+big+'</div><div class="foot">'+foot+'</div></div>';}
+function dashLink(href,t,d,badge){var ic=href==="cards"?"cards":(href==="lab"?"target":"award");return '<button class="modcard" onclick="go(\''+href+'\')"><div class="top"><span class="num">'+svg(IC[ic],2)+'</span><h3 style="font-size:14.5px">'+t+'</h3></div><p>'+d+'</p><div class="meta"><span style="color:var(--acc)">'+badge+'</span><span style="margin-left:auto">'+svg(IC.arrow,2)+'</span></div></button>';}
+function finalStatus(){const e=S.exams["final"];return e?(e.passed?"passed · "+e.best+"%":"attempted · "+e.best+"%"):"not attempted";}
+
+function nextAction(){
+  for(const m of M){
+    for(const l of m.lessons){if(!lessonDone(m.id,l.id))return{title:m.t+" — "+l.t,sub:"Continue where you left off · ~"+l.min+" min",cta:"Resume",href:"lesson/"+m.id+"/"+l.id};}
+    if(m.exam&&!examPassed(m.id))return{title:m.t+" — Module Exam",sub:"All lessons done. Lock it in.",cta:"Take exam",href:"exam/"+m.id};
+  }
+  if(cardsDue()>0)return{title:"Review "+cardsDue()+" flashcards",sub:"Spaced repetition keeps it retrievable.",cta:"Review",href:"cards"};
+  return{title:"The Interview Gauntlet",sub:"You've completed the curriculum. Prove it.",cta:"Start",href:"final"};
+}
+function rankFor(xp){
+  const r=[[0,"Aspirant"],[150,"Analyst"],[400,"Associate"],[800,"Consultant"],[1400,"Senior Consultant"],[2200,"Principal"],[3200,"Trusted Advisor"]];
+  let cur=r[0];r.forEach(x=>{if(xp>=x[0])cur=x});return{name:cur[1]};
+}
+
+/* =================== MODULE VIEW =================== */
+function viewModule(v,mid){
+  const m=modById(mid);if(!m){go("dashboard");return}
+  setCrumb('<b onclick="go(\'dashboard\')" style="cursor:pointer">Curriculum</b> / '+m.t);
+  const pct=modPct(m);
+  let ls='';
+  m.lessons.forEach((l,i)=>{
+    const dn=lessonDone(m.id,l.id);
+    const locked=false;
+    ls+='<button class="modcard" style="flex-direction:row;align-items:center" onclick="go(\'lesson/'+m.id+'/'+l.id+'\')">'+
+      '<span class="num" style="'+(dn?"background:var(--acc);color:var(--onfill)":"")+'">'+(dn?svg(IC.check,2.5):(i+1))+'</span>'+
+      '<div style="flex:1;text-align:left"><div style="font-weight:650;font-size:14.5px">'+l.t+'</div>'+
+      '<div class="mono" style="font-size:11px;color:var(--tx3)">'+(l.drill?"interactive · ":"")+'~'+l.min+' min'+(l.checks?' · '+l.checks.length+' checks':'')+'</div></div>'+
+      (dn?'<span class="pill pass" style="font-size:10px">done</span>':'')+svg(IC.arrow,2)+'</button>';
+  });
+  let examBlock='';
+  if(m.exam){
+    const passed=examPassed(m.id);const allDone=modLessonsDone(m)===m.lessons.length;
+    const e=S.exams[m.id];
+    examBlock='<div class="divider"></div><div class="card" style="background:'+(passed?'var(--goodwash)':'var(--surf)')+';border-color:'+(passed?'var(--good)':'var(--line)')+'">'+
+      '<div class="row" style="justify-content:space-between"><div><div class="eyebrow" style="color:'+(passed?'var(--good)':'var(--acc2)')+'">Checkpoint</div>'+
+      '<div style="font-size:17px;font-weight:750;margin-top:2px">Module Exam</div>'+
+      '<div style="font-size:13px;color:var(--tx2);margin-top:2px">'+m.exam.length+' questions · pass at 75% · '+(e?("best "+e.best+"%"):"not attempted")+'</div></div>'+
+      '<button class="btn '+(passed?'':'pri')+'" '+(allDone?'':'disabled title="Finish all lessons first"')+' onclick="go(\'exam/'+m.id+'\')">'+(passed?'Retake':(allDone?'Take exam':'Locked'))+'</button></div></div>';
+  }
+  v.innerHTML='<div class="page-in">'+
+    '<div class="eyebrow">Module '+m.n+(m.spine?' · minimum-viable spine':'')+(m.added?' · expanded beyond source':'')+'</div>'+
+    '<h1 class="h-hero">'+m.t+'</h1><p class="sub">'+m.sub+'</p>'+
+    '<div class="row" style="margin:18px 0 8px;gap:16px"><div class="bar" style="flex:1"><i style="width:'+pct+'%"></i></div><span class="mono" style="font-size:13px;font-weight:700;color:var(--acc)">'+pct+'%</span></div>'+
+    '<div class="grid" style="gap:11px;margin-top:18px">'+ls+'</div>'+examBlock+'</div>';
+}
+
+/* =================== LESSON VIEW =================== */
+function viewLesson(v,mid,lid){
+  const m=modById(mid);if(!m){go("dashboard");return}
+  const idx=m.lessons.findIndex(l=>l.id===lid);const l=m.lessons[idx];if(!l){go("module/"+mid);return}
+  setCrumb('<b onclick="go(\'module/'+m.id+'\')" style="cursor:pointer">'+m.t+'</b> / '+l.t);
+  const dn=lessonDone(mid,lid);
+  let html='<div class="page-in read">'+
+    '<div class="eyebrow">Module '+m.n+' · Lesson '+(idx+1)+' of '+m.lessons.length+'</div>'+
+    '<h1 class="h-hero" style="font-size:clamp(24px,3.5vw,32px)">'+l.t+'</h1>'+
+    '<div id="laSlot"></div>'+
+    '<div class="prose" style="margin-top:18px">'+l.html+'</div>';
+  if(l.drill)html+=drillHTML(l.drill);
+  if(l.checks){
+    html+='<div class="divider"></div><div class="eyebrow" style="color:var(--acc2)">Check your understanding</div>';
+    l.checks.forEach((c,i)=>{html+=quizHTML(c,mid+"_"+lid+"_c"+i,"Check "+(i+1));});
+  }
+  if(l.ex){
+    html+='<div class="divider"></div><div class="eyebrow" style="color:var(--acc2)">Practice exercises</div>';
+    l.ex.forEach((x,i)=>{const key=mid+"_"+lid+"_ex"+i;html+=(x.type==="order")?exOrderHTML(x,key):exFillcodeHTML(x,key);});
+  }
+  html+='<div class="divider"></div><div class="row" style="justify-content:space-between">'+
+    (idx>0?'<button class="btn sm ghost" onclick="go(\'lesson/'+mid+'/'+m.lessons[idx-1].id+'\')">← Previous</button>':'<span></span>')+
+    '<button class="btn pri" id="doneBtn" onclick="completeLesson(\''+mid+'\',\''+lid+'\','+idx+')">'+(dn?'Completed ✓ · Continue':'Mark complete')+' '+svg(IC.arrow,2)+'</button></div>';
+  html+='</div>';
+  v.innerHTML=html;
+  if(window.LessonAudio)LessonAudio.mount(document.getElementById('laSlot'),{course:'handbook',mid:mid,lid:lid,title:l.t,module:m.t,nextHash:m.lessons[idx+1]?'lesson/'+mid+'/'+m.lessons[idx+1].id:''});
+  bindQuizzes();
+  if(l.drill)bindDrill(l.drill);
+}
+function completeLesson(mid,lid,idx){
+  const m=modById(mid);const first=!lessonDone(mid,lid);
+  if(first){S.lessons[mid+"."+lid]={done:true,ts:Date.now()};save();touchStreak();addXP(20,"Lesson complete");}
+  const next=m.lessons[idx+1];
+  if(next)go("lesson/"+mid+"/"+next.id);
+  else if(m.exam&&!examPassed(mid))go("exam/"+mid);
+  else go("module/"+mid);
+}
+
+/* =================== QUIZ ENGINE =================== */
+function quizHTML(c,id,label){
+  let opts='';
+  c.opts.forEach((o,i)=>{opts+='<button class="opt" data-i="'+i+'" data-a="'+c.a+'" data-q="'+id+'"><span class="mk">'+String.fromCharCode(65+i)+'</span><span>'+o+'</span></button>';});
+  return '<div class="quiz" data-quiz="'+id+'"><div class="qh"><span class="qi">'+(label||"Question")+'</span></div>'+
+    '<div class="qq">'+c.q+'</div>'+opts+'<div class="why" data-why="'+id+'"><b>Why:</b> '+c.why+'</div></div>';
+}
+function bindQuizzes(){
+  document.querySelectorAll(".opt").forEach(b=>{
+    b.addEventListener("click",function(){
+      const q=this.dataset.q;const wrap=document.querySelector('[data-quiz="'+q+'"]');
+      if(wrap.dataset.answered)return;wrap.dataset.answered="1";
+      const a=+this.dataset.a;const chosen=+this.dataset.i;
+      wrap.querySelectorAll(".opt").forEach(o=>{
+        o.classList.add("locked");const oi=+o.dataset.i;
+        if(oi===a)o.classList.add("correct");
+        else if(oi===chosen)o.classList.add("wrong");
+        else o.classList.add("muted");
+      });
+      const why=wrap.querySelector(".why");why.classList.add("show");
+      if(chosen!==a)why.classList.add("bad");
+      if(!S.seen[q]){S.seen[q]=1;save();if(chosen===a)addXP(6,"Correct");}
+    });
+  });
+}
+
+/* =================== DRILL ENGINE =================== */
+function drillHTML(key){
+  const d=DRILLS[key];if(!d)return"";
+  let f='';d.fields.forEach(x=>{f+='<div class="field"><label>'+x.label+'</label><input type="number" step="any" id="'+key+'_'+x.id+'" value="'+x.def+'"></div>';});
+  return '<div class="drill" id="drill_'+key+'"><h4>'+svg(IC.play,2)+' '+d.title+'</h4><div class="di">'+d.desc+'</div>'+
+    '<div class="fields">'+f+'</div>'+
+    '<div class="dout" id="'+key+'_out"></div>'+
+    (d.guess?'<div class="dguess"><div class="field" style="max-width:180px"><label>'+d.guess.label+'</label><input type="number" step="any" id="'+key+'_guess" placeholder="your estimate"></div><button class="btn sm" onclick="checkGuess(\''+key+'\')">Check my estimate</button><span class="verdict" id="'+key+'_verdict"></span></div><div style="font-size:12px;color:var(--tx3);margin-top:8px">'+d.tip+'</div>':'')+'</div>';
+}
+function bindDrill(key){const d=DRILLS[key];d.fields.forEach(x=>{document.getElementById(key+'_'+x.id).addEventListener("input",()=>runDrill(key));});runDrill(key);}
+function val(key,id){return parseFloat(document.getElementById(key+'_'+id).value)||0;}
+function runDrill(key){DRILLS[key].compute(key);}
+function checkGuess(key){
+  const d=DRILLS[key];const g=parseFloat(document.getElementById(key+'_guess').value);
+  const truth=d.answer(key);const v=document.getElementById(key+'_verdict');
+  if(isNaN(g)){v.className="verdict no";v.textContent="Enter a number";return}
+  const err=Math.abs(g-truth)/Math.abs(truth);
+  if(err<=0.2){v.className="verdict ok";v.textContent="Within range ✓ (actual "+d.fmt(truth)+")";if(!S.drills[key]){S.drills[key]=1;save();addXP(12,"Drill solved");}}
+  else{v.className="verdict no";v.textContent="Off — actual is "+d.fmt(truth);}
+}
+
+/* =================== EXAM ENGINE =================== */
+function viewExam(v,mid){
+  const isFinal=mid==="final";
+  const m=isFinal?null:modById(mid);
+  const qs=isFinal?FINAL:(m?m.exam:null);
+  if(!qs){go("dashboard");return}
+  const title=isFinal?"The Interview Gauntlet":m.t+" — Exam";
+  setCrumb((isFinal?'<b onclick="go(\'final\')" style="cursor:pointer">Gauntlet</b>':'<b onclick="go(\'module/'+mid+'\')" style="cursor:pointer">'+m.t+'</b>')+' / Exam');
+  let state={i:0,answers:[],qs:shuffle(qs.slice())};
+  const startT=Date.now();
+  if(window.__examTimer)clearInterval(window.__examTimer);
+  window.__examTimer=setInterval(function(){const el=document.getElementById("examClock");if(el){const s=Math.floor((Date.now()-startT)/1000);el.textContent=String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0");}},1000);
+  renderExamQ();
+  function renderExamQ(){
+    delete v.dataset.locked;
+    const q=state.qs[state.i];
+    let opts='';q.opts.forEach((o,i)=>{opts+='<button class="opt" onclick="window.__pick('+i+')" data-i="'+i+'"><span class="mk">'+String.fromCharCode(65+i)+'</span><span>'+o+'</span></button>';});
+    v.innerHTML='<div class="page-in read">'+
+      '<div class="row" style="justify-content:space-between;align-items:center"><div class="eyebrow">'+title+'</div><span class="mono" id="examClock" style="font-size:12px;color:var(--tx3)" title="Elapsed time">00:00</span></div>'+
+      '<div class="row" style="justify-content:space-between;margin:6px 0 4px"><span class="mono" style="font-size:12px;color:var(--tx3)">Question '+(state.i+1)+' / '+state.qs.length+'</span><span class="mono" style="font-size:12px;color:var(--acc)">'+Math.round(state.i/state.qs.length*100)+'%</span></div>'+
+      '<div class="bar" style="margin-bottom:22px"><i style="width:'+(state.i/state.qs.length*100)+'%"></i></div>'+
+      '<div class="qq" style="font-size:18px;font-weight:700;margin-bottom:18px">'+q.q+'</div>'+opts+
+      '<div class="why" data-examwhy><b>Why:</b> '+q.why+'</div>'+
+      '<div class="row" style="justify-content:space-between;margin-top:16px"><span class="keyhint hide-sm">Keys <span class="kbd">1</span>–<span class="kbd">'+q.opts.length+'</span> or <span class="kbd">A</span>–<span class="kbd">'+String.fromCharCode(64+q.opts.length)+'</span> · <span class="kbd">Enter</span> next</span><button class="btn pri" id="examNext" style="display:none" onclick="window.__next()">'+(state.i===state.qs.length-1?'See results':'Next question')+' '+svg(IC.arrow,2)+'</button></div>'+
+    '</div>';
+  }
+  window.__pick=function(i){
+    const q=state.qs[state.i];const wrap=v;if(wrap.dataset.locked)return;wrap.dataset.locked="1";
+    v.querySelectorAll(".opt").forEach(o=>{o.classList.add("locked");const oi=+o.dataset.i;
+      if(oi===q.a)o.classList.add("correct");else if(oi===i)o.classList.add("wrong");else o.classList.add("muted");});
+    state.answers.push(i===q.a);
+    const w=v.querySelector("[data-examwhy]");w.classList.add("show");if(i!==q.a)w.classList.add("bad");
+    document.getElementById("examNext").style.display="inline-flex";
+  };
+  window.__next=function(){
+    delete v.dataset.locked;
+    if(state.i<state.qs.length-1){state.i++;renderExamQ();window.scrollTo(0,0);}
+    else finishExam();
+  };
+  function finishExam(){
+    if(window.__examTimer){clearInterval(window.__examTimer);window.__examTimer=null;}
+    const elapsed=Math.floor((Date.now()-startT)/1000);
+    const elapStr=String(Math.floor(elapsed/60)).padStart(2,"0")+":"+String(elapsed%60).padStart(2,"0");
+    const correct=state.answers.filter(Boolean).length;
+    const pct=Math.round(correct/state.qs.length*100);const passed=pct>=75;
+    const prev=S.exams[mid]||{best:0};
+    const best=Math.max(prev.best||0,pct);
+    const firstPass=passed&&!examPassed(mid);
+    S.exams[mid]={best,passed:passed||(prev.passed),lastPct:pct,ts:Date.now()};save();touchStreak();
+    if(firstPass)addXP(isFinal?120:60,"Exam passed!");
+    else if(pct>(prev.lastPct||0))addXP(10,"Improved score");
+    v.innerHTML='<div class="page-in result-hero">'+
+      '<div class="eyebrow" style="color:'+(passed?'var(--good)':'var(--crit)')+'">'+(passed?'Passed':'Not yet — 75% to pass')+'</div>'+
+      '<div class="score" style="color:'+(passed?'var(--good)':'var(--crit)')+'">'+pct+'%</div>'+
+      '<div class="mono" style="color:var(--tx2);margin-bottom:6px">'+correct+' of '+state.qs.length+' correct · '+elapStr+' · best '+best+'%</div>'+
+      '<div class="pill '+(passed?'pass':'fail')+'" style="margin-bottom:22px">'+(passed?svg(IC.check,2.5)+' unit cleared':'keep going')+'</div>'+
+      '<p class="sub" style="margin:0 auto 22px">'+(passed?(isFinal?'You can hold the room. Re-drill anything that slipped and keep the flashcards warm.':'Locked in. The reasoning is yours now — the flashcards will keep it retrievable.'):'Review the explanations, re-read the weak lesson, and retake. Mastery is the retake, not the first try.')+'</p>'+
+      '<div class="row" style="justify-content:center">'+
+        '<button class="btn" onclick="go(\''+(isFinal?'final':'module/'+mid)+'\')">Back</button>'+
+        '<button class="btn pri" onclick="retryExam(\''+mid+'\')">Retake</button>'+
+        (passed&&!isFinal?'<button class="btn gold" onclick="go(\'dashboard\')">Continue →</button>':'')+
+      '</div></div>';
+    window.scrollTo(0,0);
+    bindQuizzes();
+  }
+}
+function retryExam(mid){viewExam(document.getElementById("view"),mid);window.scrollTo(0,0);}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+/* =================== FLASHCARDS =================== */
+function viewCards(v){
+  setCrumb("Flashcards");
+  let queue=CARDS.filter(c=>cardState(c.id).due<=today());
+  const reviewMode=queue.length>0;
+  if(!reviewMode)queue=CARDS.slice();
+  queue=shuffle(queue.slice());
+  let i=0;
+  render();
+  function render(){
+    if(i>=queue.length){
+      v.innerHTML='<div class="page-in fc-stage empty">'+svg(IC.check,2)+'<h2 style="margin:10px 0 6px">Session complete</h2>'+
+        '<p class="sub" style="margin:0 auto">'+(reviewMode?'All due cards reviewed. They\'ll resurface on schedule.':'You went through the whole deck.')+'</p>'+
+        '<div class="row" style="justify-content:center;margin-top:18px"><button class="btn" onclick="go(\'dashboard\')">Dashboard</button><button class="btn pri" onclick="viewCards(document.getElementById(\'view\'))">Again</button></div></div>';return;
+    }
+    const c=queue[i];const st=cardState(c.id);
+    v.innerHTML='<div class="page-in fc-stage">'+
+      '<div class="eyebrow">'+(reviewMode?'Due for review':'Full deck')+' · card '+(i+1)+' / '+queue.length+'</div>'+
+      '<h1 class="h-hero" style="font-size:24px">Numbers &amp; one-liners to know cold</h1>'+
+      '<div class="bar" style="margin:14px 0"><i style="width:'+((i)/queue.length*100)+'%"></i></div>'+
+      '<div class="fc" id="fc" tabindex="0" role="button" aria-label="Flashcard, activate to reveal answer"><div class="fc-inner">'+
+        '<div class="fc-face fc-front"><span class="k">'+c.k+'</span><div class="q">'+c.q+'</div></div>'+
+        '<div class="fc-face fc-back"><span class="k">answer</span><div class="a">'+c.a+'</div></div>'+
+      '</div></div>'+
+      '<div class="fc-hint" id="fcHint"><span class="kbd">Space</span> flip · <span class="kbd">1</span> missed · <span class="kbd">2</span> got it</div>'+
+      '<div class="fc-grade" id="fcGrade" style="visibility:hidden"><button class="btn" onclick="window.__grade(false)">Missed it</button><button class="btn pri" onclick="window.__grade(true)">Got it ✓</button></div>'+
+    '</div>';
+    const fc=document.getElementById("fc");
+    fc.addEventListener("click",()=>{fc.classList.toggle("flip");if(fc.classList.contains("flip")){document.getElementById("fcGrade").style.visibility="visible";document.getElementById("fcHint").textContent="how did you do?";}});
+  }
+  window.__grade=function(ok){const c=queue[i];touchStreak();gradeCard(c.id,ok);if(ok)addXP(4,"Card reviewed");i++;render();renderNav();};
+}
+
+/* =================== FINAL LANDING =================== */
+function viewFinal(v){
+  setCrumb("Interview Gauntlet");
+  const o=overall();const ready=o.pct>=60;const e=S.exams["final"];
+  v.innerHTML='<div class="page-in read">'+
+    '<div class="eyebrow" style="color:var(--gold)">Capstone · Chapter 7</div>'+
+    '<h1 class="h-hero">The Interview Gauntlet</h1>'+
+    '<p class="sub">Three rooms, the case interview, the partner fit interview and the client steering committee, test the same thing: judgment under uncertainty, delivered out loud, answer-first. This is where the handbook turns into a room won.</p>'+
+    '<div class="grid g3" style="margin:22px 0">'+
+      miniCard("The case interview","Clarify, structure out loud, hypothesize, do visible math, recommend answer-first. Chapter 5 is your playbook.")+
+      miniCard("The fit interview","Five or six STAR stories with measured results: a hard problem, pushback, a failure, influence without authority.")+
+      miniCard("The steering committee","Storyline in SCR, action titles, pre-wired stakeholders, a clear ask. Chapters 4 and 6 in action.")+
+    '</div>'+
+    '<div class="box add"><div class="bx-h">'+svg(IC.target,2)+' The three-depth case drill</div>Take any case from the Case Lab and practise it at three depths until each is fluent: <b>30 seconds</b> (the answer and the one number behind it), <b>3 minutes</b> (structure, key analysis, recommendation, risk), and <b>full depth</b> (every branch of the tree, the arithmetic out loud, the next steps). One case at three depths beats five cases skimmed once.</div>'+
+    '<div class="card" style="margin-top:24px;text-align:center;background:var(--goldwash);border-color:color-mix(in srgb,var(--gold) 34%,var(--line))">'+
+      '<div class="eyebrow" style="color:var(--gold)">Final exam</div>'+
+      '<h3 style="font-size:20px;margin:6px 0">'+FINAL.length+' mixed questions · every module</h3>'+
+      '<p style="font-size:14px;color:var(--tx2);max-width:46ch;margin:0 auto 16px">Drawn from every chapter’s exam. Pass at 75%. '+(e?'Best so far: '+e.best+'%.':'Not yet attempted.')+'</p>'+
+      (ready?'<button class="btn gold" onclick="go(\'exam/final\')">'+svg(IC.play,2)+' Enter the gauntlet</button>':'<div class="pill lock">'+svg(IC.lock,2)+' Reach 60% overall to unlock ('+o.pct+'% now)</div>')+
+    '</div></div>';
+}
+function miniCard(t,d){return '<div class="card"><div style="font-weight:700;font-size:14.5px;margin-bottom:5px">'+t+'</div><div style="font-size:12.5px;color:var(--tx2);line-height:1.5">'+d+'</div></div>';}
+
+/* =================== MISC UI =================== */
+let toastT;
+function toast(msg,xp){const el=document.getElementById("toast");el.innerHTML=(msg)+(xp?' <span class="xpv">+'+xp+' XP</span>':'');el.classList.add("show");clearTimeout(toastT);toastT=setTimeout(()=>el.classList.remove("show"),2100);}
+function resetAll(){if(confirm("Reset all progress, XP, streaks and flashcard scheduling? This cannot be undone.")){localStorage.removeItem(KEY);S=load();renderChrome();go("dashboard");route();toast("Progress reset");}}
+
+/* modal + backup/restore */
+function openModal(html){const m=document.getElementById("modal");m.querySelector(".sheet").innerHTML=html;m.classList.add("on");}
+function closeModal(){document.getElementById("modal").classList.remove("on");}
+function openBackup(){
+  const cur=JSON.stringify(S);
+  openModal('<h3>Backup &amp; restore</h3>'+
+    '<p style="font-size:13px;color:var(--tx2);margin:6px 0 16px">Your progress lives in this browser only. Copy the text below and keep it somewhere safe — or paste a saved backup to restore it (here or on another device).</p>'+
+    '<label class="eyebrow" style="display:block;margin-bottom:5px">Your progress · copy this</label>'+
+    '<textarea class="ta" id="bkOut" readonly onclick="this.select()" style="min-height:84px;font-family:var(--mono);font-size:11px">'+cur+'</textarea>'+
+    '<div class="row" style="margin:9px 0 20px"><button class="btn sm" onclick="copyBackup()">'+svg(IC.check,2)+' Copy</button><span class="mono" style="font-size:11px;color:var(--tx3)">'+overall().done+' units · '+S.xp+' XP · '+casesDoneN()+' cases</span></div>'+
+    '<label class="eyebrow" style="display:block;margin-bottom:5px">Restore from a backup · paste, then restore</label>'+
+    '<textarea class="ta" id="bkIn" placeholder="Paste a previously copied backup here..." style="min-height:66px;font-family:var(--mono);font-size:11px"></textarea>'+
+    '<div class="row" style="justify-content:space-between;margin-top:16px"><button class="btn ghost sm" onclick="closeModal()">Close</button><button class="btn pri" onclick="restoreBackup()">Restore progress</button></div>');
+}
+function copyBackup(){const t=document.getElementById("bkOut");t.select();try{document.execCommand("copy");toast("Copied to clipboard");}catch(e){toast("Select the text and copy manually");}}
+function restoreBackup(){
+  const raw=(document.getElementById("bkIn").value||"").trim();
+  if(!raw){toast("Paste a backup first");return;}
+  try{const obj=JSON.parse(raw);if(!obj||typeof obj!=="object"||!("xp" in obj))throw 0;
+    S=Object.assign({},DEF,obj);save();closeModal();renderChrome();go("dashboard");route();toast("Progress restored");}
+  catch(e){toast("That doesn't look like a valid backup");}
+}
+
+/* theme */
+function initTheme(){const t=localStorage.getItem("aict_theme");if(t)document.documentElement.setAttribute("data-theme",t);syncThemeIco();}
+function toggleTheme(){const cur=document.documentElement.getAttribute("data-theme");const isDark=cur?cur==="dark":matchMedia("(prefers-color-scheme:dark)").matches;const nx=isDark?"light":"dark";document.documentElement.setAttribute("data-theme",nx);localStorage.setItem("aict_theme",nx);syncThemeIco();}
+function syncThemeIco(){const cur=document.documentElement.getAttribute("data-theme");const isDark=cur?cur==="dark":matchMedia("(prefers-color-scheme:dark)").matches;document.getElementById("themeIco").innerHTML=isDark?'<path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/>':'<circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/>';}
+
+/* rail (mobile) */
+function openRail(){document.getElementById("rail").classList.add("open");document.getElementById("scrim").classList.add("on");}
+function closeRail(){document.getElementById("rail").classList.remove("open");document.getElementById("scrim").classList.remove("on");}
+
+/* =================== BOOT =================== */
+document.getElementById("themeBtn").addEventListener("click",toggleTheme);
+document.getElementById("burger").addEventListener("click",openRail);
+document.getElementById("scrim").addEventListener("click",closeRail);
+document.getElementById("modal").addEventListener("click",function(e){if(e.target===this)closeModal();});
+
+/* keyboard controls: exams (1-4 / A-D / Enter) and flashcards (Space / 1 / 2) */
+document.addEventListener("keydown",function(e){
+  if(document.getElementById("modal").classList.contains("on")){if(e.key==="Escape")closeModal();return;}
+  if(e.target&&(e.target.tagName==="TEXTAREA"||e.target.tagName==="INPUT"))return;
+  const h=location.hash;
+  if(h.indexOf("exam")>-1){
+    let idx=-1;
+    if(e.key>="1"&&e.key<="9")idx=+e.key-1;
+    else{const c=e.key.toLowerCase();if(c.length===1&&c>="a"&&c<="j")idx=c.charCodeAt(0)-97;}
+    if(idx>=0){const opts=document.querySelectorAll("#view .opt");if(opts[idx]){opts[idx].click();e.preventDefault();}return;}
+    if(e.key==="Enter"){const n=document.getElementById("examNext");if(n&&n.style.display!=="none"){n.click();e.preventDefault();}}
+  } else if(h.indexOf("cards")>-1){
+    const fc=document.getElementById("fc");if(!fc)return;
+    if(e.key===" "||e.key==="Enter"){fc.click();e.preventDefault();}
+    else if(fc.classList.contains("flip")&&window.__grade){
+      if(e.key==="1"||e.key==="ArrowLeft"){window.__grade(false);e.preventDefault();}
+      else if(e.key==="2"||e.key==="ArrowRight"){window.__grade(true);e.preventDefault();}
+    }
+  }
+});
+
+/* reading-progress bar on lessons and cases */
+window.addEventListener("scroll",function(){
+  const el=document.getElementById("readbar");if(!el)return;
+  const h=location.hash;const on=(h.indexOf("lesson")>-1||h.indexOf("case")>-1);
+  if(!on){if(el.style.opacity!=="0")el.style.opacity=0;return;}
+  const max=document.documentElement.scrollHeight-window.innerHeight;
+  const p=max>40?Math.min(100,window.scrollY/max*100):0;
+  el.style.opacity=1;el.querySelector("i").style.width=p+"%";
+},{passive:true});
+
+initTheme();renderChrome();route();
+</script>
