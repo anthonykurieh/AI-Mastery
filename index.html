@@ -395,6 +395,9 @@ a:focus-visible,button:focus-visible,.opt:focus-visible,.modcard:focus-visible,.
 .fwcalc-out{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
 .fwcalc-out div{background:var(--surf);border:1px solid var(--line);border-radius:8px;padding:8px 10px;display:flex;flex-direction:column;gap:2px}
 .fwcalc-out span{font-size:11px;color:var(--tx3)}.fwcalc-out b{font-size:16px}
+.fwsay{border-left:3px solid var(--acc);background:var(--surf2);padding:12px 14px;border-radius:0 10px 10px 0;margin:10px 0;line-height:1.7}
+.fwsay i{color:var(--acc2);font-style:normal;font-weight:650}
+.fwtime{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--tx3);margin-left:8px;letter-spacing:.03em}
 .read .tbl{width:100%;margin:12px 0}
 </style>
 
@@ -592,6 +595,7 @@ window.CARDS=[
   {id:"f7",k:"Frameworks",q:"NIST AI RMF's four functions?",a:"Govern (runs across everything), Map, Measure, Manage. NIST AI 600-1 is the GenAI profile."},
   {id:"f8",k:"Frameworks",q:"ADKAR?",a:"Awareness, Desire, Knowledge, Ability, Reinforcement. Adoption stalls at the first missing stage; more training only fixes Knowledge."},
   {id:"f9",k:"Frameworks",q:"How do you set an AI system's autonomy?",a:"By error cost and reversibility, not model capability: assist → augment → automate with review → autonomous within guardrails. Irreversible actions stay behind a human."},
+  {id:"f11",k:"Frameworks",q:"The technical case script, in order?",a:"C·B·M·F·G·R: Clarify → Break it down → Measure → Fix (cheapest first) → Guard (evals) → Recommend. Never say a fix before the breakdown."},
   {id:"f10",k:"Frameworks",q:"Use-case prioritisation axes for GenAI?",a:"Value (× volume) vs feasibility (data, maturity, integration, regulation), with error tolerance as the GenAI check. Start with quick wins to fund strategic bets."},
 ];
 </script>
@@ -1780,7 +1784,7 @@ function checkOrder(key){
    (Taylor Warfield, 2026); the rest is gathered from the named standards bodies.
    Schema: {id,grp,name,tag,one, html? | when,parts,ai,say,trap, src, link?} */
 window.FW_GROUPS=[
-  ["play","The tech case playbook","How tech consulting cases differ, the six-step process, the seven case types and the math. From the Hacking the Case Interview tech consulting video."],
+  ["play","The tech case playbook","How tech consulting cases differ, the six-step process, the case script, the seven case types and the math. From the Hacking the Case Interview tech consulting video."],
   ["tech","Tech consulting frameworks","The six frameworks tech interviewers expect you to recognise. Entry-level candidates mainly need PPT and Technology Evaluation."],
   ["ai","AI consulting frameworks","The structures you reach for when the case is about AI: what to build, whether the client is ready, how to de-risk it and how to govern it."],
   ["craft","Structure & storytelling","The connective tissue: how you build any framework on the fly and how you deliver the answer."]
@@ -1815,6 +1819,49 @@ html:`
 <ol style="margin:0;padding-left:18px"><li>Leading with technology instead of the business problem.</li><li>Forcing a memorised framework onto a case it doesn't fit.</li><li>Ignoring change management. Most tech projects fail on adoption, not technology.</li><li>Skipping the math because it looks messier than profit math.</li><li>Name-dropping vendors (AWS, Azure, SAP) without saying why they fit.</li></ol></div>
 <div class="box"><div class="bx-h">Volume</div>Aim for 20 to 30 practice cases before interviews, 5 to 10 of them tech cases. Feedback on each case beats raw count.</div>`,
 src:"Hacking the Case Interview, Tech Consulting Case Interview video and guide (2026)"},
+
+{id:"tc-script",grp:"play",name:"The technical case script: C·B·M·F·G·R",tag:"Say it word for word",
+one:"One fill-in-the-blanks script for any AI system question: wrong answers, cost, speed, safety or evals. Six steps, always in the same order.",
+html:`
+<div class="box key"><div class="bx-h">The one rule</div>You never say a fix until you've said the breakdown. If you catch yourself about to say "caching", stop and say "let me break this down first."</div>
+<h3>1 · Clarify <span class="fwtime">30 sec</span></h3>
+<div class="fwsay">"Let me make sure I've got it. <i>[Client]</i> has <i>[system]</i>, and the problem is <i>[symptom]</i>. Before I structure it, a few questions:<br>1. Is it built in-house or bought?<br>2. What's already in place, like RAG, caching or evals?<br>3. What does success look like, and is there a constraint like budget, deadline or regulation?"</div>
+<h3>2 · Break it down <span class="fwtime">30 sec · never skip</span></h3>
+<div class="fwsay">"Can I take 30 seconds to structure this?"<br>"This is a <i>[quality / cost / speed / safety]</i> problem, so I'll break it into <i>[pieces]</i>. I'll find which piece is causing it before I propose any fixes."</div>
+<table class="tbl"><tr><th>If the problem is…</th><th>Say these pieces</th></tr>
+<tr><td><b>Wrong answers</b></td><td>Retrieval → generation</td></tr>
+<tr><td><b>Too expensive</b></td><td>Requests × tokens per request × price per token</td></tr>
+<tr><td><b>Too slow</b></td><td>Retrieval → reading the prompt → writing → streaming</td></tr>
+<tr><td><b>Unsafe</b></td><td>Inputs → tools → outputs</td></tr>
+<tr><td><b>"Is it good?"</b></td><td>Golden set → metrics → pass bar → CI gate → monitoring</td></tr></table>
+<h3>3 · Measure</h3>
+<div class="fwsay">"To find which piece it is, I'd look at <i>[the logs / one failing example]</i> and check <i>[data for piece 1]</i>, <i>[piece 2]</i>, <i>[piece 3]</i>. Do we have that?"</div>
+<p style="font-size:13.5px;color:var(--tx2)">Once you have the data:</p>
+<div class="fwsay">"So the problem is in <i>[piece]</i>, because <i>[data point]</i>."</div>
+<h3>4 · Fix</h3>
+<div class="fwsay">"I'd fix it in order of cheapest and safest first:<br>1. <i>[quick win, no risk]</i><br>2. <i>[medium change]</i><br>3. <i>[bigger change, only if still needed]</i>"</div>
+<h3>5 · Guard</h3>
+<div class="fwsay">"Every one of these changes could hurt quality, so each one has to pass the golden-set evals before shipping, and we'd monitor <i>[metric]</i> after launch."</div>
+<h3>6 · Recommend <span class="fwtime">under 45 sec</span></h3>
+<div class="fwsay">"My recommendation is <i>[answer in one sentence]</i>, for three reasons: <i>[1]</i>, <i>[2]</i>, <i>[3]</i>. Next steps: <i>[this week]</i>, <i>[this month]</i>. The main risk is <i>[risk]</i>, and we'd manage it by <i>[mitigation]</i>."</div>
+<div class="box warnbx"><div class="bx-h">Emergency phrases</div>
+<b>Jumped to a fix?</b> "Let me step back, I want to find the cause first."<br>
+<b>Don't know a term?</b> "I'm not certain of the exact mechanism, but here's how I'd reason about it…"<br>
+<b>Blanked?</b> "Let me go back to my structure." Then look at the step 2 pieces.</div>
+<h3>Worked example: the slow, expensive support bot</h3>
+<p>An e-commerce support assistant's LLM bill tripled in three months and answers take 8 to 10 seconds to start.</p>
+<table class="tbl">
+<tr><td><b>Clarify</b></td><td>Built in-house on a pay-per-token API, uses RAG, no caching, no tuning since launch.</td></tr>
+<tr><td><b>Break down</b></td><td>Cost = requests × tokens × price. Latency = retrieval → reading → writing → streaming.</td></tr>
+<tr><td><b>Measure</b></td><td>Requests up 1.5× (healthy adoption). Tokens per request doubled: full history resent every turn, about 20 chunks retrieved. Biggest model for every question. No streaming.</td></tr>
+<tr><td><b>Fix</b></td><td>1. Stream responses. 2. Trim the prompt (fewer chunks plus a reranker, summarise old history). 3. Provider prompt caching with a fixed prefix. 4. Route simple questions to a small model. 5. Semantic cache for stable FAQ answers only.</td></tr>
+<tr><td><b>Guard</b></td><td>Each change passes the golden-set evals before shipping.</td></tr>
+<tr><td><b>Recommend</b></td><td>"Same root cause: oversized prompts sent to the largest model on every request. Stream this week, then trim and cache, then route, each step gated on evals."</td></tr></table>
+<div class="box"><div class="bx-h">Three caching terms not to mix up</div>
+<b>KV cache:</b> inside the model during one request; automatic, not a fix to propose.<br>
+<b>Prompt caching:</b> a provider feature that reuses an identical prompt <em>prefix</em> across requests, so put fixed content first and variable content last.<br>
+<b>Response caching:</b> your own store of full answers to repeated questions; the biggest saving and the biggest risk of serving a stale answer.</div>`,
+src:"Built from our mock interview sessions; breakdowns synthesised from course modules 5, 7, 8 and 9"},
 
 {id:"tc-types",grp:"play",name:"The seven tech case types",tag:"Pattern-match fast",
 one:"Recognise the type in the first 30 seconds and you already know which framework to start from.",
