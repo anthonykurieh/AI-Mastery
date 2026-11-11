@@ -395,6 +395,8 @@ a:focus-visible,button:focus-visible,.opt:focus-visible,.modcard:focus-visible,.
 .fwcalc-out{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
 .fwcalc-out div{background:var(--surf);border:1px solid var(--line);border-radius:8px;padding:8px 10px;display:flex;flex-direction:column;gap:2px}
 .fwcalc-out span{font-size:11px;color:var(--tx3)}.fwcalc-out b{font-size:16px}
+@media (max-width:600px){.read .tbl{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+.fwln{color:var(--acc2);font-weight:650;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
 .fwsay{border-left:3px solid var(--acc);background:var(--surf2);padding:12px 14px;border-radius:0 10px 10px 0;margin:10px 0;line-height:1.7}
 .fwsay i{color:var(--acc2);font-style:normal;font-weight:650}
 .fwtime{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--tx3);margin-left:8px;letter-spacing:.03em}
@@ -596,6 +598,11 @@ window.CARDS=[
   {id:"f8",k:"Frameworks",q:"ADKAR?",a:"Awareness, Desire, Knowledge, Ability, Reinforcement. Adoption stalls at the first missing stage; more training only fixes Knowledge."},
   {id:"f9",k:"Frameworks",q:"How do you set an AI system's autonomy?",a:"By error cost and reversibility, not model capability: assist → augment → automate with review → autonomous within guardrails. Irreversible actions stay behind a human."},
   {id:"f11",k:"Frameworks",q:"The technical case script, in order?",a:"C·B·M·F·G·R: Clarify → Break it down → Measure → Fix (cheapest first) → Guard (evals) → Recommend. Never say a fix before the breakdown."},
+  {id:"f12",k:"Frameworks",q:"Name the nine interview formats.",a:"Fix it, design it, business case, explain a concept, estimate, coding, written case, behavioural, screening call. Spot it from the first sentence."},
+  {id:"f13",k:"Frameworks",q:"Design-from-scratch script?",a:"Clarify → requirements (with numbers) → simplest baseline → where it breaks → evals & safety → summarise trade-offs."},
+  {id:"f14",k:"Frameworks",q:"60-second concept answer?",a:"Define → mechanism → when (and when not) → trade-off → example. Comparisons: shared goal, 3 axes, when each, your default."},
+  {id:"f15",k:"Frameworks",q:"STAR+L?",a:"Situation, Task, Action (most of the time, say I), Result (a number), Learning. Prepare 6 stories that each answer several questions."},
+  {id:"f16",k:"Frameworks",q:"Estimation script?",a:"Clarify scope → driver tree → round assumptions → calculate aloud → sanity check per unit → so-what."},
   {id:"f10",k:"Frameworks",q:"Use-case prioritisation axes for GenAI?",a:"Value (× volume) vs feasibility (data, maturity, integration, regulation), with error tolerance as the GenAI check. Start with quick wins to fund strategic bets."},
 ];
 </script>
@@ -1784,43 +1791,39 @@ function checkOrder(key){
    (Taylor Warfield, 2026); the rest is gathered from the named standards bodies.
    Schema: {id,grp,name,tag,one, html? | when,parts,ai,say,trap, src, link?} */
 window.FW_GROUPS=[
-  ["play","The tech case playbook","How tech consulting cases differ, the six-step process, the case script, the seven case types and the math. From the Hacking the Case Interview tech consulting video."],
+  ["interview","Interview playbook: every format","Nine interview formats, each with a script to say almost word for word. Start with the router to spot which format you are in."],
+  ["play","The tech case playbook","How tech consulting cases differ, the six-step process, the seven case types and the math. From the Hacking the Case Interview tech consulting video."],
   ["tech","Tech consulting frameworks","The six frameworks tech interviewers expect you to recognise. Entry-level candidates mainly need PPT and Technology Evaluation."],
   ["ai","AI consulting frameworks","The structures you reach for when the case is about AI: what to build, whether the client is ready, how to de-risk it and how to govern it."],
   ["craft","Structure & storytelling","The connective tissue: how you build any framework on the fly and how you deliver the answer."]
 ];
 window.FRAMEWORKS=[
 /* ---------- PLAYBOOK ---------- */
-{id:"tc-diff",grp:"play",name:"Tech case vs traditional case",tag:"Know the game",
-one:"A tech case is a business case where the central decision is about technology, so the output, the numbers and the risks shift.",
+/* ---------- INTERVIEW PLAYBOOK ---------- */
+{id:"int-router",grp:"interview",name:"Which interview is this? The router",tag:"Start here",
+one:"Every question you'll get falls into one of nine formats. Spot the format from the first sentence and you know which template to run.",
 html:`
-<table class="tbl"><tr><th></th><th>Traditional case</th><th>Tech case</th></tr>
-<tr><td><b>Focus</b></td><td>The business decision</td><td>Business, people <em>and</em> technology together</td></tr>
-<tr><td><b>Output</b></td><td>A strategic recommendation</td><td>A recommendation <em>plus</em> an implementation roadmap</td></tr>
-<tr><td><b>Numbers</b></td><td>Revenue, cost, profit</td><td>TCO, ROI, payback period, uptime</td></tr>
-<tr><td><b>Role of tech</b></td><td>One factor among many</td><td>Central to the solution</td></tr>
-<tr><td><b>Timing</b></td><td>Often immediate</td><td>Value builds over months or years</td></tr>
-<tr><td><b>Risks</b></td><td>Market and competition</td><td>Adoption, integration, security</td></tr></table>
-<div class="box key"><div class="bx-h">The point</div>The solving method is the same as any case. What changes is that you must close with <b>how it gets delivered</b> and you must talk in <b>payback, not price</b>. Prep split suggested in the video: about 80% general case skill, 20% tech-specific.</div>`,
-src:"Hacking the Case Interview, Tech Consulting Case Interview video and guide (2026)"},
+<table class="tbl"><tr><th>If you hear…</th><th>Format</th><th>They're testing</th><th>Run</th></tr>
+<tr><td>"It's broken / slow / expensive / unsafe"</td><td><b>1 · Fix it</b></td><td>Diagnosis before solutions</td><td><a class="fwln" onclick="go('fw/tc-script')">C·B·M·F·G·R</a></td></tr>
+<tr><td>"Design / build / architect…"</td><td><b>2 · Design it</b></td><td>Simple first, then trade-offs</td><td><a class="fwln" onclick="go('fw/int-design')">Design script</a></td></tr>
+<tr><td>"Should we… / what would you advise…"</td><td><b>3 · Business case</b></td><td>Structure, numbers, judgement</td><td><a class="fwln" onclick="go('fw/int-biz')">Business case script</a></td></tr>
+<tr><td>"What is… / compare X and Y"</td><td><b>4 · Explain it</b></td><td>Real understanding, not buzzwords</td><td><a class="fwln" onclick="go('fw/int-explain')">Concept answer</a></td></tr>
+<tr><td>"How many… / how much would…"</td><td><b>5 · Estimate</b></td><td>Calm, structured maths</td><td><a class="fwln" onclick="go('fw/int-estimate')">Estimation script</a></td></tr>
+<tr><td>"Write a function / query…" or a take-home</td><td><b>6 · Coding</b></td><td>Correct, tested, explained</td><td><a class="fwln" onclick="go('fw/int-coding')">Coding & take-home</a></td></tr>
+<tr><td>"Here's a data pack, present in 45 min"</td><td><b>7 · Written case</b></td><td>Synthesis and storytelling</td><td><a class="fwln" onclick="go('fw/int-present')">Presentation case</a></td></tr>
+<tr><td>"Tell me about a time…" / "Why us?"</td><td><b>8 · Behavioural & fit</b></td><td>Evidence you've done it before</td><td><a class="fwln" onclick="go('fw/int-behav')">STAR + story bank</a></td></tr>
+<tr><td>Recruiter: "Walk me through your background"</td><td><b>9 · Screening call</b></td><td>Motivation and logistics</td><td><a class="fwln" onclick="go('fw/int-screen')">Screen script</a></td></tr></table>
+<p style="font-size:13.5px;color:var(--tx2)">Every interview ends with "Any questions for us?": <a class="fwln" onclick="go('fw/int-ask')">questions to ask</a>.</p>
+<h3>What a typical loop looks like</h3>
+<table class="tbl"><tr><th>Round</th><th>Consulting (e.g. Big 4 Data & AI)</th><th>AI engineering / FDE</th></tr>
+<tr><td><b>1</b></td><td>Recruiter screen (9)</td><td>Recruiter screen (9)</td></tr>
+<tr><td><b>2</b></td><td>Manager: fit (8) + a short case (3 or 1) + concepts (4)</td><td>Technical: concepts (4) + fix it (1)</td></tr>
+<tr><td><b>3</b></td><td>Case round: business case (3), maybe an estimate (5) or written case (7)</td><td>Design it (2) + coding or take-home (6)</td></tr>
+<tr><td><b>4</b></td><td>Partner / director: fit (8), judgement, "why us"</td><td>Hiring manager: behavioural (8), values</td></tr></table>
+<div class="box key"><div class="bx-h">Mixed questions</div>Real questions blend formats: "Design a bot, then tell me where it fails" is 2 then 1. "Should we deploy GenAI, and what would it cost?" is 3 with a 5 inside it. Name the switch out loud: "Now that it's designed, let me look at where it breaks."</div>`,
+src:"Synthesised from Big 4 consulting and AI engineering interview loops; ours"},
 
-{id:"tc-steps",grp:"play",name:"The six-step tech case process",tag:"The spine",
-one:"Same six steps as a strategy case. Follow them in order and a deeply technical prompt still feels manageable.",
-html:`
-<ol class="fwsteps">
-<li><b>Understand the case.</b> Note context and objective, ask 2 to 3 clarifying questions, then <em>restate the objective</em> and get a yes. Answering the wrong business question is the fastest way to fail.</li>
-<li><b>Structure the problem.</b> Ask for a minute, build a tailored framework (PPT or Technology Evaluation are the usual starting blocks), present it confidently.</li>
-<li><b>Kick off.</b> Candidate-led: pick the branch to explore first and say why. Interviewer-led: follow their lead.</li>
-<li><b>Solve the quant.</b> Lay out the approach and get approval <em>before</em> computing. TCO, ROI and payback are the usual targets.</li>
-<li><b>Answer the qualitative.</b> Group ideas into 2 to 3 buckets before speaking. For opinion questions, state your position first, then the reasons.</li>
-<li><b>Recommend.</b> Answer, the 2 to 3 strongest reasons, the key risks, then next steps (a regional pilot, vendor reference calls, a security audit). Under 45 seconds.</li>
-</ol>
-<div class="box warnbx"><div class="bx-h">Five ways tech cases go wrong</div>
-<ol style="margin:0;padding-left:18px"><li>Leading with technology instead of the business problem.</li><li>Forcing a memorised framework onto a case it doesn't fit.</li><li>Ignoring change management. Most tech projects fail on adoption, not technology.</li><li>Skipping the math because it looks messier than profit math.</li><li>Name-dropping vendors (AWS, Azure, SAP) without saying why they fit.</li></ol></div>
-<div class="box"><div class="bx-h">Volume</div>Aim for 20 to 30 practice cases before interviews, 5 to 10 of them tech cases. Feedback on each case beats raw count.</div>`,
-src:"Hacking the Case Interview, Tech Consulting Case Interview video and guide (2026)"},
-
-{id:"tc-script",grp:"play",name:"The technical case script: C·B·M·F·G·R",tag:"Say it word for word",
+{id:"tc-script",grp:"interview",name:"1 · Fix it: the technical case script (C·B·M·F·G·R)",tag:"Say it word for word",
 one:"One fill-in-the-blanks script for any AI system question: wrong answers, cost, speed, safety or evals. Six steps, always in the same order.",
 html:`
 <div class="box key"><div class="bx-h">The one rule</div>You never say a fix until you've said the breakdown. If you catch yourself about to say "caching", stop and say "let me break this down first."</div>
@@ -1862,6 +1865,210 @@ html:`
 <b>Prompt caching:</b> a provider feature that reuses an identical prompt <em>prefix</em> across requests, so put fixed content first and variable content last.<br>
 <b>Response caching:</b> your own store of full answers to repeated questions; the biggest saving and the biggest risk of serving a stale answer.</div>`,
 src:"Built from our mock interview sessions; breakdowns synthesised from course modules 5, 7, 8 and 9"},
+
+{id:"int-design",grp:"interview",name:"2 · Design it from scratch",tag:"System design",
+one:"Start with the simplest design that works, then show where it breaks and how you'd know. Interviewers grade the trade-offs, not the boxes.",
+html:`
+<div class="box key"><div class="bx-h">The one rule</div>Requirements before boxes, and the boring baseline before anything clever. Let evals earn the right to add complexity.</div>
+<h3>1 · Clarify <span class="fwtime">2 min</span></h3>
+<div class="fwsay">"Before I design, a few questions: who are the users and how many, <i>[internal / customers]</i>? What data does it answer from, and how often does it change? Any latency or cost target? What's the cost of a wrong answer? Any data that can't leave the region?"</div>
+<h3>2 · Requirements <span class="fwtime">1 min</span></h3>
+<div class="fwsay">"So it must <i>[2 or 3 functional needs]</i>, with <i>[latency]</i>, about <i>[volume]</i> requests a day, and <i>[risk constraint]</i>. I'll optimise for <i>[the one that matters most]</i>."</div>
+<h3>3 · Baseline design <span class="fwtime">5 min</span></h3>
+<div class="fwsay">"Here's the simplest version that works." Walk the flow left to right: <i>ingest → chunk & embed → store → retrieve → generate with citations → UI</i>. "I'd ship this first and measure it."</div>
+<h3>4 · Where it breaks <span class="fwtime">5 min</span></h3>
+<div class="fwsay">"The weakest points are <i>[1]</i> and <i>[2]</i>. For <i>[1]</i> I'd add <i>[fix]</i>, but only if evals show we need it."</div>
+<table class="tbl"><tr><th>Common weak point</th><th>Upgrade, when evals justify it</th></tr>
+<tr><td>Exact terms missed (product codes, policy names)</td><td>Hybrid search (keywords + vectors) and a reranker</td></tr>
+<tr><td>Stale or conflicting documents</td><td>Versioning, metadata filters, one source of truth per policy</td></tr>
+<tr><td>Wrong answers on high-stakes topics</td><td>Citations, "I don't know" behaviour, human escalation</td></tr>
+<tr><td>Prompt injection via documents or users</td><td>Treat retrieved text as data, limit tools, check outputs</td></tr>
+<tr><td>Cost and latency at scale</td><td>Streaming, prompt caching, small model for simple questions</td></tr></table>
+<h3>5 · Evals & safety <span class="fwtime">2 min</span></h3>
+<div class="fwsay">"I'd build a golden set from real questions, measure retrieval and answer quality separately, gate every change in CI, and monitor thumbs-down and escalations after launch."</div>
+<h3>6 · Summarise the trade-offs <span class="fwtime">1 min</span></h3>
+<div class="fwsay">"To sum up: <i>[baseline]</i>, chosen because <i>[top requirement]</i>. The main trade-off is <i>[X vs Y]</i>. Next I'd <i>[first upgrade]</i> if evals show <i>[signal]</i>."</div>
+<div class="box warnbx"><div class="bx-h">Traps</div>Opening with an agent framework or fine-tuning. Drawing boxes without numbers. Never saying how you'd know it works.</div>`,
+src:"Ours, synthesised from course modules 4 to 9",link:["module/m5","M5 · RAG Architecture"]},
+
+{id:"int-biz",grp:"interview",name:"3 · Business case: \"Should we use AI?\"",tag:"Consulting case",
+one:"The six-step tech case process with fill-in lines and the AI frameworks plugged in. The most likely format in a consulting interview.",
+html:`
+<h3>1 · Clarify</h3>
+<div class="fwsay">"So <i>[client]</i> wants to know whether <i>[decision]</i>, and success means <i>[metric]</i> by <i>[when]</i>. Is that right? Two questions: <i>[what's the current baseline?]</i> and <i>[any constraint: budget, regulation, data?]</i>"</div>
+<h3>2 · Structure</h3>
+<div class="fwsay">"I'd look at four things: <b>value</b> (is the prize worth it?), <b>feasibility</b> (data, tech, risk), <b>economics</b> (cost, payback) and <b>adoption</b> (people and process). Let me start with value, because if the prize is small nothing else matters."</div>
+<table class="tbl"><tr><th>Branch</th><th>Pull from</th></tr>
+<tr><td><b>Value</b></td><td><a class="fwln" onclick="go('fw/usecase')">Value × feasibility</a>: volume, cost per unit, revenue or risk at stake</td></tr>
+<tr><td><b>Feasibility</b></td><td><a class="fwln" onclick="go('fw/readiness')">Readiness pillars</a>, error tolerance, <a class="fwln" onclick="go('fw/euai')">regulation</a></td></tr>
+<tr><td><b>Economics</b></td><td><a class="fwln" onclick="go('fw/bizcase')">AI business case</a>, <a class="fwln" onclick="go('fw/tc-math')">TCO and payback</a>, <a class="fwln" onclick="go('fw/techeval')">build vs buy</a></td></tr>
+<tr><td><b>Adoption</b></td><td><a class="fwln" onclick="go('fw/ppt')">PPT</a>, <a class="fwln" onclick="go('fw/adkar')">ADKAR</a>, <a class="fwln" onclick="go('fw/autonomy')">autonomy ladder</a></td></tr></table>
+<h3>3 · Quant</h3>
+<div class="fwsay">"Here's how I'd size it: <i>[volume]</i> × <i>[realistic rate]</i> × <i>[saving per unit]</i>, minus <i>[run cost]</i>, against <i>[upfront cost]</i>. Does that approach make sense before I calculate?"</div>
+<h3>4 · Qualitative</h3>
+<div class="fwsay">"I see three groups of risk: <i>[technical]</i>, <i>[people]</i> and <i>[regulatory]</i>. The biggest is <i>[one]</i>, because <i>[reason]</i>."</div>
+<h3>5 · Recommend</h3>
+<div class="fwsay">"Yes, but start with <i>[narrow scope]</i>. Three reasons: <i>[value]</i>, <i>[payback]</i>, <i>[manageable risk]</i>. Next steps: a <i>[90-day pilot]</i> with exit criteria of <i>[quality, adoption, cost]</i>."</div>
+<h3>Worked example: GenAI in a telecom call centre</h3>
+<p>900,000 contacts a month. Human cost about $3 per contact. The client hopes for 30% containment.</p>
+<p>Use a realistic 20%: 900k × 12 × 20% = <b>2.16M contacts a year</b> handled by AI. Gross saving 2.16M × $3 = <b>$6.5M</b>. AI cost including review of escalations, about $0.30 per contained contact = <b>$0.65M</b>. Net about <b>$5.8M a year</b>. Build plus change management $2.5M, so payback ≈ $2.5M ÷ $5.8M ≈ <b>5 months</b>.</p>
+<div class="box key"><div class="bx-h">What makes it an AI answer, not a generic one</div>Challenging the 30% (error tolerance, knowledge base quality, escalation design), costing human review, and gating each rollout stage on evals.</div>`,
+src:"Six-step process from Hacking the Case Interview; branches and example are ours",link:["fw/tc-steps","The six-step tech case process"]},
+
+{id:"int-explain",grp:"interview",name:"4 · Explain a concept",tag:"60-second answers",
+one:"Define, mechanism, when to use it, the trade-off, an example. About 60 seconds. The format that exposes bluffing fastest.",
+html:`
+<h3>Single concept: "What is X?"</h3>
+<div class="fwsay"><b>Define:</b> "<i>[X]</i> is <i>[one plain sentence]</i>."<br><b>Mechanism:</b> "It works by <i>[2 sentences on how]</i>."<br><b>When:</b> "You use it when <i>[situation]</i>, and not when <i>[situation]</i>."<br><b>Trade-off:</b> "The cost is <i>[downside]</i>."<br><b>Example:</b> "For example, <i>[real or work example]</i>."</div>
+<h3>Comparison: "X vs Y?"</h3>
+<div class="fwsay">"Both aim to <i>[shared goal]</i>. They differ on three things: <i>[axis 1]</i>, <i>[axis 2]</i>, <i>[axis 3]</i>. I'd use X when <i>[case]</i> and Y when <i>[case]</i>. My default is <i>[the simpler one]</i>, unless <i>[signal]</i>."</div>
+<h3>Worked example: prompt caching</h3>
+<p><b>Define:</b> a provider feature that reuses the processing of an identical prompt prefix across requests. <b>Mechanism:</b> the first request computes and stores the prefix; later requests with the same prefix skip that work and are billed less for those tokens. <b>When:</b> long fixed instructions or documents reused across many calls; useless if the start of the prompt changes every time. <b>Trade-off:</b> you must order prompts with fixed content first, and caches expire. <b>Example:</b> a support bot with a 3,000-token system prompt.</p>
+<h3>The concept questions to have ready</h3>
+<table class="tbl"><tr><td>RAG vs fine-tuning vs long context</td><td>Embeddings and cosine similarity</td></tr>
+<tr><td>Chunking strategies and trade-offs</td><td>Hybrid search and reranking</td></tr>
+<tr><td>Hallucination: causes and mitigations</td><td>Prompt vs KV vs response caching</td></tr>
+<tr><td>Tokens, context windows, cost drivers</td><td>Temperature and sampling</td></tr>
+<tr><td>Agents vs workflows; tool calling</td><td>MCP and A2A</td></tr>
+<tr><td>Prompt injection and defences</td><td>Evals: golden sets, LLM-as-judge</td></tr>
+<tr><td>Reasoning models: when worth the cost</td><td>Precision vs recall; overfitting</td></tr></table>
+<div class="box warnbx"><div class="bx-h">Trap</div>Saying more terms to sound expert. One correct mechanism beats five buzzwords. If unsure: "I'm not certain of the exact mechanism, but here's how I'd reason about it."</div>`,
+src:"Ours",link:["cards","Flashcards"]},
+
+{id:"int-estimate",grp:"interview",name:"5 · Estimation & market sizing",tag:"Guesstimates",
+one:"Clarify, pick a driver tree, use round numbers, calculate out loud, sanity check, then say what it means.",
+html:`
+<h3>The script</h3>
+<div class="fwsay"><b>Clarify:</b> "Do we mean <i>[scope: geography, time period, unit]</i>?"<br><b>Approach:</b> "I'll go <i>[top-down from population / bottom-up from supply]</i>: <i>[driver]</i> × <i>[driver]</i> × <i>[driver]</i>."<br><b>Assumptions:</b> "I'll assume <i>[round number]</i> because <i>[reason]</i>."<br><b>Calculate:</b> say each step out loud.<br><b>Sanity check:</b> "That's about <i>[per-unit figure]</i>, which seems <i>[reasonable / high]</i> compared with <i>[benchmark]</i>."<br><b>So what:</b> "That tells us <i>[implication for the decision]</i>."</div>
+<h3>Worked example: monthly LLM bill for a telecom support bot</h3>
+<table class="tbl">
+<tr><td>Subscribers</td><td>4M</td></tr>
+<tr><td>Contact support each month</td><td>25% → 1M contacts</td></tr>
+<tr><td>Handled by the bot</td><td>50% → 500k conversations</td></tr>
+<tr><td>LLM calls</td><td>6 turns each → 3M calls</td></tr>
+<tr><td>Tokens per call</td><td>3,000 in, 300 out → 9B in, 0.9B out</td></tr>
+<tr><td>Price (assume)</td><td>$3 per M input, $15 per M output</td></tr>
+<tr><td><b>Monthly bill</b></td><td>$27k + $13.5k ≈ <b>$40k</b></td></tr></table>
+<p><b>Sanity check:</b> about $0.08 per conversation against roughly $3 for a human contact. <b>So what:</b> model cost is small next to labour. The real budget risk is prompts growing over time, so monitor tokens per call.</p>
+<div class="box warnbx"><div class="bx-h">Traps</div>Ugly numbers (use 4M, not 3.87M). Calculating silently. Forgetting the so-what.</div>`,
+src:"Standard consulting estimation method; example is ours"},
+
+{id:"int-coding",grp:"interview",name:"6 · Live coding, SQL & take-homes",tag:"Hands on keyboard",
+one:"Talk before you type, write the simplest correct version, test it out loud, then improve it.",
+html:`
+<h3>Live coding script</h3>
+<div class="fwsay"><b>Clarify:</b> "What's the input, what's the output, and what about <i>[empty / huge / malformed]</i> input?"<br><b>Approach:</b> "My plan is <i>[steps]</i>. That's <i>[complexity]</i>. Shall I go ahead?"<br><b>Code:</b> simplest correct version first, narrating as you go.<br><b>Test:</b> "Let me run it on <i>[normal example]</i> and <i>[edge case]</i>."<br><b>Improve:</b> "If I had more time I'd <i>[optimisation / error handling]</i>."</div>
+<h3>SQL checklist</h3>
+<table class="tbl"><tr><td><b>Grain</b></td><td>"One row per <i>[what]</i>?" Say it before writing.</td></tr>
+<tr><td><b>Joins</b></td><td>Will this join duplicate rows? Left or inner, and why?</td></tr>
+<tr><td><b>Filters</b></td><td>WHERE vs HAVING; date boundaries; time zones</td></tr>
+<tr><td><b>Nulls</b></td><td>COUNT(*) vs COUNT(col); NULLs in joins and averages</td></tr>
+<tr><td><b>Window functions</b></td><td>ROW_NUMBER for dedupe and latest-per-group; running totals</td></tr>
+<tr><td><b>Check</b></td><td>Row counts before and after each step</td></tr></table>
+<h3>AI coding tasks to be able to do cold</h3>
+<table class="tbl"><tr><td>Call an LLM API with retries and timeouts</td><td>Force and validate JSON output</td></tr>
+<tr><td>Minimal RAG: chunk, embed, top-k, answer with sources</td><td>A tool-calling loop with a step limit</td></tr>
+<tr><td>A tiny eval: golden set, score, report</td><td>Stream a response to the client</td></tr></table>
+<h3>Take-home</h3>
+<div class="box key"><div class="bx-h">What gets you hired</div>A README with assumptions, how to run it, how you evaluated it, and what you'd do next. Stick to the time box and say what you cut. A small, tested, honest solution beats a sprawling one.</div>`,
+src:"Ours"},
+
+{id:"int-present",grp:"interview",name:"7 · Written case & presentation",tag:"Data pack to deck",
+one:"You get a data pack and a deadline, and present to 'the client'. The deck is the Pyramid Principle on 4 or 5 slides.",
+html:`
+<h3>Time budget (for 60 minutes of prep)</h3>
+<table class="tbl"><tr><td>10 min</td><td>Read the question and skim everything. Write your hypothesis.</td></tr>
+<tr><td>25 min</td><td>Do only the analysis that proves or kills the hypothesis.</td></tr>
+<tr><td>20 min</td><td>Build the slides.</td></tr>
+<tr><td>5 min</td><td>Rehearse the opening and the recommendation out loud.</td></tr></table>
+<h3>The deck</h3>
+<table class="tbl"><tr><td><b>1</b></td><td>Executive summary in SCQA: the answer in the title</td></tr>
+<tr><td><b>2 to 4</b></td><td>One reason per slide. The title is the takeaway (an "action title"); one chart or table proves it</td></tr>
+<tr><td><b>5</b></td><td>Risks, next steps, what you'd need to confirm</td></tr></table>
+<div class="fwsay">"My recommendation is <i>[answer]</i>. Three reasons, one per slide. Then risks and next steps."</div>
+<h3>Q&A</h3>
+<div class="fwsay">Challenged on a number: "Fair point. Here's my assumption, <i>[X]</i>. If it's actually <i>[Y]</i>, the answer <i>[does / doesn't]</i> change because <i>[reason]</i>."</div>
+<div class="box warnbx"><div class="bx-h">Traps</div>Analysing everything in the pack. Topic titles ("Revenue analysis") instead of takeaways ("Revenue fell because of churn, not price"). Running out of time before the recommendation slide.</div>`,
+src:"Pyramid Principle (Minto); common Big 4 assessment-centre format",link:["fw/pyramid","Pyramid Principle & SCQA"]},
+
+{id:"int-behav",grp:"interview",name:"8 · Behavioural & fit",tag:"STAR + story bank",
+one:"Prepare six stories, not sixty answers. Each story answers several questions when told in STAR, plus what you learned.",
+html:`
+<h3>The STAR+L script <span class="fwtime">90 sec</span></h3>
+<div class="fwsay"><b>Situation:</b> "At <i>[company]</i>, <i>[context in one sentence]</i>."<br><b>Task:</b> "I was responsible for <i>[your part]</i>."<br><b>Action:</b> "I <i>[2 or 3 specific things YOU did]</i>." (Spend most of your time here. Say "I", not "we".)<br><b>Result:</b> "As a result, <i>[number or concrete outcome]</i>."<br><b>Learning:</b> "What I took from it is <i>[lesson]</i>, which I now apply by <i>[habit]</i>."</div>
+<h3>The story bank: prepare one story for each row</h3>
+<table class="tbl"><tr><th>Story</th><th>Answers</th><th>Kind of example to use</th></tr>
+<tr><td><b>Built something from nothing</b></td><td>Initiative, ownership, impact</td><td>An automation or tool nobody asked for that's now used</td></tr>
+<tr><td><b>Fixed something broken</b></td><td>Problem-solving, attention to detail</td><td>A pipeline or dashboard whose numbers didn't reconcile</td></tr>
+<tr><td><b>Difficult stakeholder</b></td><td>Conflict, client handling, influence</td><td>A client or colleague who disagreed with your approach</td></tr>
+<tr><td><b>Failure or mistake</b></td><td>Self-awareness, resilience</td><td>Something you shipped that broke; what you changed after</td></tr>
+<tr><td><b>Ambiguity</b></td><td>Structuring, judgement</td><td>A vague request you turned into a clear deliverable</td></tr>
+<tr><td><b>Learned fast</b></td><td>Adaptability, curiosity</td><td>A new tool or domain you got productive in quickly</td></tr></table>
+<h3>Fit questions to script word for word</h3>
+<table class="tbl"><tr><td><b>Tell me about yourself</b></td><td>Present → past → future in 60 to 90 sec: what you do now, the 2 things that got you here, why this role is the next step</td></tr>
+<tr><td><b>Why consulting?</b></td><td>Variety of problems, client impact, learning curve, with one concrete moment you enjoyed client work</td></tr>
+<tr><td><b>Why this firm?</b></td><td>Something specific: a practice, a client sector, a person you spoke to. Not "prestige"</td></tr>
+<tr><td><b>Why leave your job?</b></td><td>Towards something, never away from something</td></tr>
+<tr><td><b>Weakness</b></td><td>A real one, plus what you're doing about it</td></tr>
+<tr><td><b>Where in 5 years?</b></td><td>Growth inside the path they offer</td></tr></table>
+<div class="box warnbx"><div class="bx-h">Traps</div>"We" stories where your part is invisible. No number in the result. A weakness that's a disguised strength.</div>`,
+src:"STAR method; story-bank approach common to consulting prep"},
+
+{id:"int-screen",grp:"interview",name:"9 · Recruiter screening call",tag:"Round one",
+one:"Fifteen to thirty minutes checking motivation, rough fit and logistics. Easy to pass and easy to lose by being vague.",
+html:`
+<h3>What they're checking</h3>
+<table class="tbl"><tr><td><b>Motivation</b></td><td>Why this role, why now, why this firm</td></tr>
+<tr><td><b>Fit</b></td><td>Does your background match the level and service line?</td></tr>
+<tr><td><b>Logistics</b></td><td>Notice period, location, work authorisation, availability for interviews</td></tr>
+<tr><td><b>Expectations</b></td><td>Salary range, level, start date</td></tr></table>
+<h3>The script</h3>
+<div class="fwsay"><b>Background (60 sec):</b> "I'm a <i>[role]</i> at <i>[company]</i>, where I <i>[headline achievement]</i>. Before that, <i>[1 line]</i>. I'm looking for <i>[what this role gives you]</i>, which is why <i>[firm / role]</i> stood out."</div>
+<div class="fwsay"><b>Salary:</b> "Based on my research for this level in <i>[city]</i>, I'm looking at <i>[researched range]</i>, but I'm flexible depending on the full package and the role." Or, if you'd rather not anchor first: "I'd like to understand the level and package first. What's the budgeted range?"</div>
+<div class="fwsay"><b>Close:</b> "What are the next steps, and is there anything in my background you'd like me to clarify for the hiring manager?"</div>
+<div class="box key"><div class="bx-h">Have ready before the call</div>Notice period, earliest start date, your researched salary range, two specific reasons for this firm, and the job description open in front of you.</div>`,
+src:"Ours"},
+
+{id:"int-ask",grp:"interview",name:"Questions to ask them",tag:"Every round ends here",
+one:"Two good questions per round, tailored to who you're talking to. \"No questions\" reads as no interest.",
+html:`
+<table class="tbl"><tr><th>Interviewer</th><th>Good questions</th></tr>
+<tr><td><b>Recruiter</b></td><td>What does the interview process look like from here? What separates candidates who get offers?</td></tr>
+<tr><td><b>Manager</b></td><td>What would success look like in my first six months? What's a typical engagement or project the team runs right now?</td></tr>
+<tr><td><b>Engineer / peer</b></td><td>How do you evaluate AI systems before they ship? What's the hardest technical problem on the team right now?</td></tr>
+<tr><td><b>Partner / director</b></td><td>Where do you see the AI practice growing in the region over the next two years? What do your best people have in common?</td></tr></table>
+<div class="box warnbx"><div class="bx-h">Avoid</div>Anything answered on the website, salary or leave in a technical or partner round, and "How did I do?"</div>`,
+src:"Ours"},
+
+/* ---------- TECH CASE PLAYBOOK ---------- */
+{id:"tc-diff",grp:"play",name:"Tech case vs traditional case",tag:"Know the game",
+one:"A tech case is a business case where the central decision is about technology, so the output, the numbers and the risks shift.",
+html:`
+<table class="tbl"><tr><th></th><th>Traditional case</th><th>Tech case</th></tr>
+<tr><td><b>Focus</b></td><td>The business decision</td><td>Business, people <em>and</em> technology together</td></tr>
+<tr><td><b>Output</b></td><td>A strategic recommendation</td><td>A recommendation <em>plus</em> an implementation roadmap</td></tr>
+<tr><td><b>Numbers</b></td><td>Revenue, cost, profit</td><td>TCO, ROI, payback period, uptime</td></tr>
+<tr><td><b>Role of tech</b></td><td>One factor among many</td><td>Central to the solution</td></tr>
+<tr><td><b>Timing</b></td><td>Often immediate</td><td>Value builds over months or years</td></tr>
+<tr><td><b>Risks</b></td><td>Market and competition</td><td>Adoption, integration, security</td></tr></table>
+<div class="box key"><div class="bx-h">The point</div>The solving method is the same as any case. What changes is that you must close with <b>how it gets delivered</b> and you must talk in <b>payback, not price</b>. Prep split suggested in the video: about 80% general case skill, 20% tech-specific.</div>`,
+src:"Hacking the Case Interview, Tech Consulting Case Interview video and guide (2026)"},
+
+{id:"tc-steps",grp:"play",name:"The six-step tech case process",tag:"The spine",
+one:"Same six steps as a strategy case. Follow them in order and a deeply technical prompt still feels manageable.",
+html:`
+<ol class="fwsteps">
+<li><b>Understand the case.</b> Note context and objective, ask 2 to 3 clarifying questions, then <em>restate the objective</em> and get a yes. Answering the wrong business question is the fastest way to fail.</li>
+<li><b>Structure the problem.</b> Ask for a minute, build a tailored framework (PPT or Technology Evaluation are the usual starting blocks), present it confidently.</li>
+<li><b>Kick off.</b> Candidate-led: pick the branch to explore first and say why. Interviewer-led: follow their lead.</li>
+<li><b>Solve the quant.</b> Lay out the approach and get approval <em>before</em> computing. TCO, ROI and payback are the usual targets.</li>
+<li><b>Answer the qualitative.</b> Group ideas into 2 to 3 buckets before speaking. For opinion questions, state your position first, then the reasons.</li>
+<li><b>Recommend.</b> Answer, the 2 to 3 strongest reasons, the key risks, then next steps (a regional pilot, vendor reference calls, a security audit). Under 45 seconds.</li>
+</ol>
+<div class="box warnbx"><div class="bx-h">Five ways tech cases go wrong</div>
+<ol style="margin:0;padding-left:18px"><li>Leading with technology instead of the business problem.</li><li>Forcing a memorised framework onto a case it doesn't fit.</li><li>Ignoring change management. Most tech projects fail on adoption, not technology.</li><li>Skipping the math because it looks messier than profit math.</li><li>Name-dropping vendors (AWS, Azure, SAP) without saying why they fit.</li></ol></div>
+<div class="box"><div class="bx-h">Volume</div>Aim for 20 to 30 practice cases before interviews, 5 to 10 of them tech cases. Feedback on each case beats raw count.</div>`,
+src:"Hacking the Case Interview, Tech Consulting Case Interview video and guide (2026)"},
 
 {id:"tc-types",grp:"play",name:"The seven tech case types",tag:"Pattern-match fast",
 one:"Recognise the type in the first 30 seconds and you already know which framework to start from.",
@@ -2089,7 +2296,14 @@ window.FW_DRILL=[
 {q:"A company has run nine GenAI pilots in a year; none are in production.",opts:["AI readiness & maturity","Technology Evaluation","Pyramid Principle","CMMI"],a:0,why:"Classic Active-level pattern: diagnose the pillars (usually platform and governance) blocking the next level. Pilot gates help fix it after."},
 {q:"A client wants an agent that can issue refunds and cancel bookings automatically.",opts:["Autonomy ladder","CRISP-DM","Cloud Adoption Framework","ADKAR"],a:0,why:"Set autonomy by error cost and reversibility: refunds drafted for approval, irreversible cancellations behind a human."},
 {q:"A deployed copilot has great training scores but 12% weekly usage.",opts:["ADKAR","TOGAF","Technology Evaluation","EU AI Act tiers"],a:0,why:"Knowledge is fine; the drop-off is at Desire or Ability. ADKAR finds which."},
-{q:"A European bank wants to use a model to screen job applicants.",opts:["EU AI Act risk tiers","CMMI","Value × feasibility matrix","ITIL"],a:0,why:"Hiring is a high-risk use case: classify first, because the tier sets the obligations (and dates moved in 2026)."}
+{q:"A European bank wants to use a model to screen job applicants.",opts:["EU AI Act risk tiers","CMMI","Value × feasibility matrix","ITIL"],a:0,why:"Hiring is a high-risk use case: classify first, because the tier sets the obligations (and dates moved in 2026)."},
+{q:"Interviewer: \"Our chatbot started giving outdated refund policies last week. What would you do?\" Which format?",opts:["Explain a concept","Fix it","Design it","Business case"],a:1,why:"Something exists and is broken: run C·B·M·F·G·R, starting with the breakdown (retrieval vs generation)."},
+{q:"Interviewer: \"Design an assistant that lets our sales team query CRM data in plain English.\" Which format?",opts:["Design it","Estimate","Behavioural","Fix it"],a:0,why:"Design from scratch: clarify, requirements, simplest baseline, where it breaks, evals, trade-offs."},
+{q:"Partner: \"Should a regional bank invest in GenAI for its call centre?\" Which format?",opts:["Explain a concept","Coding","Business case","Screening call"],a:2,why:"\"Should we\" signals a business case: value, feasibility, economics, adoption, then a recommendation."},
+{q:"Interviewer: \"How much would it cost per month to run a support bot for 4M subscribers?\" Which format?",opts:["Estimate","Fix it","Written case","Design it"],a:0,why:"Estimation: driver tree, round numbers, calculate aloud, sanity check, so-what."},
+{q:"Interviewer: \"What's the difference between RAG and fine-tuning?\" Which format?",opts:["Business case","Explain a concept","Design it","Behavioural"],a:1,why:"Comparison concept: shared goal, three axes of difference, when to use each, your default."},
+{q:"Manager: \"Tell me about a time a project you delivered didn't go to plan.\" Which format?",opts:["Fix it","Behavioural","Estimate","Screening call"],a:1,why:"Behavioural: pull the failure story from your bank and tell it in STAR plus what you learned."},
+{q:"You receive a 20-page data pack and 60 minutes to prepare a recommendation for the client. Which format?",opts:["Written case","Coding","Business case","Explain a concept"],a:0,why:"Written case: hypothesis first, only the analysis that tests it, 4 to 5 slides with action titles."}
 ];
 </script>
 
@@ -2214,10 +2428,10 @@ function viewFrameworks(v){
   v.innerHTML='<div class="page-in">'+
     '<div class="eyebrow">Reference library · AI &amp; tech consulting</div>'+
     '<h1 class="h-hero">Frameworks</h1>'+
-    '<p class="sub">Every structure you might reach for in an AI or tech consulting interview, with when to use it, how it applies to an AI case, and the line to say out loud. '+fwDoneN()+' of '+fwList().length+' reviewed.</p>'+
-    '<div class="box key" style="margin-top:18px"><div class="bx-h">'+svg(IC.play,2)+' How to use it</div>Frameworks are starting blocks, not scripts. Learn the parts, then practise <em>adapting</em> them: the drill at the bottom gives you a prompt and asks which one you\'d start from.</div>'+
+    '<p class="sub">A script for every interview format, plus every structure you might reach for in an AI or tech consulting interview: when to use it, how it applies to an AI case, and the line to say out loud. '+fwDoneN()+' of '+fwList().length+' reviewed.</p>'+
+    '<div class="box key" style="margin-top:18px"><div class="bx-h">'+svg(IC.play,2)+' How to use it</div>Frameworks are starting blocks, not scripts. Learn the parts, then practise <em>adapting</em> them: the drill at the bottom gives you a prompt and asks which format or framework you\'d start from.</div>'+
     secs+
-    '<div style="margin:34px 0 12px"><div class="eyebrow" style="color:var(--acc2)">Drill · which framework?</div>'+
+    '<div style="margin:34px 0 12px"><div class="eyebrow" style="color:var(--acc2)">Drill · which format or framework?</div>'+
     '<p style="font-size:13px;color:var(--tx2);margin:4px 0 0">Read the prompt, pick the starting framework. '+fwDrillN()+' of '+(window.FW_DRILL||[]).length+' answered.</p></div>'+
     '<div class="fwdrill">'+drill+'</div></div>';
 }
