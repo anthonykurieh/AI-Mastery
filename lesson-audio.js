@@ -120,5 +120,5 @@
     if (autoplayNext) { autoplayNext = false; audio.play().catch(function () {}); }
   }
 
-  window.LessonAudio = { mount: mount, audio: audio };
+  window.LessonAudio = { mount: mount, audio: audio, setRate: setRate, rates: RATES };
 })();
