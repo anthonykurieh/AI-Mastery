@@ -1,3 +1,4 @@
+<meta charset="utf-8">
 <title>AI Consultant Track — Interactive</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <style>
@@ -2387,7 +2388,7 @@ function route(){
   const rb=document.getElementById("readbar");if(rb){rb.style.opacity=0;rb.querySelector("i").style.width="0";}
   if(p[0]==="dashboard")viewDash(v);
   else if(p[0]==="cards")viewCards(v);
-  else if(p[0]==="notes")viewNotes(v,p[1]);
+  else if(p[0]==="notes"&&window.viewNotes)viewNotes(v,p[1]);
   else if(p[0]==="lab")viewLab(v);
   else if(p[0]==="frameworks")viewFrameworks(v);
   else if(p[0]==="fw")viewFramework(v,p[1]);
