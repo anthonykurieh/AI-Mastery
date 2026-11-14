@@ -1,5 +1,6 @@
+<!doctype html>
+<html lang="en" data-course="consulting">
 <meta charset="utf-8">
-<script>document.documentElement.setAttribute("data-course","consulting")</script>
 <title>AI Consultant Track — Interactive</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <style>
@@ -2319,7 +2320,7 @@ const KEY="aict_v1";
 const DEF={xp:0,streak:0,last:null,started:null,lessons:{},quizzes:{},exams:{},cards:{},drills:{},seen:{},cases:{},caseNotes:{},activity:{},fw:{}};
 let S=load();
 function load(){try{const r=JSON.parse(localStorage.getItem(KEY));return Object.assign({},DEF,r||{})}catch(e){return Object.assign({},DEF)}}
-function save(){localStorage.setItem(KEY,JSON.stringify(S))}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 function today(){return new Date().toISOString().slice(0,10)}
 function daysBetween(a,b){return Math.round((new Date(b)-new Date(a))/864e5)}
 
@@ -2849,7 +2850,7 @@ function miniCard(t,d){return '<div class="card"><div style="font-weight:700;fon
 /* =================== MISC UI =================== */
 let toastT;
 function toast(msg,xp){const el=document.getElementById("toast");el.innerHTML=(msg)+(xp?' <span class="xpv">+'+xp+' XP</span>':'');el.classList.add("show");clearTimeout(toastT);toastT=setTimeout(()=>el.classList.remove("show"),2100);}
-function resetAll(){if(confirm("Reset all progress, XP, streaks and flashcard scheduling? This cannot be undone.")){localStorage.removeItem(KEY);S=load();renderChrome();go("dashboard");route();toast("Progress reset");}}
+function resetAll(){if(confirm("Reset all progress, XP, streaks and flashcard scheduling? This cannot be undone.")){try{localStorage.removeItem(KEY)}catch(e){}S=load();renderChrome();go("dashboard");route();toast("Progress reset");}}
 
 /* modal + backup/restore */
 function openModal(html){const m=document.getElementById("modal");m.querySelector(".sheet").innerHTML=html;m.classList.add("on");}
@@ -2875,8 +2876,8 @@ function restoreBackup(){
 }
 
 /* theme */
-function initTheme(){const t=localStorage.getItem("aict_theme");if(t)document.documentElement.setAttribute("data-theme",t);syncThemeIco();}
-function toggleTheme(){const cur=document.documentElement.getAttribute("data-theme");const isDark=cur?cur==="dark":matchMedia("(prefers-color-scheme:dark)").matches;const nx=isDark?"light":"dark";document.documentElement.setAttribute("data-theme",nx);localStorage.setItem("aict_theme",nx);syncThemeIco();}
+function initTheme(){const t=(function(){try{return localStorage.getItem("aict_theme")}catch(e){return null}})();if(t)document.documentElement.setAttribute("data-theme",t);syncThemeIco();}
+function toggleTheme(){const cur=document.documentElement.getAttribute("data-theme");const isDark=cur?cur==="dark":matchMedia("(prefers-color-scheme:dark)").matches;const nx=isDark?"light":"dark";document.documentElement.setAttribute("data-theme",nx);try{localStorage.setItem("aict_theme",nx)}catch(e){}syncThemeIco();}
 function syncThemeIco(){const cur=document.documentElement.getAttribute("data-theme");const isDark=cur?cur==="dark":matchMedia("(prefers-color-scheme:dark)").matches;document.getElementById("themeIco").innerHTML=isDark?'<path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/>':'<circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/>';}
 
 /* rail (mobile) */

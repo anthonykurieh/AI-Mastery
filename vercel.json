@@ -3,7 +3,7 @@
   "cleanUrls": true,
   "headers": [
     {
-      "source": "/index.html",
+      "source": "/((?!audio/|pdf/).*)",
       "headers": [
         { "key": "Cache-Control", "value": "no-cache" }
       ]

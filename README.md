@@ -16,10 +16,10 @@ General consulting as a book you can do: the consulting business, problem solvin
 ## All apps include
 
 - Prose lessons with inline comprehension checks and timed module exams
-- Narrated audio for every lesson (natural Kokoro voice, pre-generated MP3s in `audio/`), with speed control (0.75×–2×, remembered), ±15s skips, auto-play of the next lesson, and lock-screen/headphone controls (`lesson-audio.js`)
+- Narrated audio for every lesson (Kokoro voice am_michael, pre-generated MP3s in `audio/`; `scripts/build-narration.py` fills in any lesson that has none), with speed control (0.75×–2×, remembered), ±15s skips, auto-play of the next lesson, and lock-screen/headphone controls (`lesson-audio.js`)
 - Interactive calculator drills (cost/tokenomics, ROI, KV-cache, consensus, market sizing, …)
 - Code-completion and put-it-in-order exercises
-- Spaced-repetition flashcards (Leitner boxes, +1w / +1m schedule)
+- Spaced-repetition flashcards (Leitner boxes; reviews after 1, 3, 7, 16 and 35 days), with a reset button on the Flashcards page
 - A self-graded Case Lab of design/consulting challenges
 - Added curriculum (extras-consulting.js): 12 new lessons filling interview gaps (caching, prompt engineering, MLOps, text-to-SQL, chunking, vector maths, model training, agent memory, eval metrics, guardrails, streaming/SSE vs WebSockets, fairness) and a new Module 14 on multimodal, voice and Arabic AI, each with checks, notes sections and flashcards
 - Study notes: one detailed page per module in all three courses (the added lessons folded into their modules), plus an interview playbook page, with every diagram drawn in SVG and a line to say out loud. Download any page, or the whole course, as a clean PDF with no headers or watermark (notes-*.js, notes.js, pdf/)
