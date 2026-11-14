@@ -12,3 +12,6 @@ node_modules/
 
 # Source books — copyrighted, never commit or publish
 *.pdf
+
+# Generated study-notes PDFs (built by scripts/build-notes-pdfs.py) are ours to publish
+!pdf/**/*.pdf
