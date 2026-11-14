@@ -1,0 +1,131 @@
+/* ============ COURSE THEMES ============
+   Each course sets <html data-course="..."> and gets its own palette, type and shape.
+   Selectors are html[data-course=x] (+[data-theme]) so they outrank the base :root tokens. */
+
+/* ---------- shared type hooks ---------- */
+html[data-course] h1,html[data-course] h2,html[data-course] h3,html[data-course] h4,
+html[data-course] .brand b,html[data-course] .h-hero{font-family:var(--display,var(--sans))}
+
+/* =========================================================
+   CONSULTING: boardroom. Navy and brass, serif headings.
+   ========================================================= */
+html[data-course="consulting"]{
+  --display:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --bg:#f3f4f7;--surf:#ffffff;--surf2:#e8ebf1;
+  --line:#d5dae4;--line2:#c3cad8;
+  --tx:#121a2b;--tx2:#3a4559;--tx3:#596378;
+  --acc:#1d3a6e;--acc2:#162e59;--accdim:#9fb3d6;--accwash:#e3e9f5;
+  --gold:#86661c;--goldwash:#f4ecd8;
+  --shadow:0 1px 2px rgba(18,26,43,.06),0 8px 24px -12px rgba(18,26,43,.16);
+  --shadow2:0 2px 4px rgba(18,26,43,.05),0 18px 44px -20px rgba(18,26,43,.24);
+  --r:10px;--r2:8px;--r3:5px;--onfill:#fff;
+}
+@media (prefers-color-scheme:dark){html[data-course="consulting"]:not([data-theme="light"]){
+  --bg:#0c111b;--surf:#121927;--surf2:#182132;
+  --line:#243049;--line2:#2f3d5a;
+  --tx:#e8ecf4;--tx2:#a9b3c7;--tx3:#8c96ab;
+  --acc:#86a9e8;--acc2:#a2bdf0;--accdim:#2c4470;--accwash:#16233c;
+  --gold:#d9b45e;--goldwash:#2a2414;--onfill:#0c111b;
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 10px 30px -14px rgba(0,0,0,.65);
+  --shadow2:0 2px 6px rgba(0,0,0,.4),0 22px 50px -22px rgba(0,0,0,.75);
+}}
+html[data-course="consulting"][data-theme="dark"]{
+  --bg:#0c111b;--surf:#121927;--surf2:#182132;
+  --line:#243049;--line2:#2f3d5a;
+  --tx:#e8ecf4;--tx2:#a9b3c7;--tx3:#8c96ab;
+  --acc:#86a9e8;--acc2:#a2bdf0;--accdim:#2c4470;--accwash:#16233c;
+  --gold:#d9b45e;--goldwash:#2a2414;--onfill:#0c111b;
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 10px 30px -14px rgba(0,0,0,.65);
+  --shadow2:0 2px 6px rgba(0,0,0,.4),0 22px 50px -22px rgba(0,0,0,.75);
+}
+html[data-course="consulting"] h1,html[data-course="consulting"] h2,html[data-course="consulting"] h3,
+html[data-course="consulting"] .h-hero{font-weight:650;letter-spacing:-.012em}
+html[data-course="consulting"] .h-hero{font-size:clamp(28px,4.2vw,42px)}
+html[data-course="consulting"] .brand b{font-size:16px;font-weight:650}
+html[data-course="consulting"] .eyebrow{color:var(--gold)}
+html[data-course="consulting"] .brand{box-shadow:inset 0 3px 0 var(--gold)}
+html[data-course="consulting"] .topbar{border-bottom-color:var(--line2)}
+
+/* =========================================================
+   AGENTIC: systems lab. Violet, grotesk + mono, sharp, dot grid.
+   ========================================================= */
+html[data-course="agentic"]{
+  --display:"Space Grotesk",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --bg:#f4f4f8;--surf:#ffffff;--surf2:#ececf3;
+  --line:#dcdce8;--line2:#c9c9da;
+  --tx:#15142a;--tx2:#43425e;--tx3:#5f5d7a;
+  --acc:#5b3fd1;--acc2:#4a30b5;--accdim:#b9aaf2;--accwash:#ece7fd;
+  --gold:#955800;--goldwash:#fbecd5;
+  --shadow:0 1px 0 rgba(21,20,42,.05),0 6px 18px -10px rgba(21,20,42,.18);
+  --shadow2:0 1px 0 rgba(21,20,42,.05),0 16px 38px -18px rgba(21,20,42,.26);
+  --r:6px;--r2:5px;--r3:3px;--onfill:#fff;
+  --grid:rgba(21,20,42,.07);
+}
+@media (prefers-color-scheme:dark){html[data-course="agentic"]:not([data-theme="light"]){
+  --bg:#0b0b14;--surf:#11111d;--surf2:#171727;
+  --line:#25253c;--line2:#33334f;
+  --tx:#ebeaf6;--tx2:#aaa8c6;--tx3:#8d8baa;
+  --acc:#a993ff;--acc2:#bcaaff;--accdim:#3b2f78;--accwash:#1c1838;
+  --gold:#f0b35a;--goldwash:#2b2010;--onfill:#0b0b14;
+  --shadow:0 0 0 1px rgba(169,147,255,.04),0 10px 30px -14px rgba(0,0,0,.7);
+  --shadow2:0 0 0 1px rgba(169,147,255,.06),0 22px 50px -22px rgba(0,0,0,.8);
+  --grid:rgba(235,234,246,.06);
+}}
+html[data-course="agentic"][data-theme="dark"]{
+  --bg:#0b0b14;--surf:#11111d;--surf2:#171727;
+  --line:#25253c;--line2:#33334f;
+  --tx:#ebeaf6;--tx2:#aaa8c6;--tx3:#8d8baa;
+  --acc:#a993ff;--acc2:#bcaaff;--accdim:#3b2f78;--accwash:#1c1838;
+  --gold:#f0b35a;--goldwash:#2b2010;--onfill:#0b0b14;
+  --shadow:0 0 0 1px rgba(169,147,255,.04),0 10px 30px -14px rgba(0,0,0,.7);
+  --shadow2:0 0 0 1px rgba(169,147,255,.06),0 22px 50px -22px rgba(0,0,0,.8);
+  --grid:rgba(235,234,246,.06);
+}
+html[data-course="agentic"] body:not(.nprint){background-image:radial-gradient(var(--grid) 1px,transparent 1.2px);background-size:22px 22px;background-attachment:fixed}
+html[data-course="agentic"] h1,html[data-course="agentic"] h2,html[data-course="agentic"] h3,
+html[data-course="agentic"] .h-hero{font-weight:650;letter-spacing:-.025em}
+html[data-course="agentic"] .eyebrow{color:var(--acc)}
+html[data-course="agentic"] body:not(.nprint) .eyebrow::before{content:"// ";opacity:.6}
+html[data-course="agentic"] .brand b{font-weight:700}
+html[data-course="agentic"] .cs-opt.active{box-shadow:inset 0 -2px 0 var(--acc)}
+
+/* =========================================================
+   HANDBOOK: field notebook. Terracotta on cream, soft serif.
+   ========================================================= */
+html[data-course="handbook"]{
+  --display:"Newsreader",Georgia,"Times New Roman",serif;
+  --bg:#f6f1e7;--surf:#fffdf8;--surf2:#efe7d8;
+  --line:#e2d7c3;--line2:#d3c5ab;
+  --tx:#2a1f17;--tx2:#5a4a3c;--tx3:#735f50;
+  --acc:#a8441f;--acc2:#8c3818;--accdim:#e3b29c;--accwash:#f7e4d9;
+  --gold:#7a6510;--goldwash:#f1ead0;
+  --good:#3d7536;--goodwash:#e3eedb;
+  --shadow:0 1px 2px rgba(60,36,20,.06),0 10px 26px -14px rgba(60,36,20,.18);
+  --shadow2:0 2px 4px rgba(60,36,20,.05),0 20px 46px -22px rgba(60,36,20,.26);
+  --r:18px;--r2:13px;--r3:9px;--onfill:#fff;
+}
+@media (prefers-color-scheme:dark){html[data-course="handbook"]:not([data-theme="light"]){
+  --bg:#17120e;--surf:#1f1914;--surf2:#28201a;
+  --line:#3a2f26;--line2:#4a3d31;
+  --tx:#f1e8dc;--tx2:#c6b6a4;--tx3:#a69482;
+  --acc:#ec8a5f;--acc2:#f4a27c;--accdim:#5a3322;--accwash:#33211a;
+  --gold:#d8bf5a;--goldwash:#2c2612;--good:#7cc46e;--goodwash:#1c2a18;--onfill:#17120e;
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 10px 30px -14px rgba(0,0,0,.65);
+  --shadow2:0 2px 6px rgba(0,0,0,.4),0 22px 50px -22px rgba(0,0,0,.75);
+}}
+html[data-course="handbook"][data-theme="dark"]{
+  --bg:#17120e;--surf:#1f1914;--surf2:#28201a;
+  --line:#3a2f26;--line2:#4a3d31;
+  --tx:#f1e8dc;--tx2:#c6b6a4;--tx3:#a69482;
+  --acc:#ec8a5f;--acc2:#f4a27c;--accdim:#5a3322;--accwash:#33211a;
+  --gold:#d8bf5a;--goldwash:#2c2612;--good:#7cc46e;--goodwash:#1c2a18;--onfill:#17120e;
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 10px 30px -14px rgba(0,0,0,.65);
+  --shadow2:0 2px 6px rgba(0,0,0,.4),0 22px 50px -22px rgba(0,0,0,.75);
+}
+html[data-course="handbook"] h1,html[data-course="handbook"] h2,html[data-course="handbook"] h3,
+html[data-course="handbook"] .h-hero{font-weight:600;letter-spacing:-.01em}
+html[data-course="handbook"] .h-hero{font-size:clamp(30px,4.4vw,44px);font-style:italic}
+html[data-course="handbook"] .brand b{font-size:16.5px;font-weight:600;font-style:italic}
+html[data-course="handbook"] .eyebrow{color:var(--acc)}
+html[data-course="handbook"] .prose{font-size:16.5px}
