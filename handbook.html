@@ -1380,6 +1380,7 @@ function gradeCard(id,ok){
 
 /* =================== ICONS =================== */
 const IC={
+  pen:'<path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/>',
   home:'<path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/>',
   book:'<path d="M4 5a2 2 0 012-2h13v16H6a2 2 0 00-2 2z"/><path d="M19 3v16"/>',
   cards:'<rect x="3" y="6" width="14" height="14" rx="2"/><path d="M7 6V4a2 2 0 012-2h9a2 2 0 012 2v12a2 2 0 01-2 2h-1"/>',
@@ -1406,6 +1407,7 @@ function route(){
   const rb=document.getElementById("readbar");if(rb){rb.style.opacity=0;rb.querySelector("i").style.width="0";}
   if(p[0]==="dashboard")viewDash(v);
   else if(p[0]==="cards")viewCards(v);
+  else if(p[0]==="notes")viewNotes(v,p[1]);
   else if(p[0]==="lab")viewLab(v);
   else if(p[0]==="case")viewCase(v,p[1]);
   else if(p[0]==="final")viewFinal(v);
@@ -1429,7 +1431,7 @@ function renderNav(){
   const nav=document.getElementById("nav");
   const h=location.hash.replace(/^#\/?/,"")||"dashboard";
   let html='';
-  const top=[["dashboard","home","Dashboard"],["lab","target","Case Lab"],["cards","cards","Flashcards"],["final","award","Interview Gauntlet"]];
+  const top=[["dashboard","home","Dashboard"],["lab","target","Case Lab"],["cards","cards","Flashcards"],["notes","pen","Notes"],["final","award","Interview Gauntlet"]];
   top.forEach(t=>{
     const seg=h.split("/")[0];
     const on=(seg===t[0])||(t[0]==="lab"&&seg==="case");
@@ -1839,5 +1841,7 @@ window.addEventListener("scroll",function(){
 initTheme();renderChrome();route();
 </script>
 <script src="concepts-handbook.js"></script>
+<script src="notes-handbook.js"></script>
+<script src="notes.js"></script>
 <script src="flashdecks.js"></script>
 <script src="mobile.js"></script>

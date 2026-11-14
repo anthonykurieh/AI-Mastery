@@ -21,6 +21,7 @@ General consulting as a book you can do: the consulting business, problem solvin
 - Code-completion and put-it-in-order exercises
 - Spaced-repetition flashcards (Leitner boxes, +1w / +1m schedule)
 - A self-graded Case Lab of design/consulting challenges
+- Handwritten notes: one copy-by-hand page per module in all three courses, plus an interview playbook page, each ending with a line to say out loud and something to draw (notes-*.js, notes.js)
 - Flashcard decks: one concept card per term for every module in all three courses (concepts-*.js), a Frameworks deck, the original one-liners, Review due, Quick mix and a definition-first mode (flashdecks.js)
 - Phone-friendly: bottom tab bar, a sticky mini audio player while you scroll a lesson, swipe to grade flashcards, larger tap targets (mobile.js, shared by all three courses)
 - An Interview playbook (in Frameworks): a router to spot the format, plus scripts for all nine formats (fix it, design it, business case, explain a concept, estimate, coding and take-homes, written case, behavioural and fit, recruiter screen) and questions to ask

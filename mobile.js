@@ -26,6 +26,7 @@
     ' .mtab button.on{color:var(--acc)}',
     ' .mtab button.on::before{content:"";position:absolute;top:-4px;left:30%;right:30%;height:3px;border-radius:0 0 3px 3px;background:var(--acc)}',
     ' .mtab .bdg{position:absolute;top:2px;left:calc(50% + 6px);min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:var(--gold,#b8860b);color:#fff;font:700 10px var(--mono,monospace);display:grid;place-items:center}',
+    ' .mtab .bdg[hidden]{display:none}',
     /* mini player */
     ' .mini.on{display:flex;position:fixed;left:8px;right:8px;bottom:calc(64px + env(safe-area-inset-bottom));z-index:31;align-items:center;gap:6px;padding:6px 8px 9px 6px;border:1px solid var(--line);border-radius:14px;background:var(--surf);box-shadow:var(--shadow2,0 6px 24px rgba(0,0,0,.18));overflow:hidden;animation:miniIn .2s ease}',
     ' @keyframes miniIn{from{transform:translateY(12px);opacity:0}to{transform:none;opacity:1}}',
