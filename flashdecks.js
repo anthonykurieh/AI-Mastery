@@ -87,6 +87,11 @@
     '.fc-front .q.term{font-size:24px;font-weight:700}',
     '.fc-back .a.def{font-size:16.5px;line-height:1.55;text-align:left}',
     '.fc-face{overflow:auto}',
+    '.dk-reset{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);display:flex;align-items:center;gap:14px;flex-wrap:wrap}',
+    '.dk-reset button{font:inherit;font-size:13px;font-weight:650;padding:8px 14px;border-radius:8px;border:1px solid var(--line2);background:var(--surf);color:var(--tx2);cursor:pointer}',
+    '.dk-reset button:hover{border-color:var(--crit);color:var(--crit)}',
+    '.dk-reset button.armed{background:var(--crit);border-color:var(--crit);color:#fff}',
+    '.dk-reset span{font-size:12.5px;color:var(--tx3);flex:1;min-width:200px}',
     '@media (max-width:600px){.dk-top{grid-template-columns:1fr}.dk-grid{grid-template-columns:1fr}.fc-front .q.term{font-size:21px}.fc-face{padding:22px!important}}'
   ].join('\n');
   document.head.appendChild(css);
@@ -119,9 +124,18 @@
       section('concepts', 'Concepts by module', 'One card per concept, written from that module\'s lessons.') +
       section('frameworks', 'Frameworks', 'Every framework and interview format from the Frameworks section.') +
       section('oneliners', 'Quick one-liners', 'The original deck: numbers and one-liners to know cold.') +
+      '<div class="dk-reset"><button id="dkReset" type="button">Reset flashcard progress</button><span>Clears known, due and seen status for every card in this course. Lessons, XP and notes stay.</span></div>' +
       '</div>';
     var cb = document.getElementById('dkRev');
     if (cb) cb.onchange = function () { lsSet(REV_KEY, cb.checked); };
+    var rb = document.getElementById('dkReset');
+    if (rb) rb.onclick = function () {
+      if (!rb.dataset.armed) { rb.dataset.armed = '1'; rb.textContent = 'Tap again to confirm reset'; rb.classList.add('armed');
+        setTimeout(function () { if (rb.isConnected) { delete rb.dataset.armed; rb.textContent = 'Reset flashcard progress'; rb.classList.remove('armed'); } }, 4000); return; }
+      S.cards = {}; save();
+      if (typeof renderNav === 'function') renderNav();
+      home(v);
+    };
   }
 
   /* ---------- study session ---------- */
