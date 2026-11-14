@@ -9,6 +9,18 @@
   function esc(t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
   function inline(t) { return esc(t).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>'); }
   var PAGES = window.NOTES || [];
+  /* merge sections for lessons added in extras-*.js into each module's page */
+  if (window.EXTRAS && window.EXTRAS.notes) {
+    Object.keys(window.EXTRAS.notes).forEach(function (mid) {
+      var add = window.EXTRAS.notes[mid].join('\n\n');
+      var pg = PAGES.filter(function (p) { return p[0] === mid; })[0];
+      if (pg) { pg[2] = pg[2] + '\n\n' + add; return; }
+      var mod = (window.MODULES || []).filter(function (m) { return m.id === mid; })[0];
+      var at = PAGES.map(function (p) { return p[0]; }).indexOf('play');
+      var page = [mid, mod ? mod.t : mid, add];
+      if (at < 0) PAGES.push(page); else PAGES.splice(at, 0, page);
+    });
+  }
   var modNum = {};
   (window.MODULES || []).forEach(function (m) { modNum[m.id] = m.n || ''; });
 

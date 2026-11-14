@@ -23,6 +23,18 @@
       cards: d[2].map(function (c, i) { return { id: 'k-' + mid + '-' + (i + 1), k: 'Module ' + (modNum[mid] || '') + ' · ' + title, q: c[0], a: c[1], concept: true }; })
     });
   });
+  /* cards for lessons added in extras-*.js: appended to their module's deck (or a new deck) */
+  if (window.EXTRAS && window.EXTRAS.cards) {
+    Object.keys(window.EXTRAS.cards).forEach(function (mid) {
+      var mod = (window.MODULES || []).filter(function (m) { return m.id === mid; })[0];
+      var title = mod ? mod.t : mid, num = (mod && mod.n) || modNum[mid] || mid.replace(/\D/g, '');
+      var deck = DECKS.filter(function (d) { return d.id === mid; })[0];
+      if (!deck) { deck = { id: mid, group: 'concepts', title: title, num: num, cards: [] }; DECKS.push(deck); }
+      window.EXTRAS.cards[mid].forEach(function (c, i) {
+        deck.cards.push({ id: 'k-' + mid + '-x' + (i + 1), k: 'Module ' + num + ' · ' + title, q: c[0], a: c[1], concept: true });
+      });
+    });
+  }
   if (window.FRAMEWORKS && window.FRAMEWORKS.length) {
     DECKS.push({
       id: 'frameworks', group: 'frameworks', title: 'Frameworks & interview playbook', num: 'F',
